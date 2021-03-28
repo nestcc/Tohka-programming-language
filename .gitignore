@@ -1,5 +1,31 @@
 
 # vscode
 
-/.vscode
+.vscode/*
+*.coverage
+*.coveragexml
 
+# build
+build/*
+cmake-build-debug/
+CMakeFiles/
+cmake-build-debug
+cmake_install.cmake
+cMakeCache.txt
+Makefile
+
+# jetbrains
+.idea/
+
+# MacOS
+.DS_Store
+*/.DS_Store
+
+# .o file
+*.o
+tohka_outputs/*
+toh
+Tohka.cbp
+
+# test
+Testing/
