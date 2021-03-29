@@ -9,6 +9,15 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
+#include <util.h>
+
+#ifdef NDEBUG
+#define LOG_INFO(info, ...)
+#else
+#define LOG_INFO(...) \
+printf( BLUE "[%s : %d] " NOCOLOR, __FILE__, __LINE__); \
+printf(__VA_ARGS__);
+#endif
 
 void *mem_manager(VM *vm, void *ptr, uint32_t old_size, uint32_t new_size);
 
@@ -29,15 +38,15 @@ mem_manager(vm_ptr, mem_ptr, 0, 0);
 
 uint32_t ceil_to_squar(uint32_t v);
 
-struct STRING {
-    uint32_t length;
-    char *str;
-};
-
-struct CharVal {
-    uint32_t length;
-    char str[0];
-};
+//struct STRING {
+//    uint32_t length;
+//    char *str;
+//};
+//
+//struct CharVal {
+//    uint32_t length;
+//    char str[0];
+//};
 
 template<typename Type>
 class MemBuffer {
@@ -48,11 +57,11 @@ public:
 
     uint32_t capacity;
 
-    VM *vm;
+//    VM *vm;
     
-    MemBuffer() : datas(nullptr), count(0) {};
+    MemBuffer() : datas(nullptr), count(0), capacity(0) {};
 
-    void fillWirte(VM *vm, Type &data, uint32_t fill_cnt) {
+    void fillWirte(VM *vm, Type data, uint32_t fill_cnt) {
         uint32_t new_cnt = count + fill_cnt;
         if (new_cnt > capacity) {
             size_t old_size = capacity * sizeof(Type);
@@ -69,7 +78,7 @@ public:
         return ;
     };
 
-    void buffAdd(VM *vm, Type &data) {
+    void buffAdd(VM *vm, Type data) {
         fillWirte(vm, data, 1);
         return ;
     };
@@ -77,6 +86,7 @@ public:
     void buffClear(VM *vm) {
         size_t curr_size = count * sizeof(Type);
         mem_manager(vm, datas, curr_size, 0);
+        datas = nullptr; count = 0; capacity = 0;
         return ;
     }
 
@@ -86,7 +96,7 @@ typedef uint8_t Byte;
 typedef char Char;
 typedef int Int;
 
-typedef MemBuffer<STRING> SymbolTable;
+typedef MemBuffer<std::string> SymbolTable;
 typedef MemBuffer<uint8_t> ByteBuffer;
 
 

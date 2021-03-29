@@ -13,12 +13,16 @@
 #include "../includes/common.h"
 
 class VM {
-protected:
+public:
+    static VM *getInstance();
     uint32_t allocated_byte;
     Parser *curr_parser;
 
-public:
+private:
+    static VM *instance;
     VM();
+    VM(const VM &) = delete;
+    ~VM() = default;
 };
 
 #endif

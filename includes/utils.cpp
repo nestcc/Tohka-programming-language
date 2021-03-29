@@ -39,7 +39,7 @@ void *mem_manager(VM *vm, void *data, uint32_t old_size, uint32_t new_size) {
 
 void symbol_table_clear(VM *vm, SymbolTable *buffer) {
     for (uint32_t i = 0; i < buffer -> count; i += 1) {
-        mem_manager(vm, buffer -> datas[i].str, 0, 0);
+        mem_manager(vm, (void *) buffer -> datas[i].data(), 0, 0);
     }
     buffer -> buffClear(vm);
     return;

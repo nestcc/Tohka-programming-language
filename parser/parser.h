@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 17:18:38
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-03-16 12:21:56
+ * @LastEditTime: 2021-03-29 15:38:42
  * @Description:  < file content >
  */
 
@@ -135,15 +135,25 @@ public:
     void parse_id(TokenType type);
 
     /**
-     * @description: 
+     * @description: 获取下一个token
      * @param {*}
      * @return {*}
      */
     void get_next_token();
-    void consume_curr_token();
-    void consume_next_token();
 
-    bool metch_next_char(char expected_char);
+    /**
+     * @description: 断言当前token为expected并读入下一token,否则报错errMsg
+     * @param {*}
+     * @return {*}
+     */
+    void consume_curr_token(TokenType expected, const char* errMsg);
+
+    /**
+     * @description: 断言下一个token为expected,否则报错errMsg
+     * @param {*}
+     * @return {*}
+     */
+    void consume_next_token(TokenType expected, const char* errMsg);
 
     const char *file;
     const char *source_code;
@@ -161,9 +171,54 @@ private:
     // 用于跟踪小括号对儿的嵌套
     int interpolation_expect_rparen_num;
 
+    /**
+     * @description: 查看下一个字符是否为期望的,如果是就读进来,返回true,否则返回false
+     * @param {*}
+     * @return {*}
+     */
+    bool match_next_char(char expected_char);
+
+    /**
+     * @description: 解析unicode码点
+     * @param {*}
+     * @return {*}
+     */
     void parse_unicode_code_point(ByteBuffer *buf);
-    
+
+    /**
+     * @description: 获取下一字符
+     * @param {*}
+     * @return {*}
+     */
     void get_next_char();
+
+    /**
+     * @description: 解析字符串
+     * @param {*}
+     * @return {*}
+     */
+    void parse_string();
+
+    /**
+     * @description: 跳过注释
+     * @param {*}
+     * @return {*}
+     */
+    void skip_comment();
+
+    /**
+     * @description: 跳过一行
+     * @param {*}
+     * @return {*}
+     */
+    void skip_line();
+
+    /**
+     * @description: //若当前token为expected则读入下一个token并返回true,否则不读入token且返回false
+     * @param {*}
+     * @return {*}
+     */
+    bool match_token(TokenType expected);
 };
 
 #endif
