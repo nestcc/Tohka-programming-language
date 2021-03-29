@@ -2,14 +2,14 @@
  * @Author: Zhao Yizhu
  * @Date: 2021-02-25 13:55:51
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-03-16 10:22:22
+ * @LastEditTime: 2021-03-29 16:11:23
  * @Description:  < file content > 
  */
 
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
-#include <util.h>
+#include <stdarg.h>
 
 #ifdef NDEBUG
 #define LOG_INFO(info, ...)
