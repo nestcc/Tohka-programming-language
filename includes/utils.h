@@ -10,6 +10,8 @@
 #define _UTILS_H_
 
 #include <stdarg.h>
+#include <vector>
+#include "../vm/vm.h"
 
 #ifdef NDEBUG
 #define LOG_INFO(info, ...)
@@ -36,57 +38,36 @@ mem_manager(vm_ptr, arr_ptr, sizeof(arr_ptr[0]) * capacity, 0);
 #define DESTORY(vm_ptr, mem_ptr) \
 mem_manager(vm_ptr, mem_ptr, 0, 0);
 
-uint32_t ceil_to_squar(uint32_t v);
-
-//struct STRING {
-//    uint32_t length;
-//    char *str;
-//};
-//
-//struct CharVal {
-//    uint32_t length;
-//    char str[0];
-//};
+//uint32_t ceil_to_squar(uint32_t v);
 
 template<typename Type>
-class MemBuffer {
+class MemBuffer : public std::vector<Type> {
 public:
-    Type *datas;
-    
-    uint32_t count;
+    VM *vm;
 
-    uint32_t capacity;
+    MemBuffer() = default;
 
-//    VM *vm;
-    
-    MemBuffer() : datas(nullptr), count(0), capacity(0) {};
+    MemBuffer(VM *vm) : vm(vm) {};
 
-    void fillWirte(VM *vm, Type data, uint32_t fill_cnt) {
-        uint32_t new_cnt = count + fill_cnt;
-        if (new_cnt > capacity) {
-            size_t old_size = capacity * sizeof(Type);
-            capacity = ceil_to_squar(new_cnt);
-            size_t new_size = capacity * sizeof(Type);
-            ASSERT(new_size > old_size, RED "> faint...memory allocated.\n" NOCOLOR);
-            datas = (Type *) mem_manager(vm, (void *) datas, old_size, new_size);
+    void fill_wirte(VM *vm, Type data, uint64_t fill_cnt) {
+        size_t old_size = this -> capacity() * sizeof(Type);
+        for (uint64_t i = 0; i < fill_cnt; i += 1) {
+            this -> push_back(data);
         }
-
-        for (uint32_t cnt = 0; cnt < fill_cnt; cnt += 1) {
-            datas[count++] = data;
-        }
-        
+        size_t new_size = this -> capacity() * sizeof(Type);
+        vm -> realloca_memory(old_size, new_size);
         return ;
     };
 
-    void buffAdd(VM *vm, Type data) {
-        fillWirte(vm, data, 1);
+    void buff_add(VM *vm, Type data) {
+        fill_wirte(vm, data, 1);
         return ;
     };
 
-    void buffClear(VM *vm) {
-        size_t curr_size = count * sizeof(Type);
-        mem_manager(vm, datas, curr_size, 0);
-        datas = nullptr; count = 0; capacity = 0;
+    void buff_clear(VM *vm) {
+        size_t curr_size = this -> capacity() * sizeof(Type);
+        vm -> realloca_memory(curr_size, 0);
+        this -> clear();
         return ;
     }
 

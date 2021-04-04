@@ -47,7 +47,7 @@ static TokenType id_or_keyword(const char *str, size_t length) {
     for (size_t i = 0; i < keywords_token.size(); i += 1) {
         if (keywords_token[i].length == length &&
             memcmp((char *) keywords_token[i].keyword.c_str(), str, length) == 0) {
-                return (TokenType) (keywords_token[i].token - 1);
+                return (TokenType) (keywords_token[i].token);
         }
     }
 
@@ -287,8 +287,8 @@ void Parser::parse_unicode_code_point(ByteBuffer *buf) {
     uint32_t byte_num = get_number_encode_utf8(value);
     ASSERT(byteNum != 0, "utf8 encode bytes should be between 1 and 4!");
 
-    buf -> fillWirte(vm, 0, byte_num);
-    encode_utf8(buf -> datas + buf -> count - byte_num, value);
+    buf -> fill_wirte(vm, 0, byte_num);
+    encode_utf8(buf -> data() + buf -> size() - byte_num, value);
 
     return;
 }
@@ -324,44 +324,44 @@ void Parser::parse_string() {
             get_next_char();
             switch (curr_char) {
                 case '0':
-                    str.buffAdd(vm, '\0');
+                    str.buff_add(vm, '\0');
                     break;
                 case 'a':
-                    str.buffAdd(vm, '\a');
+                    str.buff_add(vm, '\a');
                     break;
                 case 'b':
-                    str.buffAdd(vm, '\b');
+                    str.buff_add(vm, '\b');
                     break;
                 case 'f':
-                    str.buffAdd(vm, '\f');
+                    str.buff_add(vm, '\f');
                     break;
                 case 'n':
-                    str.buffAdd(vm, '\n');
+                    str.buff_add(vm, '\n');
                     break;
                 case 'r':
-                    str.buffAdd(vm, '\r');
+                    str.buff_add(vm, '\r');
                     break;
                 case 't':
-                    str.buffAdd(vm, '\t');
+                    str.buff_add(vm, '\t');
                     break;
                 case 'u':
                     parse_unicode_code_point(&str);
                     break;
                 case '"':
-                    str.buffAdd(vm, '"');
+                    str.buff_add(vm, '"');
                     break;
                 case '\\':
-                    str.buffAdd(vm, '\\');
+                    str.buff_add(vm, '\\');
                     break;
                 default:
                     LEX_ERROR(this, "unsupport escape \\%c", curr_char);
                     break;
             }
         } else {   //普通字符
-            str.buffAdd(vm, curr_char);
+            str.buff_add(vm, curr_char);
         }
     }
-    str.buffClear(vm);
+    str.buff_clear(vm);
     return;
 }
 

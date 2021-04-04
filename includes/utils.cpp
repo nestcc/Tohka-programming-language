@@ -33,17 +33,17 @@ void *mem_manager(VM *vm, void *data, uint32_t old_size, uint32_t new_size) {
         free(data);
         return nullptr;
     }
-
-    return realloc(data, new_size);
+    return nullptr;
+//    return realloc(data, new_size);
 }
 
-void symbol_table_clear(VM *vm, SymbolTable *buffer) {
-    for (uint32_t i = 0; i < buffer -> count; i += 1) {
-        mem_manager(vm, (void *) buffer -> datas[i].data(), 0, 0);
-    }
-    buffer -> buffClear(vm);
-    return;
-}
+//void symbol_table_clear(VM *vm, SymbolTable *buffer) {
+//    for (uint32_t i = 0; i < buffer -> count; i += 1) {
+//        mem_manager(vm, (void *) buffer -> datas[i].data(), 0, 0);
+//    }
+//    buffer -> buffClear(vm);
+//    return;
+//}
 
 void report_error(void *parser, ErrorType err_type, const char *fmt, ...) {
     char buffer[DEFAULT_BUfFER_SIZE] = "\0";

@@ -20,4 +20,10 @@ if (DEBUG)
     SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 endif ()
 
-add_executable(toh ${CLI_DIR} ${INCLUDE_DIR} ${VM_DIR} ${PARSER_DIR})
+add_executable(toh  ${CLI_DIR}
+                    ${INCLUDE_DIR}
+                    ${VM_DIR}
+                    ${PARSER_DIR})
+#                    ${OBJECT_DIR}
+#                    ${GC_DIR}
+#                    ${COMPILER_DIR})

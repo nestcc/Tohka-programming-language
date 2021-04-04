@@ -35,8 +35,9 @@ void runFile(const char* path) {
 
     while (parser.curr_token.type != TOKEN_EOF) {
         parser.get_next_token();
-        printf(" %d L-tokenArray [%d] : %s [", parser.curr_token.line_no,
-      	    parser.curr_token.type, tokenArray[parser.curr_token.type].data());
+        printf(" %d L-tokenArray [%d] : ", parser.curr_token.line_no,
+      	    parser.curr_token.type);
+        std::cout << tokenArray[parser.curr_token.type] << " [";
         uint32_t idx = 0;
         while (idx < parser.curr_token.length) {
             printf("%c", *(parser.curr_token.start + idx++));

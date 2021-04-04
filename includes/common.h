@@ -40,7 +40,7 @@
 
 class VM;
 class Parser;
-class Classes;
+class BaseClass;
 
 // #define bool char
 // #define True 1
