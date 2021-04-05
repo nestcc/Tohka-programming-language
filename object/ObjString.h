@@ -10,6 +10,7 @@
 #define _TOHKA_OBJSTRING_H_
 
 #include <cinttypes>
+#include <string>
 #include "ObjectHeader.h"
 
 class ObjString : public ObjHeader {

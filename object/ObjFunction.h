@@ -13,6 +13,7 @@
 
 class ObjFunction : public ObjHeader {
 public:
+
     ByteBuffer ins_stream;  // 函数编译后的指令流
     ValueBuffer constants;  // 函数中的常量表
 
@@ -20,6 +21,9 @@ public:
     uint64_t max_stk_slot_num;      // 本函数最多需要的栈空间,是栈使用空间的峰值
     uint64_t up_val_num;    // 本函数所涵盖的upvalue数量
     uint8_t arg_num;        // 函数期望的参数个数
+
+    ObjFunction() = default;
+    ObjFunction(VM *vm, ObjModule *obj_module, uint64_t slot_num);
 };
 
 

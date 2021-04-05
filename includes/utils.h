@@ -14,11 +14,10 @@
 #include "../vm/vm.h"
 
 #ifdef NDEBUG
-#define LOG_INFO(info, ...)
+#define LOG_INFO(...)
 #else
 #define LOG_INFO(...) \
-printf( BLUE "[%s : %d] " NOCOLOR, __FILE__, __LINE__); \
-printf(__VA_ARGS__);
+{ printf( BLUE "[%s : %d] " NOCOLOR, __FILE__, __LINE__); printf(__VA_ARGS__); }
 #endif
 
 void *mem_manager(VM *vm, void *ptr, uint32_t old_size, uint32_t new_size);
@@ -50,12 +49,10 @@ public:
     MemBuffer(VM *vm) : vm(vm) {};
 
     void fill_wirte(VM *vm, Type data, uint64_t fill_cnt) {
-        size_t old_size = this -> capacity() * sizeof(Type);
         for (uint64_t i = 0; i < fill_cnt; i += 1) {
             this -> push_back(data);
         }
-        size_t new_size = this -> capacity() * sizeof(Type);
-        vm -> realloca_memory(old_size, new_size);
+        vm -> alloca_memory(sizeof(Type) * fill_cnt);
         return ;
     };
 

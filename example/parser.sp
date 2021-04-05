@@ -20,4 +20,3 @@ var f = Family.new("wbf", "ls", "shine")
 f.sayHi()
 
 fn()
-

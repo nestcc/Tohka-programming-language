@@ -223,6 +223,249 @@ includes/utils.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/includes/utils.cpp.s
 .PHONY : includes/utils.cpp.s
 
+object/Frame.o: object/Frame.cpp.o
+
+.PHONY : object/Frame.o
+
+# target to build an object file
+object/Frame.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/Frame.cpp.o
+.PHONY : object/Frame.cpp.o
+
+object/Frame.i: object/Frame.cpp.i
+
+.PHONY : object/Frame.i
+
+# target to preprocess a source file
+object/Frame.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/Frame.cpp.i
+.PHONY : object/Frame.cpp.i
+
+object/Frame.s: object/Frame.cpp.s
+
+.PHONY : object/Frame.s
+
+# target to generate assembly for a file
+object/Frame.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/Frame.cpp.s
+.PHONY : object/Frame.cpp.s
+
+object/ObjClosure.o: object/ObjClosure.cpp.o
+
+.PHONY : object/ObjClosure.o
+
+# target to build an object file
+object/ObjClosure.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjClosure.cpp.o
+.PHONY : object/ObjClosure.cpp.o
+
+object/ObjClosure.i: object/ObjClosure.cpp.i
+
+.PHONY : object/ObjClosure.i
+
+# target to preprocess a source file
+object/ObjClosure.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjClosure.cpp.i
+.PHONY : object/ObjClosure.cpp.i
+
+object/ObjClosure.s: object/ObjClosure.cpp.s
+
+.PHONY : object/ObjClosure.s
+
+# target to generate assembly for a file
+object/ObjClosure.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjClosure.cpp.s
+.PHONY : object/ObjClosure.cpp.s
+
+object/ObjFunction.o: object/ObjFunction.cpp.o
+
+.PHONY : object/ObjFunction.o
+
+# target to build an object file
+object/ObjFunction.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjFunction.cpp.o
+.PHONY : object/ObjFunction.cpp.o
+
+object/ObjFunction.i: object/ObjFunction.cpp.i
+
+.PHONY : object/ObjFunction.i
+
+# target to preprocess a source file
+object/ObjFunction.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjFunction.cpp.i
+.PHONY : object/ObjFunction.cpp.i
+
+object/ObjFunction.s: object/ObjFunction.cpp.s
+
+.PHONY : object/ObjFunction.s
+
+# target to generate assembly for a file
+object/ObjFunction.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjFunction.cpp.s
+.PHONY : object/ObjFunction.cpp.s
+
+object/ObjInstance.o: object/ObjInstance.cpp.o
+
+.PHONY : object/ObjInstance.o
+
+# target to build an object file
+object/ObjInstance.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjInstance.cpp.o
+.PHONY : object/ObjInstance.cpp.o
+
+object/ObjInstance.i: object/ObjInstance.cpp.i
+
+.PHONY : object/ObjInstance.i
+
+# target to preprocess a source file
+object/ObjInstance.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjInstance.cpp.i
+.PHONY : object/ObjInstance.cpp.i
+
+object/ObjInstance.s: object/ObjInstance.cpp.s
+
+.PHONY : object/ObjInstance.s
+
+# target to generate assembly for a file
+object/ObjInstance.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjInstance.cpp.s
+.PHONY : object/ObjInstance.cpp.s
+
+object/ObjModule.o: object/ObjModule.cpp.o
+
+.PHONY : object/ObjModule.o
+
+# target to build an object file
+object/ObjModule.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjModule.cpp.o
+.PHONY : object/ObjModule.cpp.o
+
+object/ObjModule.i: object/ObjModule.cpp.i
+
+.PHONY : object/ObjModule.i
+
+# target to preprocess a source file
+object/ObjModule.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjModule.cpp.i
+.PHONY : object/ObjModule.cpp.i
+
+object/ObjModule.s: object/ObjModule.cpp.s
+
+.PHONY : object/ObjModule.s
+
+# target to generate assembly for a file
+object/ObjModule.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjModule.cpp.s
+.PHONY : object/ObjModule.cpp.s
+
+object/ObjString.o: object/ObjString.cpp.o
+
+.PHONY : object/ObjString.o
+
+# target to build an object file
+object/ObjString.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjString.cpp.o
+.PHONY : object/ObjString.cpp.o
+
+object/ObjString.i: object/ObjString.cpp.i
+
+.PHONY : object/ObjString.i
+
+# target to preprocess a source file
+object/ObjString.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjString.cpp.i
+.PHONY : object/ObjString.cpp.i
+
+object/ObjString.s: object/ObjString.cpp.s
+
+.PHONY : object/ObjString.s
+
+# target to generate assembly for a file
+object/ObjString.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjString.cpp.s
+.PHONY : object/ObjString.cpp.s
+
+object/ObjUpvalue.o: object/ObjUpvalue.cpp.o
+
+.PHONY : object/ObjUpvalue.o
+
+# target to build an object file
+object/ObjUpvalue.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjUpvalue.cpp.o
+.PHONY : object/ObjUpvalue.cpp.o
+
+object/ObjUpvalue.i: object/ObjUpvalue.cpp.i
+
+.PHONY : object/ObjUpvalue.i
+
+# target to preprocess a source file
+object/ObjUpvalue.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjUpvalue.cpp.i
+.PHONY : object/ObjUpvalue.cpp.i
+
+object/ObjUpvalue.s: object/ObjUpvalue.cpp.s
+
+.PHONY : object/ObjUpvalue.s
+
+# target to generate assembly for a file
+object/ObjUpvalue.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjUpvalue.cpp.s
+.PHONY : object/ObjUpvalue.cpp.s
+
+object/ObjectHeader.o: object/ObjectHeader.cpp.o
+
+.PHONY : object/ObjectHeader.o
+
+# target to build an object file
+object/ObjectHeader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjectHeader.cpp.o
+.PHONY : object/ObjectHeader.cpp.o
+
+object/ObjectHeader.i: object/ObjectHeader.cpp.i
+
+.PHONY : object/ObjectHeader.i
+
+# target to preprocess a source file
+object/ObjectHeader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjectHeader.cpp.i
+.PHONY : object/ObjectHeader.cpp.i
+
+object/ObjectHeader.s: object/ObjectHeader.cpp.s
+
+.PHONY : object/ObjectHeader.s
+
+# target to generate assembly for a file
+object/ObjectHeader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjectHeader.cpp.s
+.PHONY : object/ObjectHeader.cpp.s
+
+object/Value.o: object/Value.cpp.o
+
+.PHONY : object/Value.o
+
+# target to build an object file
+object/Value.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/Value.cpp.o
+.PHONY : object/Value.cpp.o
+
+object/Value.i: object/Value.cpp.i
+
+.PHONY : object/Value.i
+
+# target to preprocess a source file
+object/Value.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/Value.cpp.i
+.PHONY : object/Value.cpp.i
+
+object/Value.s: object/Value.cpp.s
+
+.PHONY : object/Value.s
+
+# target to generate assembly for a file
+object/Value.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/Value.cpp.s
+.PHONY : object/Value.cpp.s
+
 parser/parser.o: parser/parser.cpp.o
 
 .PHONY : parser/parser.o
@@ -322,6 +565,33 @@ help:
 	@echo "... includes/utils.o"
 	@echo "... includes/utils.i"
 	@echo "... includes/utils.s"
+	@echo "... object/Frame.o"
+	@echo "... object/Frame.i"
+	@echo "... object/Frame.s"
+	@echo "... object/ObjClosure.o"
+	@echo "... object/ObjClosure.i"
+	@echo "... object/ObjClosure.s"
+	@echo "... object/ObjFunction.o"
+	@echo "... object/ObjFunction.i"
+	@echo "... object/ObjFunction.s"
+	@echo "... object/ObjInstance.o"
+	@echo "... object/ObjInstance.i"
+	@echo "... object/ObjInstance.s"
+	@echo "... object/ObjModule.o"
+	@echo "... object/ObjModule.i"
+	@echo "... object/ObjModule.s"
+	@echo "... object/ObjString.o"
+	@echo "... object/ObjString.i"
+	@echo "... object/ObjString.s"
+	@echo "... object/ObjUpvalue.o"
+	@echo "... object/ObjUpvalue.i"
+	@echo "... object/ObjUpvalue.s"
+	@echo "... object/ObjectHeader.o"
+	@echo "... object/ObjectHeader.i"
+	@echo "... object/ObjectHeader.s"
+	@echo "... object/Value.o"
+	@echo "... object/Value.i"
+	@echo "... object/Value.s"
 	@echo "... parser/parser.o"
 	@echo "... parser/parser.i"
 	@echo "... parser/parser.s"

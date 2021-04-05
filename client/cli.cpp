@@ -9,10 +9,10 @@
 #include <iostream>
 #include <cstring>
 #include "cli.h"
+#include "../object/ObjFunction.h"
+#include "../object/ObjModule.h"
 
 void runFile(const char* path) {
-    LOG_INFO("in run file\n");
-
     const char* lastSlash = strrchr(path, '/');
     if (lastSlash != nullptr) {
         char* root = (char*)malloc(lastSlash - path + 2);
@@ -21,23 +21,19 @@ void runFile(const char* path) {
         root_dir = root;
     }
 
-    LOG_INFO("get resource code ok\n");
-
     VM *vm = VM::getInstance();
-
-    LOG_INFO("get vm ok\n");
 
     const char* sourceCode = read_file(path);
 
     Parser parser(vm, path, sourceCode);
 
-    #include "../parser/token.list"
+//    #include "../parser/token.list"
 
     while (parser.curr_token.type != TOKEN_EOF) {
         parser.get_next_token();
-        printf(" %d L-tokenArray [%d] : ", parser.curr_token.line_no,
+        printf(" %d L-tokenArray [%d] : [", parser.curr_token.line_no,
       	    parser.curr_token.type);
-        std::cout << tokenArray[parser.curr_token.type] << " [";
+//        std::cout << tokenArray[parser.curr_token.type] << " [";
         uint32_t idx = 0;
         while (idx < parser.curr_token.length) {
             printf("%c", *(parser.curr_token.start + idx++));
@@ -54,6 +50,11 @@ int main(int argc, const char **argv) {
     } else {
         runFile(argv[1]);
     }
+
+    ObjModule module(VM::getInstance(), "new module");
+    LOG_INFO(" create module ok\n");
+    ObjFunction obj_func(VM::getInstance(), &module, 32);
+    LOG_INFO(" create function object ok\n");
 
     return 0;
 }

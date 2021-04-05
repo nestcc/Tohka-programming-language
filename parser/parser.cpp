@@ -111,7 +111,7 @@ void Parser::parse_id(TokenType type) {
 }
 
 void Parser::get_next_char() {
-    curr_char = *next_char_ptr++;
+    curr_char = *(next_char_ptr++);
 }
 
 void Parser::get_next_token() {
@@ -122,6 +122,10 @@ void Parser::get_next_token() {
     curr_token.length = 0;
     curr_token.start = next_char_ptr - 1;
 
+    if (curr_char == -1) {
+        curr_token.type = TOKEN_EOF;
+        return;
+    }
     while (curr_char != '\0') {
         switch (curr_char) {
         case ',':
@@ -236,8 +240,8 @@ void Parser::get_next_token() {
                     skip_line();
                     curr_token.start = next_char_ptr - 1;  //重置下一个token起始地址
                     continue;
-                } 
-                LEX_ERROR(this, "unsupport char: \'%c\', quit.", curr_char);
+                }
+                LEX_ERROR(this, "unsupport char: \'%c\' %d, quit.", curr_char, curr_char);
             }
             return;
         }

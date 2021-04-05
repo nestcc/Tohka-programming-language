@@ -55,7 +55,7 @@ union Bits64 {
     double num;
 };
 
-//typedef MemBuffer<Value> ValueBuffer;
+typedef MemBuffer<Value> ValueBuffer;
 typedef bool (*Primitive) (VM *vm, Value *args);
 
 #define CAPACITY_GROW_FACTOR 4

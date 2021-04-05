@@ -7,9 +7,19 @@
  */
 
 #include "ObjModule.h"
+#include "ObjString.h"
+#include "Value.h"
+#include <iostream>
 
 ObjModule::ObjModule(VM *vm, const std::string &mod_name) :
-ObjHeader(vm, OT_MODULE, nullptr){
-    vm -> realloca_memory(0, sizeof ObjModule);
+ObjHeader(vm, OT_MODULE, nullptr) {
+    module_var_name = SymbolTable();
+    module_var_value = ValueBuffer();
 
+    delete name;
+    name = new ObjString(vm, mod_name);
+    vm -> alloca_memory(sizeof(*this));
+    LOG_INFO(" allocated ObjModule by %lu\n", sizeof(*this));
+    LOG_INFO(" module name = ");
+    std::cout << mod_name << std::endl;
 }

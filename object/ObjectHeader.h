@@ -18,7 +18,7 @@ public:
     BaseClass *cls;
     ObjHeader *next;
 
-    ObjHeader() = delete;
+    ObjHeader() = default;
     ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls);
 
 private:

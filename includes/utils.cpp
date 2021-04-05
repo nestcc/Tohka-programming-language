@@ -12,6 +12,7 @@
 
 #include "common.h"
 #include "utils.h"
+#include "../parser/parser.h"
 
 uint32_t ceil_to_squar(uint32_t v) {
     v += (v == 0);
@@ -55,17 +56,17 @@ void report_error(void *parser, ErrorType err_type, const char *fmt, ...) {
     switch (err_type) {
     case ERROR_IO:
     case ERROR_MEM:
-        fprintf(stderr, "%s:%d In function %s():%s\n",
+        fprintf(stderr, RED "%s:%d" NOCOLOR " In function %s():%s\n",
             __FILE__, __LINE__, __func__, buffer);
         break;
     case ERROR_LEX:
     case ERROR_COMPILE:
         ASSERT(parser != nullptr, "parser is null!");
-        // fprintf(stderr, "%s:%d \"%s\"\n", ((Parser *) parser)->file,
-        //     ((Parser *) parser)->preToken.lineNo, buffer);
+         fprintf(stderr, RED "%s:%d" NOCOLOR " \"%s\"\n", ((Parser *) parser) -> file,
+             ((Parser *) parser) -> prev_token.line_no, buffer);
         break;
     case ERROR_RUNTIME:
-        fprintf(stderr, "%s\n", buffer);
+        fprintf(stderr, RED "%s\n" NOCOLOR, buffer);
         break;
     default:
         NOT_REACHED();

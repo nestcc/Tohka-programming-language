@@ -26,7 +26,9 @@ public:
     ObjHeader *all_objects;
     static VM *getInstance();
 
-    void realloca_memory(size_t old_size, size_t new_size);
+    size_t realloca_memory(size_t old_size, size_t new_size);
+
+    size_t alloca_memory(size_t new_size);
 
 private:
     static VM *instance;

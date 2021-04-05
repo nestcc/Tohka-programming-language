@@ -21,6 +21,12 @@ VM *VM::getInstance() {
 
 VM *VM::instance = nullptr;
 
-void VM::realloca_memory(size_t old_size, size_t new_size) {
+size_t VM::realloca_memory(size_t old_size, size_t new_size) {
     allocated_byte += (new_size - old_size);
+    return new_size - old_size;
+}
+
+size_t VM::alloca_memory(size_t new_size) {
+    allocated_byte += new_size;
+    return new_size;
 }

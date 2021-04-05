@@ -15,7 +15,7 @@ class ObjModule : public ObjHeader{
 public:
     SymbolTable module_var_name;        // 模块中的模块变量名
     ValueBuffer module_var_value;       // 模块中的模块变量值
-    ObjString *name;
+    ObjString *name;                    // 模块名
 
     ObjModule() = default;
     ObjModule(VM *vm, const std::string &mod_name);

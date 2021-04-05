@@ -10,6 +10,7 @@
 #define _TOHKA_UPVALUE_H_
 
 #include "ObjectHeader.h"
+#include "Value.h"
 
 class ObjUpvalue : public ObjHeader {
 public:
@@ -18,6 +19,7 @@ public:
     ObjUpvalue *next;
 
     ObjUpvalue() = default;
+    ObjUpvalue(VM *vm, Value *local_value);
 };
 
 

@@ -10,12 +10,14 @@
 #define _TOHKA_OBJCLOSURE_H_
 
 #include <vector>
-#include "ObjFunction.h.h"
+#include "ObjFunction.h"
 
 class ObjClosure : public ObjHeader {
 public:
-    ObjFunc *func;
-    std::vector<ObjUpvalue *> upvalues;
+    ObjFunction *func;
+
+    typedef std::vector<ObjUpvalue *> UpvalueBuff;
+    UpvalueBuff upvalues;
 
     ObjClosure() = default;
     ObjClosure(VM *vm, ObjFunction *func_obj);
