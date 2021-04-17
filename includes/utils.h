@@ -11,6 +11,7 @@
 
 #include <stdarg.h>
 #include <vector>
+#include <string>
 #include "../vm/vm.h"
 
 #ifdef NDEBUG

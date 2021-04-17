@@ -42,6 +42,8 @@ class VM;
 class Parser;
 class BaseClass;
 
+#include <cinttypes>
+
 // #define bool char
 // #define True 1
 // #define False 0
