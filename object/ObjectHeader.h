@@ -17,9 +17,11 @@ public:
     bool is_dark;
     BaseClass *cls;
     ObjHeader *next;
+    VM *vm;
 
     ObjHeader() = default;
     ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls);
+    virtual ~ObjHeader() = default;
 
 private:
 };

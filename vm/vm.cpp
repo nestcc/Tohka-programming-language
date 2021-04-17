@@ -21,12 +21,12 @@ VM *VM::getInstance() {
 
 VM *VM::instance = nullptr;
 
-size_t VM::realloca_memory(size_t old_size, size_t new_size) {
+uint64_t VM::realloca_memory(uint64_t old_size, uint64_t new_size) {
     allocated_byte += (new_size - old_size);
     return new_size - old_size;
 }
 
-size_t VM::alloca_memory(size_t new_size) {
+uint64_t VM::alloca_memory(uint64_t new_size) {
     allocated_byte += new_size;
     return new_size;
 }

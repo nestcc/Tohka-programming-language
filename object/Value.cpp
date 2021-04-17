@@ -22,8 +22,21 @@ Value::Value(const double &num) {
     this -> num = num;
 }
 
-bool Value::to_bool() {
-    return (type == VT_TRUE) ? true : false;
+Value::Value(const long &ln) {
+    type = VT_NUM;
+    num = ln;
+}
+
+Value::operator bool() {
+    return (type == VT_TRUE);
+}
+
+Value::Value(ObjHeader *obj_ptr) {
+    obj_header = obj_ptr;
+}
+
+Value::~Value() {
+    if (type == VT_OBJ) { delete obj_header; }
 }
 
 //double Value::to_num() {

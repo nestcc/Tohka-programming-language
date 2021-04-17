@@ -14,7 +14,7 @@
 #include "utils.h"
 #include "../parser/parser.h"
 
-uint32_t ceil_to_squar(uint32_t v) {
+uint64_t ceil_to_squar(uint64_t v) {
     v += (v == 0);
     v--;
     v |= v >> 1;
@@ -26,7 +26,7 @@ uint32_t ceil_to_squar(uint32_t v) {
     return v;
 }
 
-void *mem_manager(VM *vm, void *data, uint32_t old_size, uint32_t new_size) {
+void *mem_manager(VM *vm, void *data, uint64_t old_size, uint64_t new_size) {
 
     // vm -> allocatedBytes += new_size - old_size;
 
@@ -39,7 +39,7 @@ void *mem_manager(VM *vm, void *data, uint32_t old_size, uint32_t new_size) {
 }
 
 //void symbol_table_clear(VM *vm, SymbolTable *buffer) {
-//    for (uint32_t i = 0; i < buffer -> count; i += 1) {
+//    for (uint64_t i = 0; i < buffer -> count; i += 1) {
 //        mem_manager(vm, (void *) buffer -> datas[i].data(), 0, 0);
 //    }
 //    buffer -> buffClear(vm);
@@ -62,7 +62,7 @@ void report_error(void *parser, ErrorType err_type, const char *fmt, ...) {
     case ERROR_LEX:
     case ERROR_COMPILE:
         ASSERT(parser != nullptr, "parser is null!");
-         fprintf(stderr, RED "%s:%d" NOCOLOR " \"%s\"\n", ((Parser *) parser) -> file,
+         fprintf(stderr, RED "%s:%llu" NOCOLOR " \"%s\"\n", ((Parser *) parser) -> file,
              ((Parser *) parser) -> prev_token.line_no, buffer);
         break;
     case ERROR_RUNTIME:

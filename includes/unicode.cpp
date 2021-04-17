@@ -13,7 +13,7 @@
 #include "unicode.h"
 
 //返回value按照utf8编码后的字节数
-uint32_t get_number_encode_utf8(int value) {
+uint64_t get_number_encode_utf8(int value) {
     ASSERT(value > 0, "Can`t encode negative value!");
 
    // 单个ascii字符需要1字节
@@ -74,7 +74,7 @@ uint8_t encode_utf8(uint8_t *buff, int value) {
 }
 
 //返回解码utf8的字节数
-uint32_t get_number_decode_utf8(uint8_t byte) {
+uint64_t get_number_decode_utf8(uint8_t byte) {
    //byte应该是utf8的最高1字节,如果指向了utf8编码后面的低字节部分则返回0
     if ((byte & 0xc0) == 0x80) {
         return 0;
@@ -103,7 +103,7 @@ int decode_utf8(const uint8_t *byte_ptr, size_t length) {
     }
 
     int value;
-    uint32_t remainingBytes;
+    uint64_t remainingBytes;
 
    //先读取高1字节
    //根据高字节的高n位判断相应字节数的utf8编码

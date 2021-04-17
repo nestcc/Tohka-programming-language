@@ -8,12 +8,15 @@
 
 #include "ObjString.h"
 #include <string>
+#include <iostream>
 
 ObjString::ObjString(VM *vm, const std::string &str) :
 ObjHeader(vm, OT_STRING, vm -> str_cls) {
     value = str;
     hash();
-    vm -> alloca_memory(sizeof (*this));
+    vm -> alloca_memory(sizeof(*this));
+    LOG_INFO(" allocated string object by %lu B.\n", sizeof(*this) + value.size());
+    std::cout << " > string : " << value << std::endl;
 }
 
 uint64_t ObjString::hash() {
@@ -23,4 +26,12 @@ uint64_t ObjString::hash() {
         hash_code *= 16777619;
     }
     return hash_code;
+}
+
+ObjString::ObjString(VM *vm, const char *str, uint32_t ssize) {
+    value = std::string(str, ssize);
+    hash();
+    vm -> alloca_memory(sizeof(*this));
+    LOG_INFO(" allocated string object by %lu B.\n", sizeof(*this) + value.size());
+    std::cout << " > string : " <<  value << std::endl;
 }

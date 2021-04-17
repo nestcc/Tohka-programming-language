@@ -24,3 +24,8 @@ ObjHeader(vm, OT_FUNCTION, vm -> func_cls){
 
     LOG_INFO(" allocated ObjFunction by %lu\n", allocated);
 }
+
+//
+//ObjFunction::~ObjFunction() {
+//    this -> ObjHeader::vm -> realloca_memory();
+//}

@@ -99,8 +99,8 @@ enum TokenType {
 struct Token {
     TokenType type;
     const char *start;
-    uint32_t length;
-    uint32_t line_no;
+    uint64_t length;
+    uint64_t line_no;
     Value value;
 };
 
@@ -111,50 +111,36 @@ public:
 
     /**
      * @description: 获取前一个字符
-     * @param {*}
-     * @return {*}
      */
     char look_ahead() const;
 
     /** 
      * @description: 下一个字符是否是期望的，是则读入并返回true，否则返回false
-     * @param {*}
-     * @return {*}
      */
     bool metch_token(TokenType expected);
 
     /**
      * @description: 跳过连续的空白
-     * @param {*}
-     * @return {*}
      */
     void skip_blanks();
 
     /**
      * @description: 解析token
-     * @param {TokenType} type
-     * @return {*}
      */    
     void parse_id(TokenType type);
 
     /**
      * @description: 获取下一个token
-     * @param {*}
-     * @return {*}
      */
     void get_next_token();
 
     /**
      * @description: 断言当前token为expected并读入下一token,否则报错errMsg
-     * @param {*}
-     * @return {*}
      */
     void consume_curr_token(TokenType expected, const char* errMsg);
 
     /**
      * @description: 断言下一个token为expected,否则报错errMsg
-     * @param {*}
-     * @return {*}
      */
     void consume_next_token(TokenType expected, const char* errMsg);
 
@@ -176,52 +162,58 @@ private:
 
     /**
      * @description: 查看下一个字符是否为期望的,如果是就读进来,返回true,否则返回false
-     * @param {*}
-     * @return {*}
      */
     bool match_next_char(char expected_char);
 
     /**
      * @description: 解析unicode码点
-     * @param {*}
-     * @return {*}
      */
     void parse_unicode_code_point(ByteBuffer *buf);
 
     /**
      * @description: 获取下一字符
-     * @param {*}
-     * @return {*}
      */
     void get_next_char();
 
     /**
      * @description: 解析字符串
-     * @param {*}
-     * @return {*}
      */
     void parse_string();
 
     /**
      * @description: 跳过注释
-     * @param {*}
-     * @return {*}
      */
     void skip_comment();
 
     /**
      * @description: 跳过一行
-     * @param {*}
-     * @return {*}
      */
     void skip_line();
 
     /**
      * @description: //若当前token为expected则读入下一个token并返回true,否则不读入token且返回false
-     * @param {*}
-     * @return {*}
      */
     bool match_token(TokenType expected);
+
+    /**
+ * @description: 解析十进制数
+ */
+    void parse_dec_number();
+
+    /**
+     * @description: 解析十六进制数
+     */
+    void parse_hex_number();
+
+    /**
+     * @description: 解析八进制数
+     */
+    void parse_oct_number();
+
+    /**
+     * @description: 解析数字
+     */
+    void parse_number();
 };
 
 #endif

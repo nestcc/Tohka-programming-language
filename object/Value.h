@@ -20,10 +20,16 @@ public:
     };
 
     Value() = default;
-    Value(ValueType vt);
-    Value(const bool &bl);
-    Value(const double &num);
-    bool to_bool();
+    explicit Value(ValueType vt);
+    explicit Value(const bool &bl);
+    explicit Value(const double &num);
+    explicit Value(const long &ln);
+
+    explicit Value(ObjHeader *obj_ptr);
+
+    explicit operator bool ();
+
+    ~Value();
 };   //通用的值结构
 
 #endif //TOHKA_VALUE_H

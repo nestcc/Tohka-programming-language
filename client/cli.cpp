@@ -31,7 +31,7 @@ void runFile(const char* path) {
 
     while (parser.curr_token.type != TOKEN_EOF) {
         parser.get_next_token();
-        printf(" %d L-tokenArray [%d] : [", parser.curr_token.line_no,
+        printf(" %llu L-tokenArray [%d] : [", parser.curr_token.line_no,
       	    parser.curr_token.type);
 //        std::cout << tokenArray[parser.curr_token.type] << " [";
         uint32_t idx = 0;
@@ -51,10 +51,10 @@ int main(int argc, const char **argv) {
         runFile(argv[1]);
     }
 
-    ObjModule module(VM::getInstance(), "new module");
-    LOG_INFO(" create module ok\n");
-    ObjFunction obj_func(VM::getInstance(), &module, 32);
-    LOG_INFO(" create function object ok\n");
+//    ObjModule module(VM::getInstance(), "new module5000");
+//    LOG_INFO(" create module ok\n");
+//    ObjFunction obj_func(VM::getInstance(), &module, 32);
+//    LOG_INFO(" create function object ok\n");
 
     return 0;
 }

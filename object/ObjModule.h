@@ -19,6 +19,8 @@ public:
 
     ObjModule() = default;
     ObjModule(VM *vm, const std::string &mod_name);
+
+    ~ObjModule() override = default;
 };
 
 

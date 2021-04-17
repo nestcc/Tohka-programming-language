@@ -42,9 +42,9 @@ std::vector<KeywordToken> keywords_token = {
    {"",         0,  TOKEN_UNKNOWN}
 };
 
-static TokenType id_or_keyword(const char *str, size_t length) {
+static TokenType id_or_keyword(const char *str, uint64_t length) {
     TokenType ret;
-    for (size_t i = 0; i < keywords_token.size(); i += 1) {
+    for (uint64_t i = 0; i < keywords_token.size(); i += 1) {
         if (keywords_token[i].length == length &&
             memcmp((char *) keywords_token[i].keyword.c_str(), str, length) == 0) {
                 return (TokenType) (keywords_token[i].token);
@@ -101,7 +101,7 @@ void Parser::parse_id(TokenType type) {
         get_next_char();
     }
 
-    auto wlen = (size_t) (next_char_ptr - curr_token.start - 1);
+    auto wlen = (uint64_t) (next_char_ptr - curr_token.start - 1);
 
     if (type != TOKEN_UNKNOWN) { curr_token.type = type; }
     else { curr_token.type = id_or_keyword(curr_token.start, wlen); }
@@ -235,6 +235,9 @@ void Parser::get_next_token() {
             if (isalpha(curr_char) || curr_char == '_') {
                 parse_id(TOKEN_UNKNOWN);  //解析变量名其余的部分
             }
+            else if (isdigit(curr_char)) {
+                parse_number();
+            }
             else {
                 if (curr_char == '#' && match_next_char('!')) {
                     skip_line();
@@ -245,7 +248,7 @@ void Parser::get_next_token() {
             }
             return;
         }
-        curr_token.length = (uint32_t) (next_char_ptr - curr_token.start);
+        curr_token.length = (uint64_t) (next_char_ptr - curr_token.start);
         get_next_char();
         return ;
     }
@@ -274,7 +277,7 @@ bool Parser::match_next_char(char expected_char) {
 }
 
 void Parser::parse_unicode_code_point(ByteBuffer *buf) {
-    uint32_t idx = 0;
+    uint64_t idx = 0;
     int value = 0;
     uint8_t digit = 0;
 
@@ -288,7 +291,7 @@ void Parser::parse_unicode_code_point(ByteBuffer *buf) {
         value = value * 16 | digit;
     }
 
-    uint32_t byte_num = get_number_encode_utf8(value);
+    uint64_t byte_num = get_number_encode_utf8(value);
     ASSERT(byteNum != 0, "utf8 encode bytes should be between 1 and 4!");
 
     buf -> fill_wirte(vm, 0, byte_num);
@@ -365,7 +368,9 @@ void Parser::parse_string() {
             str.buff_add(vm, curr_char);
         }
     }
-    str.buff_clear(vm);
+
+    ObjString *obj_str = new ObjString(vm, (const char *) str.data(), (uint64_t)str.size());
+    curr_token.value = Value(obj_str);
     return;
 }
 
@@ -409,4 +414,47 @@ bool Parser::match_token(TokenType expected) {
         return true;
     }
     return false;
+}
+
+void Parser::parse_dec_number() {
+    while (isdigit(curr_char)) {
+        get_next_char();
+    }
+}
+
+void Parser::parse_hex_number() {
+    while (isxdigit(curr_char)) {
+        get_next_char();
+    }
+    if (curr_char == '.' && isdigit(look_ahead())) {
+        get_next_char();
+        while (isdigit(curr_char)) {
+            get_next_char();
+        }
+    }
+}
+
+void Parser::parse_oct_number() {
+    while (curr_char >= '0' && curr_char < '8') {
+        get_next_char();
+    }
+}
+
+void Parser::parse_number() {
+    if (curr_char == '0' && match_next_char('x')) {
+        get_next_char(); // skip 'x' behind '0'
+        parse_hex_number();
+        curr_token.value = Value(strtol(curr_token.start, nullptr, 16));
+    }
+    else if (curr_char == '0' && isdigit(look_ahead())) {
+        parse_oct_number();
+        curr_token.value = Value(strtol(curr_token.start, nullptr, 8));
+    }
+    else {
+        parse_dec_number();
+        curr_token.value = Value(strtol(curr_token.start, nullptr, 10));
+    }
+
+    curr_token.length = (uint64_t) (next_char_ptr - curr_token.start - 1);
+    curr_token.type = TOKEN_NUM;
 }

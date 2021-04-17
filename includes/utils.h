@@ -20,7 +20,7 @@
 { printf( BLUE "[%s : %d] " NOCOLOR, __FILE__, __LINE__); printf(__VA_ARGS__); }
 #endif
 
-void *mem_manager(VM *vm, void *ptr, uint32_t old_size, uint32_t new_size);
+void *mem_manager(VM *vm, void *ptr, uint64_t old_size, uint64_t new_size);
 
 #define ALLOCATE(vm_ptr, type) \
 (type *) mem_manager(vm_ptr, NULL, 0, sizeof(type));
@@ -37,22 +37,28 @@ mem_manager(vm_ptr, arr_ptr, sizeof(arr_ptr[0]) * capacity, 0);
 #define DESTORY(vm_ptr, mem_ptr) \
 mem_manager(vm_ptr, mem_ptr, 0, 0);
 
-//uint32_t ceil_to_squar(uint32_t v);
+//uint64_t ceil_to_squar(uint64_t v);
 
 template<typename Type>
 class MemBuffer : public std::vector<Type> {
 public:
-    VM *vm;
+    VM *vm = nullptr;
 
-    MemBuffer() = default;
+    MemBuffer() : vm(VM::getInstance()) {};
 
-    MemBuffer(VM *vm) : vm(vm) {};
+//    MemBuffer(VM *vm) : vm(vm) {};
+
+    ~MemBuffer() {
+        buff_clear(vm);
+    }
 
     void fill_wirte(VM *vm, Type data, uint64_t fill_cnt) {
+        uint64_t  old_capacity = total_size();
         for (uint64_t i = 0; i < fill_cnt; i += 1) {
             this -> push_back(data);
         }
-        vm -> alloca_memory(sizeof(Type) * fill_cnt);
+        uint64_t  new_capacity = total_size();
+        vm -> alloca_memory(new_capacity - old_capacity);
         return ;
     };
 
@@ -62,10 +68,14 @@ public:
     };
 
     void buff_clear(VM *vm) {
-        size_t curr_size = this -> capacity() * sizeof(Type);
+        uint64_t curr_size = total_size();
         vm -> realloca_memory(curr_size, 0);
-        this -> clear();
+        std::vector<Type>::clear();
         return ;
+    }
+
+    uint64_t total_size() {
+        return std::vector<Type>::capacity() * sizeof(Type);
     }
 
 };
@@ -86,7 +96,7 @@ enum ErrorType {
     ERROR_RUNTIME,
 };
 
-void symbol_table_clear(VM *vm, SymbolTable *buffer);
+//void symbol_table_clear(VM *vm, SymbolTable *buffer);
 
 void report_error(void *parser, ErrorType err_type, const char *fmt, ...);
 

@@ -20,7 +20,10 @@ public:
 
     ObjString() = delete;
     ObjString(VM *vm, const std::string &str);
+    ObjString(VM *vm, const char *str, uint32_t ssize);
     uint64_t hash();
+
+    ~ObjString() override = default;
 };
 
 

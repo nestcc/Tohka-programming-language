@@ -19,4 +19,5 @@ class Family < People {
 var f = Family.new("wbf", "ls", "shine")
 f.sayHi()
 
+// var number_test = 12345
 fn()

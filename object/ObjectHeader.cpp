@@ -10,4 +10,5 @@ ObjHeader::ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls) {
     is_dark = false;
     next = vm -> all_objects;
     vm -> all_objects = next;
+//    this -> vm = vm;
 }

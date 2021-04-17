@@ -18,6 +18,7 @@ public:
     FieldType fields;
     ObjInstance() = default;
     ObjInstance(VM *vm, BaseClass *base_class);
+    ~ObjInstance() override = default;
 };
 
 

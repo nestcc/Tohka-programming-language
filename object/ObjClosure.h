@@ -21,6 +21,8 @@ public:
 
     ObjClosure() = default;
     ObjClosure(VM *vm, ObjFunction *func_obj);
+
+    ~ObjClosure() override = default;
 };
 
 

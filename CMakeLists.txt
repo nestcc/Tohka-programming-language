@@ -2,7 +2,9 @@ cmake_minimum_required (VERSION 3.0.0)
 
 project(Tohka)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+#SET(CMAKE_BUILD_TYPE "Debug")
+#SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -glldb")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -g")
 
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SOURCE_DIR)
 

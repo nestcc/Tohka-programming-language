@@ -21,14 +21,26 @@ class VM {
 public:
     BaseClass *str_cls;
     BaseClass *func_cls;
-    size_t allocated_byte;
+    BaseClass *class_class;
+    BaseClass *object_class;
+    BaseClass *string_class;
+    BaseClass *map_class;
+    BaseClass *range_class;
+    BaseClass *list_class;
+    BaseClass *null_class;
+    BaseClass *bool_class;
+    BaseClass *num_class;
+    BaseClass *fn_class;
+    BaseClass *thread_class;
+
+    uint64_t allocated_byte;
     Parser *curr_parser;
     ObjHeader *all_objects;
     static VM *getInstance();
 
-    size_t realloca_memory(size_t old_size, size_t new_size);
+    uint64_t realloca_memory(uint64_t old_size, uint64_t new_size);
 
-    size_t alloca_memory(size_t new_size);
+    uint64_t alloca_memory(uint64_t new_size);
 
 private:
     static VM *instance;

@@ -20,6 +20,8 @@ public:
 
     ObjUpvalue() = default;
     ObjUpvalue(VM *vm, Value *local_value);
+
+    ~ObjUpvalue() override = default;
 };
 
 
