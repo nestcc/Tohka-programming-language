@@ -56,5 +56,18 @@ int main(int argc, const char **argv) {
 //    ObjFunction obj_func(VM::getInstance(), &module, 32);
 //    LOG_INFO(" create function object ok\n");
 
+    VM *vm = VM::getInstance();
+
+    std::cout << " get all objects" << std::endl;
+    ObjHeader *objs = vm -> all_objects;
+//    std::cout << objs -> type << std::endl;
+
+    while (objs != nullptr) {
+        ObjString *str_obj = dynamic_cast<ObjString *> (objs);
+        if (str_obj == nullptr) { continue; }
+        std::cout << str_obj -> value << std::endl;
+        objs = objs -> next;
+    }
+
     return 0;
 }

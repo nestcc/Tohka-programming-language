@@ -13,9 +13,8 @@
 #include "ObjString.h"
 #include "Method.h"
 
-class BaseClass {
+class BaseClass : public ObjHeader {
 public:
-    ObjHeader header;
     BaseClass *super_class;
     uint64_t field_num;
     typedef MemBuffer<Method> MethodBuffer;

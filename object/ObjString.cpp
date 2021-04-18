@@ -28,7 +28,8 @@ uint64_t ObjString::hash() {
     return hash_code;
 }
 
-ObjString::ObjString(VM *vm, const char *str, uint32_t ssize) {
+ObjString::ObjString(VM *vm, const char *str, uint32_t ssize) :
+ObjHeader(vm, OT_STRING, vm -> str_cls) {
     value = std::string(str, ssize);
     hash();
     vm -> alloca_memory(sizeof(*this));

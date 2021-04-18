@@ -420,17 +420,17 @@ void Parser::parse_dec_number() {
     while (isdigit(curr_char)) {
         get_next_char();
     }
-}
-
-void Parser::parse_hex_number() {
-    while (isxdigit(curr_char)) {
-        get_next_char();
-    }
     if (curr_char == '.' && isdigit(look_ahead())) {
         get_next_char();
         while (isdigit(curr_char)) {
             get_next_char();
         }
+    }
+}
+
+void Parser::parse_hex_number() {
+    while (isxdigit(curr_char)) {
+        get_next_char();
     }
 }
 
