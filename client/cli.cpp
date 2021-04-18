@@ -59,14 +59,17 @@ int main(int argc, const char **argv) {
     VM *vm = VM::getInstance();
 
     std::cout << " get all objects" << std::endl;
-    ObjHeader *objs = vm -> all_objects;
+    ObjHeader *objs = vm -> all_objects, *tmp = objs -> next;
 //    std::cout << objs -> type << std::endl;
+    ObjString *str_obj = dynamic_cast<ObjString *> (objs);
+    if (str_obj != nullptr)
+        std::cout << " > objs : " << str_obj -> value << std::endl;
 
-    while (objs != nullptr) {
-        ObjString *str_obj = dynamic_cast<ObjString *> (objs);
+    while (tmp != objs) {
+        ObjString *str_obj = dynamic_cast<ObjString *> (tmp);
         if (str_obj == nullptr) { continue; }
-        std::cout << str_obj -> value << std::endl;
-        objs = objs -> next;
+        std::cout << " > curr obj : " << str_obj -> value << std::endl;
+        tmp = tmp -> next;
     }
 
     return 0;

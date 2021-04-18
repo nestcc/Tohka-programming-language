@@ -16,7 +16,7 @@ public:
     ObjType type;
     bool is_dark;
     BaseClass *cls;
-    ObjHeader *next;
+    ObjHeader *next, *prev;
     VM *vm;
 
     ObjHeader() = default;
