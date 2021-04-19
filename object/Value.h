@@ -10,8 +10,9 @@
 #define _TOHKA_VALUE_H_
 
 #include "headers.h"
+#include "ObjectHeader.h"
 
-class Value {
+class Value : public ObjHeader {
 public:
     ValueType type;
     union {

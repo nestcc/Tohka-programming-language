@@ -9,6 +9,7 @@ ObjHeader::ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls) {
     type = obj_type;
     cls = base_cls;
     is_dark = false;
+    ref_cnt = 0;
 
     if (vm -> all_objects == nullptr) {
         next = this;

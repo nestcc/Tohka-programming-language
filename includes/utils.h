@@ -44,8 +44,9 @@ template<typename Type>
 class MemBuffer : public std::vector<Type> {
 public:
     VM *vm = nullptr;
+    uint64_t curr_size;
 
-    MemBuffer() : vm(VM::getInstance()) {};
+    MemBuffer() : vm(VM::getInstance()) , curr_size(0) {};
 
 //    MemBuffer(VM *vm) : vm(vm) {};
 
@@ -53,30 +54,30 @@ public:
         buff_clear(vm);
     }
 
+    uint64_t total_size() {
+        return std::vector<Type>::capacity() * sizeof(Type);
+    }
+
+    void adjust_size(VM *vm) {
+        uint64_t new_size = total_size();
+        vm -> realloca_memory(curr_size, new_size);
+        curr_size = new_size;
+    }
+
     void fill_wirte(VM *vm, Type data, uint64_t fill_cnt) {
-        uint64_t  old_capacity = total_size();
         for (uint64_t i = 0; i < fill_cnt; i += 1) {
             this -> push_back(data);
         }
-        uint64_t  new_capacity = total_size();
-        vm -> alloca_memory(new_capacity - old_capacity);
-        return ;
+        adjust_size(vm);
     };
 
     void buff_add(VM *vm, Type data) {
         fill_wirte(vm, data, 1);
-        return ;
     };
 
     void buff_clear(VM *vm) {
-        uint64_t curr_size = total_size();
-        vm -> realloca_memory(curr_size, 0);
         std::vector<Type>::clear();
-        return ;
-    }
-
-    uint64_t total_size() {
-        return std::vector<Type>::capacity() * sizeof(Type);
+        adjust_size(vm);
     }
 
 };

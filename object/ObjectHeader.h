@@ -17,6 +17,7 @@ public:
     bool is_dark;
     BaseClass *cls;
     ObjHeader *next, *prev;
+    uint64_t ref_cnt;
     VM *vm;
 
     ObjHeader() = default;

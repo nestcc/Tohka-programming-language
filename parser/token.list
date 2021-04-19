@@ -53,5 +53,6 @@ char* tokenArray[] = {
    "LESS",
    "LESS_EQUAL",
    "QUESTION",
+   "SEMICOLON",
    "EOF"
 };

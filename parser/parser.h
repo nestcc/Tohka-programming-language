@@ -92,6 +92,7 @@ enum TokenType {
 
     TOKEN_QUESTION,	   //'?'
 
+    TOKEN_SEMICOLON,         // ';'
     // 文件结束标记,仅词法分析时使用
     TOKEN_EOF		   //'EOF'                  54
 };

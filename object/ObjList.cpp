@@ -7,9 +7,9 @@
  */
 
 #include <vector>
+#include <cerrno>
 #include "ObjList.h"
 #include "Value.h"
-#include "../vm/vm.h"
 
 ObjList::ObjList(VM *vm, int size_n) :
 ObjHeader(vm, OT_LIST, vm -> list_class){
@@ -19,25 +19,37 @@ ObjHeader(vm, OT_LIST, vm -> list_class){
 }
 
 Value &ObjList::operator[](uint64_t index) {
+    if (index > elements.size()) {
+        errno = ERROR_MEM;
+        MEM_ERROR("index out of range");
+        exit(EXIT_FAILURE);
+    }
     return elements[index];
 }
 
 Value ObjList::remove_element(VM *vm, uint64_t index) {
+    if (index >= elements.size()) {
+        errno = ERROR_MEM;
+        MEM_ERROR("index out of range");
+        exit(EXIT_FAILURE);
+    }
     Value ret = elements[index];
     elements.erase(elements.begin() + (long) index);
+    elements. adjust_size(vm);
     return ret;
 }
 
 void ObjList::insert_element(VM *vm, uint64_t index, Value value) {
-    uint64_t old_size = elements.capacity() * sizeof(Value);
+    if (index > elements.size()) {
+        errno = ERROR_MEM;
+        MEM_ERROR("index out of range");
+        exit(EXIT_FAILURE);
+    }
     elements.insert(elements.begin() + (long) index, value);
-    uint64_t new_size = elements.capacity() * sizeof(Value);
-    vm -> realloca_memory(old_size, new_size);
+    elements. adjust_size(vm);
 }
 
 void ObjList::resize(VM *vm, uint64_t new_size) {
-    uint64_t o_size = elements.capacity() * sizeof(Value);
     elements.reserve(new_size);
-    uint64_t n_size = elements.capacity() * sizeof(Value);
-    vm -> realloca_memory(o_size, n_size);
+    elements. adjust_size(vm);
 }
