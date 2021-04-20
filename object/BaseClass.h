@@ -17,7 +17,7 @@ class BaseClass : public ObjHeader {
 public:
     BaseClass *super_class;
     uint64_t field_num;
-    typedef MemBuffer<Method> MethodBuffer;
+    typedef MemBufferSTL<Method> MethodBuffer;
     MethodBuffer methods;
     ObjString *name;
 };

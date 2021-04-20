@@ -41,16 +41,16 @@ mem_manager(vm_ptr, mem_ptr, 0, 0);
 //uint64_t ceil_to_squar(uint64_t v);
 
 template<typename Type>
-class MemBuffer : public std::vector<Type> {
+class MemBufferSTL : public std::vector<Type> {
 public:
     VM *vm = nullptr;
     uint64_t curr_size;
 
-    MemBuffer() : vm(VM::getInstance()) , curr_size(0) {};
+    MemBufferSTL() : vm(VM::getInstance()) , curr_size(0) {};
 
 //    MemBuffer(VM *vm) : vm(vm) {};
 
-    ~MemBuffer() {
+    ~MemBufferSTL() {
         buff_clear(vm);
     }
 
@@ -86,8 +86,11 @@ typedef uint8_t Byte;
 typedef char Char;
 typedef int Int;
 
-typedef MemBuffer<std::string> SymbolTable;
-typedef MemBuffer<uint8_t> ByteBuffer;
+//template<typename Type>
+//typedef MemBufferSTL<Type> MemBuffer;
+
+typedef MemBufferSTL<std::string> SymbolTable;
+typedef MemBufferSTL<uint8_t> ByteBuffer;
 
 
 enum ErrorType {

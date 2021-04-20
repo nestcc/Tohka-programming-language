@@ -22,7 +22,7 @@ public:
 
     ObjHeader() = default;
     ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls);
-    virtual ~ObjHeader() = default;
+    virtual ~ObjHeader();
 
 private:
 };

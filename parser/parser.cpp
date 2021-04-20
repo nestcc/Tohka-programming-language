@@ -44,33 +44,34 @@ std::vector<KeywordToken> keywords_token = {
 
 static TokenType id_or_keyword(const char *str, uint64_t length) {
     TokenType ret;
-    for (uint64_t i = 0; i < keywords_token . size(); i += 1) {
-        if (keywords_token[i] . length == length &&
-            memcmp((char *) keywords_token[i] . keyword . c_str(), str, length) == 0) {
-            return (TokenType) (keywords_token[i] . token);
+    for (uint64_t i = 0; i < keywords_token.size(); i += 1) {
+        if (keywords_token[i].length == length &&
+            memcmp((char *) keywords_token[i].keyword.c_str(), str, length) == 0) {
+            return (TokenType) (keywords_token[i].token);
         }
     }
 
     return TOKEN_ID;
 }
 
-Parser::Parser(VM *vm, const char *file, const char *source_code) {
-    this -> vm = vm;
-    this -> file = file;
-    this -> source_code = source_code;
+Parser::Parser(VM *vm, const char *file, const char *source_code, ObjModule *obj_mudule) {
+    this->vm = vm;
+    this->file = file;
+    this->source_code = source_code;
 
-    curr_char = *this -> source_code;
-    next_char_ptr = this -> source_code + 1;
+    curr_char = *this->source_code;
+    next_char_ptr = this->source_code + 1;
 
-    curr_token = Token();
-    prev_token = Token();
+    curr_token.type = TOKEN_UNKNOWN;
+    prev_token=curr_token;
 
-    curr_token . line_no = 1;
-    curr_token . type = TOKEN_UNKNOWN;
-    curr_token . start = nullptr;
-    curr_token . length = 0;
+    curr_token.line_no = 1;
+    curr_token.type = TOKEN_UNKNOWN;
+    curr_token.start = nullptr;
+    curr_token.length = 0;
 
     prev_token = curr_token;
+    this->obj_module = obj_mudule;
 
     interpolation_expect_rparen_num = 0;
 
@@ -81,7 +82,7 @@ char Parser::look_ahead() const {
 }
 
 bool Parser::metch_token(TokenType expected) {
-    if (curr_token . type == expected) {
+    if (curr_token.type == expected) {
         get_next_token();
         return true;
     }
@@ -90,7 +91,7 @@ bool Parser::metch_token(TokenType expected) {
 
 void Parser::skip_blanks() {
     while (isspace(curr_char)) {
-        if (curr_char == '\n') { curr_token . line_no += 1; }
+        if (curr_char == '\n') { curr_token.line_no += 1; }
         get_next_char();
     }
     return;
@@ -101,12 +102,12 @@ void Parser::parse_id(TokenType type) {
         get_next_char();
     }
 
-    auto wlen = (uint64_t) (next_char_ptr - curr_token . start - 1);
+    auto wlen = (uint64_t) (next_char_ptr - curr_token.start - 1);
 
-    if (type != TOKEN_UNKNOWN) { curr_token . type = type; }
-    else { curr_token . type = id_or_keyword(curr_token . start, wlen); }
+    if (type != TOKEN_UNKNOWN) { curr_token.type = type; }
+    else { curr_token.type = id_or_keyword(curr_token.start, wlen); }
 
-    curr_token . length = wlen;
+    curr_token.length = wlen;
     return;
 }
 
@@ -118,27 +119,27 @@ void Parser::get_next_token() {
     prev_token = curr_token;
     skip_blanks();
 
-    curr_token . type = TOKEN_EOF;
-    curr_token . length = 0;
-    curr_token . start = next_char_ptr - 1;
+    curr_token.type = TOKEN_EOF;
+    curr_token.length = 0;
+    curr_token.start = next_char_ptr - 1;
 
     if (curr_char == -1) {
-        curr_token . type = TOKEN_EOF;
+        curr_token.type = TOKEN_EOF;
         return;
     }
     while (curr_char != '\0') {
         switch (curr_char) {
             case ',':
-                curr_token . type = TOKEN_COMMA;
+                curr_token.type = TOKEN_COMMA;
                 break;
             case ':':
-                curr_token . type = TOKEN_COLON;
+                curr_token.type = TOKEN_COLON;
                 break;
             case '(':
                 if (interpolation_expect_rparen_num > 0) {
                     interpolation_expect_rparen_num += 1;
                 }
-                curr_token . type = TOKEN_LEFT_PAREN;
+                curr_token.type = TOKEN_LEFT_PAREN;
                 break;
             case ')':
                 if (interpolation_expect_rparen_num > 0) {
@@ -148,76 +149,76 @@ void Parser::get_next_token() {
                         break;
                     }
                 }
-                curr_token . type = TOKEN_RIGHT_PAREN;
+                curr_token.type = TOKEN_RIGHT_PAREN;
                 break;
             case '[':
-                curr_token . type = TOKEN_LEFT_BRACKET;
+                curr_token.type = TOKEN_LEFT_BRACKET;
                 break;
             case ']':
-                curr_token . type = TOKEN_RIGHT_BRACKET;
+                curr_token.type = TOKEN_RIGHT_BRACKET;
                 break;
             case '{':
-                curr_token . type = TOKEN_LEFT_BRACE;
+                curr_token.type = TOKEN_LEFT_BRACE;
                 break;
             case '}':
-                curr_token . type = TOKEN_RIGHT_BRACE;
+                curr_token.type = TOKEN_RIGHT_BRACE;
                 break;
             case '.':
-                if (match_next_char('.')) { curr_token . type = TOKEN_DOT_DOT; }
-                else { curr_token . type = TOKEN_DOT; }
+                if (match_next_char('.')) { curr_token.type = TOKEN_DOT_DOT; }
+                else { curr_token.type = TOKEN_DOT; }
                 break;
             case '=':
-                if (match_next_char('=')) { curr_token . type = TOKEN_EQUAL; }
-                else { curr_token . type = TOKEN_ASSIGN; }
+                if (match_next_char('=')) { curr_token.type = TOKEN_EQUAL; }
+                else { curr_token.type = TOKEN_ASSIGN; }
                 break;
             case '+':
-                curr_token . type = TOKEN_ADD;
+                curr_token.type = TOKEN_ADD;
                 break;
             case '-':
-                curr_token . type = TOKEN_SUB;
+                curr_token.type = TOKEN_SUB;
                 break;
             case '*':
-                curr_token . type = TOKEN_MUL;
+                curr_token.type = TOKEN_MUL;
                 break;
             case '/':
                 //跳过注释'//'或'/*'
                 if (match_next_char('/') || match_next_char('*')) {
                     skip_comment();
                     //重置下一个token起始地址
-                    curr_token . start = next_char_ptr - 1;
+                    curr_token.start = next_char_ptr - 1;
                     continue;
-                } else { curr_token . type = TOKEN_DIV; } // '/'
+                } else { curr_token.type = TOKEN_DIV; } // '/'
                 break;
             case '%':
-                curr_token . type = TOKEN_MOD;
+                curr_token.type = TOKEN_MOD;
                 break;
             case '&':
-                if (match_next_char('&')) { curr_token . type = TOKEN_LOGIC_AND; }
-                else { curr_token . type = TOKEN_BIT_AND; }
+                if (match_next_char('&')) { curr_token.type = TOKEN_LOGIC_AND; }
+                else { curr_token.type = TOKEN_BIT_AND; }
                 break;
             case '|':
-                if (match_next_char('|')) { curr_token . type = TOKEN_LOGIC_OR; }
-                else { curr_token . type = TOKEN_BIT_OR; }
+                if (match_next_char('|')) { curr_token.type = TOKEN_LOGIC_OR; }
+                else { curr_token.type = TOKEN_BIT_OR; }
                 break;
             case '~':
-                curr_token . type = TOKEN_BIT_NOT;
+                curr_token.type = TOKEN_BIT_NOT;
                 break;
             case '?':
-                curr_token . type = TOKEN_QUESTION;
+                curr_token.type = TOKEN_QUESTION;
                 break;
             case '>':
-                if (match_next_char('=')) { curr_token . type = TOKEN_GREATE_EQUAL; }
-                else if (match_next_char('>')) { curr_token . type = TOKEN_BIT_SHIFT_RIGHT; }
-                else { curr_token . type = TOKEN_GREATE; }
+                if (match_next_char('=')) { curr_token.type = TOKEN_GREATE_EQUAL; }
+                else if (match_next_char('>')) { curr_token.type = TOKEN_BIT_SHIFT_RIGHT; }
+                else { curr_token.type = TOKEN_GREATE; }
                 break;
             case '<':
-                if (match_next_char('=')) { curr_token . type = TOKEN_LESS_EQUAL; }
-                else if (match_next_char('<')) { curr_token . type = TOKEN_BIT_SHIFT_LEFT; }
-                else { curr_token . type = TOKEN_LESS; }
+                if (match_next_char('=')) { curr_token.type = TOKEN_LESS_EQUAL; }
+                else if (match_next_char('<')) { curr_token.type = TOKEN_BIT_SHIFT_LEFT; }
+                else { curr_token.type = TOKEN_LESS; }
                 break;
             case '!':
-                if (match_next_char('=')) { curr_token . type = TOKEN_NOT_EQUAL; }
-                else { curr_token . type = TOKEN_LOGIC_NOT; }
+                if (match_next_char('=')) { curr_token.type = TOKEN_NOT_EQUAL; }
+                else { curr_token.type = TOKEN_LOGIC_NOT; }
                 break;
 
             case '"':
@@ -225,7 +226,7 @@ void Parser::get_next_token() {
                 break;
 
             case ';':
-                curr_token . type = TOKEN_SEMICOLON;
+                curr_token.type = TOKEN_SEMICOLON;
                 break;
 
             default:
@@ -242,21 +243,21 @@ void Parser::get_next_token() {
                 } else {
                     if (curr_char == '#' && match_next_char('!')) {
                         skip_line();
-                        curr_token . start = next_char_ptr - 1;  //重置下一个token起始地址
+                        curr_token.start = next_char_ptr - 1;  //重置下一个token起始地址
                         continue;
                     }
                     LEX_ERROR(this, "unsupport char: \'%c\' %d, quit.", curr_char, curr_char);
                 }
                 return;
         }
-        curr_token . length = (uint64_t) (next_char_ptr - curr_token . start);
+        curr_token.length = (uint64_t) (next_char_ptr - curr_token.start);
         get_next_char();
         return;
     }
 }
 
 void Parser::consume_curr_token(TokenType expected, const char *errMsg) {
-    if (curr_token . type != expected) {
+    if (curr_token.type != expected) {
         COMPILE_ERROR(this, errMsg);
     }
     get_next_token();
@@ -264,7 +265,7 @@ void Parser::consume_curr_token(TokenType expected, const char *errMsg) {
 
 void Parser::consume_next_token(TokenType expected, const char *errMsg) {
     get_next_token();
-    if (curr_token . type != expected) {
+    if (curr_token.type != expected) {
         COMPILE_ERROR(this, errMsg);
     }
 }
@@ -295,8 +296,8 @@ void Parser::parse_unicode_code_point(ByteBuffer *buf) {
     uint64_t byte_num = get_number_encode_utf8(value);
     ASSERT(byteNum != 0, "utf8 encode bytes should be between 1 and 4!");
 
-    buf -> fill_wirte(vm, 0, byte_num);
-    encode_utf8(buf -> data() + buf -> size() - byte_num, value);
+    buf->fill_wirte(vm, 0, byte_num);
+    encode_utf8(buf->data() + buf->size() - byte_num, value);
 
     return;
 }
@@ -312,7 +313,7 @@ void Parser::parse_string() {
         }
 
         if (curr_char == '"') {
-            curr_token . type = TOKEN_STRING;
+            curr_token.type = TOKEN_STRING;
             break;
         }
 
@@ -324,7 +325,7 @@ void Parser::parse_string() {
                 COMPILE_ERROR(this, "sorry, I don`t support nest interpolate expression!");
             }
             interpolation_expect_rparen_num = 1;
-            curr_token . type = TOKEN_INTERPOLATION;
+            curr_token.type = TOKEN_INTERPOLATION;
             break;
         }
 
@@ -332,46 +333,46 @@ void Parser::parse_string() {
             get_next_char();
             switch (curr_char) {
                 case '0':
-                    str . buff_add(vm, '\0');
+                    str.buff_add(vm, '\0');
                     break;
                 case 'a':
-                    str . buff_add(vm, '\a');
+                    str.buff_add(vm, '\a');
                     break;
                 case 'b':
-                    str . buff_add(vm, '\b');
+                    str.buff_add(vm, '\b');
                     break;
                 case 'f':
-                    str . buff_add(vm, '\f');
+                    str.buff_add(vm, '\f');
                     break;
                 case 'n':
-                    str . buff_add(vm, '\n');
+                    str.buff_add(vm, '\n');
                     break;
                 case 'r':
-                    str . buff_add(vm, '\r');
+                    str.buff_add(vm, '\r');
                     break;
                 case 't':
-                    str . buff_add(vm, '\t');
+                    str.buff_add(vm, '\t');
                     break;
                 case 'u':
                     parse_unicode_code_point(&str);
                     break;
                 case '"':
-                    str . buff_add(vm, '"');
+                    str.buff_add(vm, '"');
                     break;
                 case '\\':
-                    str . buff_add(vm, '\\');
+                    str.buff_add(vm, '\\');
                     break;
                 default:
                     LEX_ERROR(this, "unsupport escape \\%c", curr_char);
                     break;
             }
         } else {   //普通字符
-            str . buff_add(vm, curr_char);
+            str.buff_add(vm, curr_char);
         }
     }
 
-    ObjString *obj_str = new ObjString(vm, (const char *) str . data(), (uint64_t) str . size());
-    curr_token . value = Value(obj_str);
+    ObjString *obj_str = new ObjString(vm, (const char *) str.data(), (uint64_t) str.size());
+    curr_token.value = Value(obj_str);
     return;
 }
 
@@ -382,7 +383,7 @@ void Parser::skip_comment() {
         while (next_ch != '*' && next_ch != '\0') {
             get_next_char();
             if (curr_char == '\n') {
-                curr_token . line_no++;
+                curr_token.line_no++;
             }
             next_ch = look_ahead();
         }
@@ -399,7 +400,7 @@ void Parser::skip_line() {
     get_next_char();
     while (curr_char != '\0') {
         if (curr_char == '\n') {
-            curr_token . line_no += 1;
+            curr_token.line_no += 1;
             get_next_char();
             break;
         }
@@ -409,7 +410,7 @@ void Parser::skip_line() {
 }
 
 bool Parser::match_token(TokenType expected) {
-    if (curr_token . type == expected) {
+    if (curr_token.type == expected) {
         get_next_token();
         return true;
     }
@@ -444,15 +445,15 @@ void Parser::parse_number() {
     if (curr_char == '0' && match_next_char('x')) {
         get_next_char(); // skip 'x' behind '0'
         parse_hex_number();
-        curr_token . value = Value(strtol(curr_token . start, nullptr, 16));
+        curr_token.value = Value(strtol(curr_token.start, nullptr, 16));
     } else if (curr_char == '0' && isdigit(look_ahead())) {
         parse_oct_number();
-        curr_token . value = Value(strtol(curr_token . start, nullptr, 8));
+        curr_token.value = Value(strtol(curr_token.start, nullptr, 8));
     } else {
         parse_dec_number();
-        curr_token . value = Value(strtol(curr_token . start, nullptr, 10));
+        curr_token.value = Value(strtol(curr_token.start, nullptr, 10));
     }
 
-    curr_token . length = (uint64_t) (next_char_ptr - curr_token . start - 1);
-    curr_token . type = TOKEN_NUM;
+    curr_token.length = (uint64_t) (next_char_ptr - curr_token.start - 1);
+    curr_token.type = TOKEN_NUM;
 }

@@ -385,6 +385,33 @@ object/ObjModule.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjModule.cpp.s
 .PHONY : object/ObjModule.cpp.s
 
+object/ObjRange.o: object/ObjRange.cpp.o
+
+.PHONY : object/ObjRange.o
+
+# target to build an object file
+object/ObjRange.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjRange.cpp.o
+.PHONY : object/ObjRange.cpp.o
+
+object/ObjRange.i: object/ObjRange.cpp.i
+
+.PHONY : object/ObjRange.i
+
+# target to preprocess a source file
+object/ObjRange.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjRange.cpp.i
+.PHONY : object/ObjRange.cpp.i
+
+object/ObjRange.s: object/ObjRange.cpp.s
+
+.PHONY : object/ObjRange.s
+
+# target to generate assembly for a file
+object/ObjRange.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjRange.cpp.s
+.PHONY : object/ObjRange.cpp.s
+
 object/ObjString.o: object/ObjString.cpp.o
 
 .PHONY : object/ObjString.o
@@ -520,6 +547,33 @@ parser/parser.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/parser/parser.cpp.s
 .PHONY : parser/parser.cpp.s
 
+vm/MemAllocator.o: vm/MemAllocator.cpp.o
+
+.PHONY : vm/MemAllocator.o
+
+# target to build an object file
+vm/MemAllocator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/vm/MemAllocator.cpp.o
+.PHONY : vm/MemAllocator.cpp.o
+
+vm/MemAllocator.i: vm/MemAllocator.cpp.i
+
+.PHONY : vm/MemAllocator.i
+
+# target to preprocess a source file
+vm/MemAllocator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/vm/MemAllocator.cpp.i
+.PHONY : vm/MemAllocator.cpp.i
+
+vm/MemAllocator.s: vm/MemAllocator.cpp.s
+
+.PHONY : vm/MemAllocator.s
+
+# target to generate assembly for a file
+vm/MemAllocator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/vm/MemAllocator.cpp.s
+.PHONY : vm/MemAllocator.cpp.s
+
 vm/core.o: vm/core.cpp.o
 
 .PHONY : vm/core.o
@@ -610,6 +664,9 @@ help:
 	@echo "... object/ObjModule.o"
 	@echo "... object/ObjModule.i"
 	@echo "... object/ObjModule.s"
+	@echo "... object/ObjRange.o"
+	@echo "... object/ObjRange.i"
+	@echo "... object/ObjRange.s"
 	@echo "... object/ObjString.o"
 	@echo "... object/ObjString.i"
 	@echo "... object/ObjString.s"
@@ -625,6 +682,9 @@ help:
 	@echo "... parser/parser.o"
 	@echo "... parser/parser.i"
 	@echo "... parser/parser.s"
+	@echo "... vm/MemAllocator.o"
+	@echo "... vm/MemAllocator.i"
+	@echo "... vm/MemAllocator.s"
 	@echo "... vm/core.o"
 	@echo "... vm/core.i"
 	@echo "... vm/core.s"

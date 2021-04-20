@@ -33,7 +33,7 @@ Value ObjList::remove_element(VM *vm, uint64_t index) {
         MEM_ERROR("index out of range");
         exit(EXIT_FAILURE);
     }
-    Value ret = elements[index];
+    Value ret(elements[index]);
     elements.erase(elements.begin() + (long) index);
     elements. adjust_size(vm);
     return ret;

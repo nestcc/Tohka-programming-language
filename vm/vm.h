@@ -42,11 +42,16 @@ public:
 
     uint64_t alloca_memory(uint64_t new_size);
 
+    void add_object(ObjHeader *obj);
+
+    void remove_object(ObjHeader *obj);
+
 private:
-    static VM *instance;
     VM();
     VM(const VM &vm) = delete;
     ~VM() = default;
+    static VM *instance;
+    int obj_cnt;
 };
 
 #endif

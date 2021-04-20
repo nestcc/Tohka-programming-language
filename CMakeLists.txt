@@ -19,7 +19,7 @@ aux_source_directory(${PROJECT_SOURCE_DIR}/compiler COMPILER_DIR)
 if (DEBUG)
     SET(CMAKE_BUILD_TYPE "Debug")
     SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -ggdb")
-    SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+    SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall -DNDEBUG")
 endif ()
 
 add_executable(toh  ${CLI_DIR}

@@ -36,8 +36,45 @@ Value::Value(ObjHeader *obj_ptr) {
 }
 
 Value::~Value() {
-    if (type == VT_OBJ) { delete obj_header; }
+    if (type == VT_OBJ && obj_header != nullptr) { delete obj_header; }
 }
+
+Value::Value(const Value &val) {
+    type = val.type;
+    num = val.num;
+}
+
+Value::Value(Value &&val) {
+    type = val.type;
+    num = val.num;
+    val.obj_header = nullptr;
+//    return *this;
+}
+
+Value &Value::operator=(const Value &val) {
+    type = val.type;
+    num = val.num;
+    return *this;
+}
+
+Value &Value::operator=(Value &&val) noexcept {
+    type = val.type;
+    num = val.num;
+    val.obj_header = nullptr;
+    return *this;
+}
+
+//Value &Value::operator=(const Value &val) {
+//    this->type = val.type;
+//    this->num = val.num;
+//    return *this;
+//}
+
+//Value &operator=(Value &self, Value &val) {
+//    self.type = val.type;
+//    self.num = val.num;
+//    return self;
+//}
 
 //double Value::to_num() {
 //    return num;

@@ -25,7 +25,7 @@ void runFile(const char* path) {
 
     const char* sourceCode = read_file(path);
 
-    Parser parser(vm, path, sourceCode);
+    Parser parser(vm, path, sourceCode, nullptr);
 
     #include "../parser/token.list"
 

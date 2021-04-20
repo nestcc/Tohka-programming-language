@@ -12,7 +12,7 @@
 #include "headers.h"
 #include "ObjectHeader.h"
 
-class Value : public ObjHeader {
+class Value {
 public:
     ValueType type;
     union {
@@ -25,10 +25,16 @@ public:
     explicit Value(const bool &bl);
     explicit Value(const double &num);
     explicit Value(const long &ln);
+    Value(const Value &val);
+    Value(Value &&val);
 
     explicit Value(ObjHeader *obj_ptr);
 
     explicit operator bool ();
+
+    Value &operator= (const Value &val);
+
+    Value &operator= (Value &&val) noexcept ;
 
     ~Value();
 };   //通用的值结构

@@ -108,7 +108,7 @@ struct Token {
 class Parser {
 public:
     Parser() = default;
-    Parser(VM *vm, const char *file, const char *sourceCode);
+    Parser(VM *vm, const char *file, const char *sourceCode, ObjModule *obj_mudule);
 
     /**
      * @description: 获取前一个字符
@@ -151,6 +151,7 @@ public:
     char curr_char;
     Token curr_token;
     Token prev_token;
+    ObjModule *obj_module;
 
 private:
     VM *vm;
