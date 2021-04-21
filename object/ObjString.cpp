@@ -1,8 +1,8 @@
 /*
  * @Author: nestcc 
  * @Date: 2021/4/4 22:48
- * @LastEditors: nestcc
- * @LastEditTime: 2021/4/4 22:48
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-04-21 14:05:23
  * @Discription: 
  */
 
@@ -35,4 +35,16 @@ ObjHeader(vm, OT_STRING, vm -> str_cls) {
     vm -> alloca_memory(sizeof(*this));
     LOG_INFO(" allocated string object by %lu B.\n", sizeof(*this) + value.size());
     std::cout << " > string : " <<  value << std::endl;
+}
+
+bool ObjString::equal_to(const ObjHeader *obj) {
+    const ObjString *other = dynamic_cast<const ObjString *> (obj);
+    if (other == nullptr) { return false; }
+    if (hash_code != other -> hash_code) { return false; }
+    return value == other -> value;
+}
+
+ObjString::~ObjString() {
+    vm -> realloca_memory(value.size(), 0);
+    // vm -> remove_object(this);
 }

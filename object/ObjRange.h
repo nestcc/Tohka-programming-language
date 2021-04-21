@@ -1,8 +1,8 @@
 /*
  * @Author: nestcc 
  * @Date: 2021/4/19 23:14
- * @LastEditors: nestcc
- * @LastEditTime: 2021/4/19 23:14
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-04-21 14:12:53
  * @Discription: 
  */
 
@@ -14,8 +14,10 @@
 class ObjRange : public ObjHeader{
 public:
     ObjRange() = default;
-    ObjRange(VM *vm, int form, int to);
+    ObjRange(VM *vm, int from, int to);
 
+    virtual bool equal_to(const ObjHeader *obj) override;
+    
     uint64_t from;
     uint64_t to;
 };

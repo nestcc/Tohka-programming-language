@@ -1,8 +1,8 @@
 /*
  * @Author: nestcc 
  * @Date: 2021/4/4 23:30
- * @LastEditors: nestcc
- * @LastEditTime: 2021/4/4 23:30
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-04-21 13:16:46
  * @Discription: 
  */
 
@@ -28,7 +28,15 @@ Value::Value(const long &ln) {
 }
 
 Value::operator bool() {
-    return (type == VT_TRUE);
+    return (type != VT_FALSE);
+}
+
+Value::operator double() {
+    return type == VT_NUM ? num : 0;
+}
+
+Value::operator ObjHeader *() {
+    return type == VT_OBJ ? obj_header : nullptr;
 }
 
 Value::Value(ObjHeader *obj_ptr) {
@@ -63,6 +71,14 @@ Value &Value::operator=(Value &&val) noexcept {
     val.obj_header = nullptr;
     return *this;
 }
+
+bool operator==(const Value &v1, const Value &v2) {
+    if (v1.type != v2.type) { return false; }
+    if (v1.type == VT_NUM) { return v1.num == v2.num; }
+    if (v1.type == VT_OBJ) { return v1.obj_header == v2.obj_header; }
+    return true;
+}
+
 
 //Value &Value::operator=(const Value &val) {
 //    this->type = val.type;

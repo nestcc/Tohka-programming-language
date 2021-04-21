@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date:
  * @LastEditors: Nestcc
- * @LastEditTime:
+ * @LastEditTime: 2021-04-21 14:03:22
  * @Discription:
  */
 
@@ -22,8 +22,10 @@ public:
 
     ObjHeader() = default;
     ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls);
-    virtual ~ObjHeader();
 
+    virtual bool equal_to(const ObjHeader *obj);
+
+    virtual ~ObjHeader();
 private:
 };
 

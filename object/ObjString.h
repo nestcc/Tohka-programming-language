@@ -1,8 +1,8 @@
 /*
  * @Author: nestcc 
  * @Date: 2021/4/4 22:48
- * @LastEditors: nestcc
- * @LastEditTime: 2021/4/4 22:48
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-04-21 14:03:55
  * @Discription: 
  */
 
@@ -23,7 +23,9 @@ public:
     ObjString(VM *vm, const char *str, uint32_t ssize);
     uint64_t hash();
 
-    ~ObjString() override = default;
+    virtual bool equal_to(const ObjHeader *obj) override;
+    
+    ~ObjString() override;
 };
 
 

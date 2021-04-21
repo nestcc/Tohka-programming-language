@@ -1,3 +1,10 @@
+/*
+ * @Author: Nestcc
+ * @Date: 2021-04-04 16:38:13
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-04-21 14:03:29
+ * @Description:  < file content > 
+ */
 //
 // Created by nestcc on 2021/4/4.
 //
@@ -11,21 +18,14 @@ ObjHeader::ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls) {
     is_dark = false;
     ref_cnt = 0;
 
-//    if (vm -> all_objects == nullptr) {
-//        next = this;
-//        prev = this;
-//        vm -> all_objects = this;
-//    }
-//    else {
-//        next = vm -> all_objects;
-//        prev = vm -> all_objects -> prev;
-//        next -> prev = this;
-//        prev -> next = this;
-//        vm -> all_objects = this;
-//    }
     vm -> add_object(this);
     LOG_INFO("object type : %d add to vm.\n", type);
 //    this -> vm = vm;
+}
+
+bool ObjHeader::equal_to(const ObjHeader *obj) {
+    if (type != obj -> type) { return false; }
+    return true;
 }
 
 ObjHeader::~ObjHeader() {

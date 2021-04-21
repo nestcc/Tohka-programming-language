@@ -1,8 +1,8 @@
 /*
  * @Author: nestcc 
  * @Date: 2021/4/4 18:40
- * @LastEditors: nestcc
- * @LastEditTime: 2021/4/4 18:40
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-04-21 13:39:23
  * @Discription: 
  */
 
@@ -22,4 +22,8 @@ ObjHeader(vm, OT_MODULE, nullptr) {
     LOG_INFO(" allocated ObjModule by %lu\n", sizeof(*this));
     LOG_INFO(" module name = ");
     std::cout << mod_name << std::endl;
+}
+
+ObjModule::~ObjModule() {
+    delete name;
 }

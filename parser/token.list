@@ -1,4 +1,4 @@
-char* tokenArray[] = {
+std::vector<std::string> tokenArray = {
    "UNKNOWN",
    "NUM",
    "STRING",

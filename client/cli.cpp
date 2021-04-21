@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-28 10:22:48
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-03-29 15:40:45
+ * @LastEditTime: 2021-04-21 14:11:52
  * @Description:  < file content > 
  */
 
@@ -32,7 +32,7 @@ void runFile(const char* path) {
     while (parser.curr_token.type != TOKEN_EOF) {
         parser.get_next_token();
         printf(" %llu L-tokenArray [%s] : [", parser.curr_token.line_no,
-               tokenArray[parser.curr_token.type]);
+               tokenArray[parser.curr_token.type].c_str());
 //        std::cout << tokenArray[parser.curr_token.type] << " [";
         uint32_t idx = 0;
         while (idx < parser.curr_token.length) {
