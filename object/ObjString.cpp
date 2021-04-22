@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 22:48
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-21 14:05:23
+ * @LastEditTime: 2021-04-22 14:06:35
  * @Discription: 
  */
 
@@ -47,4 +47,8 @@ bool ObjString::equal_to(const ObjHeader *obj) {
 ObjString::~ObjString() {
     vm -> realloca_memory(value.size(), 0);
     // vm -> remove_object(this);
+}
+
+uint64_t ObjString::hash_value() const {
+    return hash_code;
 }

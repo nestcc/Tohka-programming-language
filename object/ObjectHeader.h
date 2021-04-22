@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date:
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-21 14:03:22
+ * @LastEditTime: 2021-04-22 14:42:24
  * @Discription:
  */
 
@@ -23,7 +23,11 @@ public:
     ObjHeader() = default;
     ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls);
 
+    ObjHeader &operator=(const ObjHeader &obj) = delete;
+
     virtual bool equal_to(const ObjHeader *obj);
+
+    virtual uint64_t hash_value() const;
 
     virtual ~ObjHeader();
 private:

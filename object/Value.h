@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:28
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-21 13:14:12
+ * @LastEditTime: 2021-04-22 14:39:11
  * @Discription: 
  */
 
@@ -25,10 +25,9 @@ public:
     explicit Value(const bool &bl);
     explicit Value(const double &num);
     explicit Value(const long &ln);
+    explicit Value(ObjHeader *obj_ptr);
     Value(const Value &val);
     Value(Value &&val);
-
-    explicit Value(ObjHeader *obj_ptr);
 
     explicit operator bool ();
 
@@ -42,7 +41,11 @@ public:
 
     bool operator==(const double &num);
 
+    uint64_t hash_value() const ;
+
     friend bool operator==(const Value &v1, const Value &v2);
+
+    friend bool operator!=(const Value &v1, const Value &v2);
 
     ~Value();
 };   //通用的值结构

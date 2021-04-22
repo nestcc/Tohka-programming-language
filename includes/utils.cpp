@@ -2,7 +2,7 @@
  * @Author: Zhao Yizhu
  * @Date: 2021-02-25 14:10:12
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-03-12 16:54:36
+ * @LastEditTime: 2021-04-22 13:51:39
  * @Description:  < file content >
  */
 
@@ -62,12 +62,16 @@ void report_error(void *parser, ErrorType err_type, const char *fmt, ...) {
     case ERROR_LEX:
     case ERROR_COMPILE:
         ASSERT(parser != nullptr, "parser is null!");
-         fprintf(stderr, RED "%s:%llu" NOCOLOR " \"%s\"\n", ((Parser *) parser) -> file,
-             ((Parser *) parser) -> prev_token.line_no, buffer);
+        fprintf(stderr, RED "%s:%llu" NOCOLOR " \"%s\"\n", ((Parser *) parser) -> file,
+            ((Parser *) parser) -> prev_token.line_no, buffer);
         break;
     case ERROR_RUNTIME:
         fprintf(stderr, RED "%s\n" NOCOLOR, buffer);
         break;
+
+    case ERROR_WARRNING:
+        fprintf(stderr, YELLOW "%s:%llu" NOCOLOR "%s\n", buffer);
+        return;
     default:
         NOT_REACHED();
     }

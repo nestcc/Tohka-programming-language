@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:30
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-21 13:16:46
+ * @LastEditTime: 2021-04-22 14:40:56
  * @Discription: 
  */
 
@@ -27,6 +27,12 @@ Value::Value(const long &ln) {
     num = ln;
 }
 
+Value::Value(ObjHeader *obj_ptr) {
+    type = VT_OBJ;
+    obj_header = obj_ptr;
+    obj_ptr -> ref_cnt += 1;
+}
+
 Value::operator bool() {
     return (type != VT_FALSE);
 }
@@ -44,7 +50,10 @@ Value::Value(ObjHeader *obj_ptr) {
 }
 
 Value::~Value() {
-    if (type == VT_OBJ && obj_header != nullptr) { delete obj_header; }
+    if (type == VT_OBJ && obj_header != nullptr && obj_header -> ref_cnt == 1) 
+        delete obj_header;
+    else 
+        obj_header -> ref_cnt -= 1;
 }
 
 Value::Value(const Value &val) {
@@ -72,11 +81,33 @@ Value &Value::operator=(Value &&val) noexcept {
     return *this;
 }
 
+uint64_t Value::hash_value() const {
+    switch (type) {
+        case VT_FALSE:
+        case VT_NULL:
+            return 0;
+        case VT_TRUE:
+            return 1;
+        case VT_NUM:
+            return num;
+        case VT_OBJ:
+            return obj_header -> hash_value();
+        default:
+            RUNTIME_ERROR(nullptr, "UNDEFINED type has no hash code.");
+            return -1;
+    }
+    return 0;
+}
+
 bool operator==(const Value &v1, const Value &v2) {
     if (v1.type != v2.type) { return false; }
     if (v1.type == VT_NUM) { return v1.num == v2.num; }
     if (v1.type == VT_OBJ) { return v1.obj_header == v2.obj_header; }
     return true;
+}
+
+bool operator!=(const Value &v1, const Value &v2) {
+    return !(v1 == v2);
 }
 
 

@@ -1,8 +1,8 @@
 /*
  * @Author: nestcc 
  * @Date: 2021/4/4 23:12
- * @LastEditors: nestcc
- * @LastEditTime: 2021/4/4 23:12
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-04-22 14:03:04
  * @Discription: 
  */
 
@@ -60,6 +60,7 @@ typedef bool (*Primitive) (VM *vm, Value *args);
 
 #define CAPACITY_GROW_FACTOR 4
 #define MIN_CAPACITY 64
+
 
 //uint32_t hash_string(const std::string &str) {
 //    uint32_t hash_code = 2166136261;

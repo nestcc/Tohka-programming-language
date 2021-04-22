@@ -2,7 +2,7 @@
  * @Author: Zhao Yizhu
  * @Date: 2021-02-25 13:55:51
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-03-29 16:11:23
+ * @LastEditTime: 2021-04-22 14:00:42
  * @Description:  < file content > 
  */
 
@@ -46,9 +46,17 @@ public:
     VM *vm = nullptr;
     uint64_t curr_size;
 
-    MemBufferSTL() : vm(VM::getInstance()) , curr_size(0) {};
+    MemBufferSTL() : std::vector<Type>(0), vm(VM::getInstance()) , curr_size(0) {};
 
-//    MemBuffer(VM *vm) : vm(vm) {};
+    MemBufferSTL(uint64_t size) : 
+        std::vector<Type>(size),
+        vm(VM::getInstance()),
+        curr_size(size) {};
+
+    MemBufferSTL(uint64_t size, const Type &t) : 
+        std::vector<Type>(size, t), 
+        vm(VM::getInstance),
+        curr_size(size) {};
 
     ~MemBufferSTL() {
         buff_clear(vm);
@@ -99,6 +107,7 @@ enum ErrorType {
     ERROR_LEX,
     ERROR_COMPILE,
     ERROR_RUNTIME,
+    ERROR_WARRNING
 };
 
 //void symbol_table_clear(VM *vm, SymbolTable *buffer);
@@ -119,6 +128,9 @@ report_error(parser, ERROR_COMPILE, __VA_ARGS__);
 
 #define RUNTIME_ERROR(parser, ...) \
 report_error(parser, ERROR_RUNTIME, __VA_ARGS__);
+
+#define RUNTIME_WARRINING(parser, ...) \
+report_error(parser, ERROR_WARRNING, __VA_ARGS__);
 
 #define DEFAULT_BUfFER_SIZE 512
 

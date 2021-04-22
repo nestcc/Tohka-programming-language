@@ -2,11 +2,17 @@
  * @Author: nestcc 
  * @Date: 2021/4/19 23:14
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-21 14:12:45
+ * @LastEditTime: 2021-04-22 14:05:51
  * @Discription: 
  */
 
 #include "ObjRange.h"
+
+static inline uint64_t hash_num(uint64_t num) {
+   Bits64 bits64;
+   bits64.num = num;
+   return bits64.bits32[0] ^ bits64.bits32[1];
+}
 
 ObjRange::ObjRange(VM *vm, int from, int to) :
         ObjHeader(vm, OT_RANGE, vm -> range_class),
@@ -18,4 +24,9 @@ bool ObjRange::equal_to(const ObjHeader *obj) {
     const ObjRange *other = dynamic_cast<const ObjRange *> (obj);
     if (other == nullptr) { return false; }
     return (from == other -> from) && (to == other -> to);
+}
+
+
+uint64_t ObjRange::hash_value() const {
+    return hash_num(from) ^ hash_num(to);
 }
