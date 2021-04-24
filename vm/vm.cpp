@@ -2,13 +2,14 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 16:19:21
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-03-12 16:20:36
+ * @LastEditTime: 2021-04-24 21:58:45
  * @Description:  < file content > 
  */
 
 #include <cstdint>
-#include <string>
+// #include <string>
 #include "../object/ObjectHeader.h"
+#include "../object/ObjMap.h"
 #include "vm.h"
 
 VM::VM() : allocated_byte(0), curr_parser(nullptr), all_objects(nullptr), obj_cnt(0) {}

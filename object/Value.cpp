@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:30
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-22 14:40:56
+ * @LastEditTime: 2021-04-24 22:00:10
  * @Discription: 
  */
 
@@ -45,14 +45,8 @@ Value::operator ObjHeader *() {
     return type == VT_OBJ ? obj_header : nullptr;
 }
 
-Value::Value(ObjHeader *obj_ptr) {
-    obj_header = obj_ptr;
-}
-
 Value::~Value() {
-    if (type == VT_OBJ && obj_header != nullptr && obj_header -> ref_cnt == 1) 
-        delete obj_header;
-    else 
+    if (type == VT_OBJ && obj_header != nullptr && obj_header -> ref_cnt == 1)
         obj_header -> ref_cnt -= 1;
 }
 

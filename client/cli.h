@@ -1,17 +1,19 @@
-//
-// Created by nestcc on 2021/3/28.
-//
+/*
+ * @Author: Nestcc
+ * @Date: 2021-03-29 16:05:45
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-04-24 21:54:37
+ * @Description:  < file content > 
+ */
 
-#ifndef TOHKA_CLI_H
-#define TOHKA_CLI_H
+#ifndef _CLI_H_
+#define _CLI_H_
 
-#define VERSION 0.1.0
 #define MAX_LINE_LEN 1024
 
 #include "../includes/common.h"
-#include "../includes/utils.h"
 #include "../includes/unicode.h"
-#include "../vm/vm.h"
+#include "../includes/utils.h"
 #include "../vm/core.h"
 #include "../parser/parser.h"
 

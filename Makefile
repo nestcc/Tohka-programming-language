@@ -58,10 +58,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = "/Users/nestcc/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/CLion.app/Contents/bin/cmake/mac/bin/cmake"
+CMAKE_COMMAND = /Applications/CMake.app/Contents/bin/cmake
 
 # The command to remove a file.
-RM = "/Users/nestcc/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/CLion.app/Contents/bin/cmake/mac/bin/cmake" -E rm -f
+RM = /Applications/CMake.app/Contents/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -78,7 +78,7 @@ CMAKE_BINARY_DIR = /Users/nestcc/projects/cFile/Tohka-programming-language
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	"/Users/nestcc/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/CLion.app/Contents/bin/cmake/mac/bin/cmake" --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/Applications/CMake.app/Contents/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -88,8 +88,8 @@ rebuild_cache/fast: rebuild_cache
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	"/Users/nestcc/Library/Application Support/JetBrains/Toolbox/apps/CLion/ch-0/211.6693.114/CLion.app/Contents/bin/cmake/mac/bin/cmake" -E echo No\ interactive\ CMake\ dialog\ available.
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/Applications/CMake.app/Contents/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -358,6 +358,33 @@ object/ObjList.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjList.cpp.s
 .PHONY : object/ObjList.cpp.s
 
+object/ObjMap.o: object/ObjMap.cpp.o
+
+.PHONY : object/ObjMap.o
+
+# target to build an object file
+object/ObjMap.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjMap.cpp.o
+.PHONY : object/ObjMap.cpp.o
+
+object/ObjMap.i: object/ObjMap.cpp.i
+
+.PHONY : object/ObjMap.i
+
+# target to preprocess a source file
+object/ObjMap.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjMap.cpp.i
+.PHONY : object/ObjMap.cpp.i
+
+object/ObjMap.s: object/ObjMap.cpp.s
+
+.PHONY : object/ObjMap.s
+
+# target to generate assembly for a file
+object/ObjMap.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjMap.cpp.s
+.PHONY : object/ObjMap.cpp.s
+
 object/ObjModule.o: object/ObjModule.cpp.o
 
 .PHONY : object/ObjModule.o
@@ -438,6 +465,33 @@ object/ObjString.s: object/ObjString.cpp.s
 object/ObjString.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjString.cpp.s
 .PHONY : object/ObjString.cpp.s
+
+object/ObjThread.o: object/ObjThread.cpp.o
+
+.PHONY : object/ObjThread.o
+
+# target to build an object file
+object/ObjThread.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjThread.cpp.o
+.PHONY : object/ObjThread.cpp.o
+
+object/ObjThread.i: object/ObjThread.cpp.i
+
+.PHONY : object/ObjThread.i
+
+# target to preprocess a source file
+object/ObjThread.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjThread.cpp.i
+.PHONY : object/ObjThread.cpp.i
+
+object/ObjThread.s: object/ObjThread.cpp.s
+
+.PHONY : object/ObjThread.s
+
+# target to generate assembly for a file
+object/ObjThread.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/object/ObjThread.cpp.s
+.PHONY : object/ObjThread.cpp.s
 
 object/ObjUpvalue.o: object/ObjUpvalue.cpp.o
 
@@ -661,6 +715,9 @@ help:
 	@echo "... object/ObjList.o"
 	@echo "... object/ObjList.i"
 	@echo "... object/ObjList.s"
+	@echo "... object/ObjMap.o"
+	@echo "... object/ObjMap.i"
+	@echo "... object/ObjMap.s"
 	@echo "... object/ObjModule.o"
 	@echo "... object/ObjModule.i"
 	@echo "... object/ObjModule.s"
@@ -670,6 +727,9 @@ help:
 	@echo "... object/ObjString.o"
 	@echo "... object/ObjString.i"
 	@echo "... object/ObjString.s"
+	@echo "... object/ObjThread.o"
+	@echo "... object/ObjThread.i"
+	@echo "... object/ObjThread.s"
 	@echo "... object/ObjUpvalue.o"
 	@echo "... object/ObjUpvalue.i"
 	@echo "... object/ObjUpvalue.s"

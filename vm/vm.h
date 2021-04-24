@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 16:13:34
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-03-16 10:21:16
+ * @LastEditTime: 2021-04-24 21:57:13
  * @Description:  < file content > 
  */
 
@@ -10,12 +10,16 @@
 #ifndef _VM_H_
 #define _VM_H_
 
-#include "../includes/common.h"
-//#include "../object/ObjectHeader.h"
-//#include "../object/BaseClass.h"
+// #include "../includes/common.h"
+// #include "../includes/utils.h"
+#include "../object/headers.h"
+//#include "../object/ObjMap.h"
+#include <vector>
+#include <string>
 
 class ObjHeader;
 class BaseClass;
+class ObjMap;
 
 class VM {
 public:
@@ -35,7 +39,11 @@ public:
 
     uint64_t allocated_byte;
     Parser *curr_parser;
+
     ObjHeader *all_objects;
+    std::vector<std::string> all_methods;
+//    ObjMap *all_modules;
+
     static VM *getInstance();
 
     uint64_t realloca_memory(uint64_t old_size, uint64_t new_size);

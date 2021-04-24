@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date:
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-22 14:42:24
+ * @LastEditTime: 2021-04-24 21:50:55
  * @Discription:
  */
 
@@ -10,6 +10,7 @@
 #define _TOHKA_OBJECT_HEADER_H_
 
 #include "headers.h"
+#include "../vm/MemBufferSTL.h"
 
 class ObjHeader {
 public:
@@ -32,5 +33,7 @@ public:
     virtual ~ObjHeader();
 private:
 };
+
+typedef MemBufferSTL<Value> ValueBuffer;
 
 #endif //TOHKA_OBJECT_HEADER_H

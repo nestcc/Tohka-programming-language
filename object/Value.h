@@ -2,14 +2,13 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:28
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-22 14:39:11
+ * @LastEditTime: 2021-04-24 21:51:58
  * @Discription: 
  */
 
 #ifndef _TOHKA_VALUE_H_
 #define _TOHKA_VALUE_H_
 
-#include "headers.h"
 #include "ObjectHeader.h"
 
 class Value {

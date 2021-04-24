@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-04-22 10:36:45
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-22 14:50:44
+ * @LastEditTime: 2021-04-24 21:04:26
  * @Description:  < file content > 
  */
 
@@ -26,10 +26,22 @@ ObjMap::KV &ObjMap::KV::operator== (const KV &kv) {
 }
 
 ObjMap::ObjMap(VM *vm) :
-ObjHeader(vm, OT_MAP, vm -> map_class) {
-    capacity = 1024, vsize = 0, size = 0, enlarge_ratio = 0.8;
-    items = std::vector<KV *> (capacity, nullptr);
+ObjHeader(vm, OT_MAP, vm -> map_class),
+capacity(1024),
+vsize(0),
+size(0), 
+enlarge_ratio(0.8),
+items(std::vector<KV *> (capacity, nullptr)) {
+    vm -> alloca_memory(sizeof(*this));
 }
+
+ObjMap::ObjMap(VM *vm, uint64_t capacity) :
+    ObjHeader(vm, OT_MAP, vm -> map_class),
+    capacity(capacity),
+    vsize(0),
+    size(0), 
+    enlarge_ratio(0.8),
+    items(std::vector<KV *> (capacity, nullptr)) {}
 
 int ObjMap::add_item(const Value &key, const Value &val) {
     uint64_t index = key.hash_value() % capacity;
@@ -43,6 +55,7 @@ int ObjMap::add_item(const Value &key, const Value &val) {
         items[index] = head;
     }
     size += 1;
+    vm -> alloca_memory(sizeof(KV));
     return 0;
 }
 
@@ -77,6 +90,7 @@ int ObjMap::remove(const Value &key) {
     prev -> next = rm -> next;
     delete rm;
     size -= 1;
+    vm -> realloca_memory(sizeof(KV), 0);
     return 0;
 }
 
@@ -88,4 +102,22 @@ Value *ObjMap::get(const Value &key) {
     KV *res = items[index];
     while (res && res -> key != key) { res = res -> next; }
     return res == nullptr ? nullptr : &(res -> val);
+}
+
+void ObjMap::clear() {
+    for (uint64_t i = 0; i < capacity; i += 1) {
+        if (items[i] == nullptr) { continue; }
+        KV *curr = items[i], *next;
+        while (curr != nullptr) {
+            next = curr -> next;
+            delete curr;
+            curr = curr -> next;
+        }
+    }
+    vm -> realloca_memory(sizeof(KV) * size, 0);
+    vsize = size = 0;
+}
+
+ObjMap::~ObjMap() {
+    clear();
 }

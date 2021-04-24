@@ -2,15 +2,16 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 17:18:38
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-03-29 15:38:42
+ * @LastEditTime: 2021-04-24 21:49:43
  * @Description:  < file content >
  */
 
 #ifndef _PARSER_H_
 #define _PARSER_H_
 
-#include "../vm/vm.h"
+#include "../vm/MemBufferSTL.h"
 #include "../vm/core.h"
+// #include "../vm/MemBufferSTL.h"
 #include "../includes/common.h"
 #include "../includes/utils.h"
 #include "../includes/unicode.h"

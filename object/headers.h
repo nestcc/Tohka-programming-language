@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:12
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-22 14:03:04
+ * @LastEditTime: 2021-04-24 21:48:44
  * @Discription: 
  */
 
@@ -18,6 +18,9 @@ class ObjClosure;
 class ObjModule;
 class ObjUpvalue;
 class ObjString;
+class ObjUpvalue;
+class ObjMap;
+class Frame;
 
 enum ObjType{
     OT_CLASS,   //此项是class类型,以下都是object类型   0
@@ -55,7 +58,6 @@ union Bits64 {
     double num;
 };
 
-typedef MemBufferSTL<Value> ValueBuffer;
 typedef bool (*Primitive) (VM *vm, Value *args);
 
 #define CAPACITY_GROW_FACTOR 4

@@ -2,7 +2,7 @@
  * @Author: Zhao Yizhu
  * @Date: 2021-02-25 14:10:12
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-22 13:51:39
+ * @LastEditTime: 2021-04-24 22:01:09
  * @Description:  < file content >
  */
 
@@ -70,7 +70,7 @@ void report_error(void *parser, ErrorType err_type, const char *fmt, ...) {
         break;
 
     case ERROR_WARRNING:
-        fprintf(stderr, YELLOW "%s:%llu" NOCOLOR "%s\n", buffer);
+        fprintf(stderr, YELLOW "%s:%d > " NOCOLOR "%s\n", __FILE__, __LINE__, buffer);
         return;
     default:
         NOT_REACHED();
