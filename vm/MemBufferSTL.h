@@ -19,46 +19,47 @@ public:
     VM *vm = nullptr;
     uint64_t curr_size;
 
-    MemBufferSTL() : std::vector<Type>(0), vm(VM::getInstance()) , curr_size(0) {};
+    MemBufferSTL() : std::vector<Type>(0), vm(nullptr) , curr_size(0) {};
 
-    MemBufferSTL(uint64_t size) : 
+    MemBufferSTL(VM *vm, uint64_t size) :
         std::vector<Type>(size),
-        vm(VM::getInstance()),
+        vm(vm),
         curr_size(size) {};
 
-    MemBufferSTL(uint64_t size, const Type &t) : 
+    MemBufferSTL(VM *vm, uint64_t size, const Type &t) :
         std::vector<Type>(size, t), 
-        vm(VM::getInstance()),
+        vm(vm),
         curr_size(size) {};
 
     ~MemBufferSTL() {
-        buff_clear(vm);
+        if (vm != nullptr)
+            buff_clear();
     }
 
     uint64_t total_size() {
         return std::vector<Type>::capacity() * sizeof(Type);
     }
 
-    void adjust_size(VM *vm) {
+    void adjust_size() {
         uint64_t new_size = total_size();
         vm -> realloca_memory(curr_size, new_size);
         curr_size = new_size;
     }
 
-    void fill_wirte(VM *vm, Type data, uint64_t fill_cnt) {
+    void fill_wirte(Type data, uint64_t fill_cnt) {
         for (uint64_t i = 0; i < fill_cnt; i += 1) {
             this -> push_back(data);
         }
-        adjust_size(vm);
+        adjust_size();
     };
 
-    void buff_add(VM *vm, Type data) {
-        fill_wirte(vm, data, 1);
+    void buff_add(Type data) {
+        fill_wirte(data, 1);
     };
 
-    void buff_clear(VM *vm) {
+    void buff_clear() {
         std::vector<Type>::clear();
-        adjust_size(vm);
+        adjust_size();
     }
 
 };

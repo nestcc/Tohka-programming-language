@@ -2,7 +2,7 @@
  * @Author: Zhao Yizhu
  * @Date: 2021-02-25 13:55:51
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 21:54:53
+ * @LastEditTime: 2021-04-25 17:24:49
  * @Description:  < file content > 
  */
 
@@ -21,24 +21,24 @@
 { printf( BLUE "[%s : %d] " NOCOLOR, __FILE__, __LINE__); printf(__VA_ARGS__); }
 #endif
 
-// void *mem_manager(VM *vm, void *ptr, uint64_t old_size, uint64_t new_size);
+void *mem_manager(VM *vm, void *ptr, uint64_t old_size, uint64_t new_size);
 
-// #define ALLOCATE(vm_ptr, type) \
-// (type *) mem_manager(vm_ptr, NULL, 0, sizeof(type));
+#define ALLOCATE(vm_ptr, type) \
+(type *) mem_manager(vm_ptr, NULL, 0, sizeof(type));
 
-// #define ALLOCATE_EXTRA(vm_ptr, type, extra_size) \
-// (type *) mem_manager(vm_ptr, NULL, 0, sizeof(type) + extra_size);
+#define ALLOCATE_EXTRA(vm_ptr, type, extra_size) \
+(type *) mem_manager(vm_ptr, NULL, 0, sizeof(type) + extra_size);
 
-// #define ALLOCATE_ARRAY(vm_ptr, type, capacity) \
-// (type *) mem_manager(vm_ptr, NULL, 0, sizeof(typr) * capacity);
+#define ALLOCATE_ARRAY(vm_ptr, type, capacity) \
+(type *) mem_manager(vm_ptr, NULL, 0, sizeof(typr) * capacity);
 
-// #define DESTORY_ARRAY(vm_ptr, arr_ptr, capacity) \
-// mem_manager(vm_ptr, arr_ptr, sizeof(arr_ptr[0]) * capacity, 0);
+#define DESTORY_ARRAY(vm_ptr, arr_ptr, capacity) \
+mem_manager(vm_ptr, arr_ptr, sizeof(arr_ptr[0]) * capacity, 0);
 
-// #define DESTORY(vm_ptr, mem_ptr) \
-// mem_manager(vm_ptr, mem_ptr, 0, 0);
+#define DESTORY(vm_ptr, mem_ptr) \
+mem_manager(vm_ptr, mem_ptr, 0, 0);
 
-//uint64_t ceil_to_squar(uint64_t v);
+uint64_t ceil_to_squar(uint64_t v);
 
 typedef uint8_t Byte;
 typedef char Char;

@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-04-22 10:24:47
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 20:27:11
+ * @LastEditTime: 2021-04-25 17:42:08
  * @Description:  < file content > 
  */
 
@@ -24,12 +24,13 @@ private:
         ~KV() = default;
     };
     
-private:
+// private:
     void clear();
     Value *get(const Value &key);
     
     uint64_t capacity, vsize, size;
     double  enlarge_ratio;
+    std::vector<KV *> items;
 
 public:
 
@@ -37,7 +38,6 @@ public:
     ObjMap(VM *vm);
     ObjMap(VM *vm, uint64_t capacity);
     ~ObjMap();
-    std::vector<KV *> items;
     int add_item(const Value &key, const Value &val);
     Value &get_item(const Value &key);
     int remove(const Value &key);

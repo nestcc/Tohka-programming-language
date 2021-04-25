@@ -18,8 +18,11 @@ ObjHeader::ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls) {
     is_dark = false;
     ref_cnt = 0;
 
-    vm -> add_object(this);
-    LOG_INFO("object type : %d add to vm.\n", type);
+    this -> vm = vm;
+    if (vm != nullptr) {
+        vm->add_object(this);
+        LOG_INFO("object type : %d add to vm.\n", type);
+    }
 //    this -> vm = vm;
 }
 
@@ -34,6 +37,8 @@ uint64_t ObjHeader::hash_value() const {
 }
 
 ObjHeader::~ObjHeader() {
-    LOG_INFO("remove object (%d) from vm.\n", type);
-    vm -> remove_object(this);
+    if (vm != nullptr) {
+        vm->remove_object(this);
+        LOG_INFO("remove object (%d) from vm.\n", type);
+    }
 }

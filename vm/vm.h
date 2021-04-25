@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 16:13:34
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 21:57:13
+ * @LastEditTime: 2021-04-25 17:28:34
  * @Description:  < file content > 
  */
 
@@ -20,9 +20,20 @@
 class ObjHeader;
 class BaseClass;
 class ObjMap;
+class ObjThread;
 
 class VM {
 public:
+    // 虚拟机执行结果
+    enum VmResult {
+        VM_RESULT_SUCCESS,
+        VM_RESULT_ERROR
+    };
+
+    uint64_t allocated_byte;
+    Parser *curr_parser;
+    ObjHeader *all_objects;
+
     BaseClass *str_cls;
     BaseClass *func_cls;
     BaseClass *class_class;
@@ -36,13 +47,9 @@ public:
     BaseClass *num_class;
     BaseClass *fn_class;
     BaseClass *thread_class;
-
-    uint64_t allocated_byte;
-    Parser *curr_parser;
-
-    ObjHeader *all_objects;
-    std::vector<std::string> all_methods;
-//    ObjMap *all_modules;
+    std::vector<std::string> all_method_name;
+    ObjMap *all_modules;
+    ObjThread *curr_thread;
 
     static VM *getInstance();
 

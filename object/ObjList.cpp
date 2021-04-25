@@ -35,7 +35,7 @@ Value ObjList::remove_element(VM *vm, uint64_t index) {
     }
     Value ret(elements[index]);
     elements.erase(elements.begin() + (long) index);
-    elements.adjust_size(vm);
+    elements.adjust_size();
     return ret;
 }
 
@@ -46,12 +46,12 @@ void ObjList::insert_element(VM *vm, uint64_t index, Value value) {
         exit(EXIT_FAILURE);
     }
     elements.insert(elements.begin() + (long) index, value);
-    elements.adjust_size(vm);
+    elements.adjust_size();
 }
 
 void ObjList::resize(VM *vm, uint64_t new_size) {
     elements.reserve(new_size);
-    elements.adjust_size(vm);
+    elements.adjust_size();
 }
 
 ObjList::~ObjList() {

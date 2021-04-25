@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 17:18:43
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-03-29 15:44:19
+ * @LastEditTime: 2021-04-25 17:32:07
  * @Description:  < file content > 
  */
 
@@ -123,11 +123,7 @@ void Parser::get_next_token() {
     curr_token.length = 0;
     curr_token.start = next_char_ptr - 1;
 
-    if (curr_char == -1) {
-        curr_token.type = TOKEN_EOF;
-        return;
-    }
-    while (curr_char != '\0') {
+    while (curr_char != '\0' && curr_char != EOF) {
         switch (curr_char) {
             case ',':
                 curr_token.type = TOKEN_COMMA;
@@ -296,7 +292,7 @@ void Parser::parse_unicode_code_point(ByteBuffer *buf) {
     uint64_t byte_num = get_number_encode_utf8(value);
     ASSERT(byteNum != 0, "utf8 encode bytes should be between 1 and 4!");
 
-    buf->fill_wirte(vm, 0, byte_num);
+    buf->fill_wirte(0, byte_num);
     encode_utf8(buf->data() + buf->size() - byte_num, value);
 
     return;
@@ -304,6 +300,7 @@ void Parser::parse_unicode_code_point(ByteBuffer *buf) {
 
 void Parser::parse_string() {
     ByteBuffer str;
+    str.vm = vm;
 
     while (true) {
         get_next_char();
@@ -333,41 +330,41 @@ void Parser::parse_string() {
             get_next_char();
             switch (curr_char) {
                 case '0':
-                    str.buff_add(vm, '\0');
+                    str.buff_add('\0');
                     break;
                 case 'a':
-                    str.buff_add(vm, '\a');
+                    str.buff_add('\a');
                     break;
                 case 'b':
-                    str.buff_add(vm, '\b');
+                    str.buff_add('\b');
                     break;
                 case 'f':
-                    str.buff_add(vm, '\f');
+                    str.buff_add('\f');
                     break;
                 case 'n':
-                    str.buff_add(vm, '\n');
+                    str.buff_add('\n');
                     break;
                 case 'r':
-                    str.buff_add(vm, '\r');
+                    str.buff_add('\r');
                     break;
                 case 't':
-                    str.buff_add(vm, '\t');
+                    str.buff_add('\t');
                     break;
                 case 'u':
                     parse_unicode_code_point(&str);
                     break;
                 case '"':
-                    str.buff_add(vm, '"');
+                    str.buff_add('"');
                     break;
                 case '\\':
-                    str.buff_add(vm, '\\');
+                    str.buff_add('\\');
                     break;
                 default:
                     LEX_ERROR(this, "unsupport escape \\%c", curr_char);
                     break;
             }
         } else {   //普通字符
-            str.buff_add(vm, curr_char);
+            str.buff_add(curr_char);
         }
     }
 

@@ -44,6 +44,7 @@ ObjMap::ObjMap(VM *vm, uint64_t capacity) :
     items(std::vector<KV *> (capacity, nullptr)) {}
 
 int ObjMap::add_item(const Value &key, const Value &val) {
+    if (capacity == 0) { MEM_ERROR("Capacity of a map object is 0."); }
     uint64_t index = key.hash_value() % capacity;
     if (items[index] == nullptr) {
         items[index] = new KV(key, val);
@@ -55,7 +56,8 @@ int ObjMap::add_item(const Value &key, const Value &val) {
         items[index] = head;
     }
     size += 1;
-    vm -> alloca_memory(sizeof(KV));
+    if (vm != nullptr)
+        vm -> alloca_memory(sizeof(KV));
     return 0;
 }
 
@@ -90,7 +92,9 @@ int ObjMap::remove(const Value &key) {
     prev -> next = rm -> next;
     delete rm;
     size -= 1;
-    vm -> realloca_memory(sizeof(KV), 0);
+
+    if (vm != nullptr)
+        vm -> realloca_memory(sizeof(KV), 0);
     return 0;
 }
 
@@ -114,7 +118,9 @@ void ObjMap::clear() {
             curr = curr -> next;
         }
     }
-    vm -> realloca_memory(sizeof(KV) * size, 0);
+
+    if (vm != nullptr)
+        vm -> realloca_memory(sizeof(KV) * size, 0);
     vsize = size = 0;
 }
 

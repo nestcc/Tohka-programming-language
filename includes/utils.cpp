@@ -2,7 +2,7 @@
  * @Author: Zhao Yizhu
  * @Date: 2021-02-25 14:10:12
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 22:01:09
+ * @LastEditTime: 2021-04-25 17:26:51
  * @Description:  < file content >
  */
 
@@ -13,6 +13,7 @@
 #include "common.h"
 #include "utils.h"
 #include "../parser/parser.h"
+#include "../vm/vm.h"
 
 uint64_t ceil_to_squar(uint64_t v) {
     v += (v == 0);
@@ -28,23 +29,15 @@ uint64_t ceil_to_squar(uint64_t v) {
 
 void *mem_manager(VM *vm, void *data, uint64_t old_size, uint64_t new_size) {
 
-    // vm -> allocatedBytes += new_size - old_size;
+    vm -> allocated_byte += new_size - old_size;
 
     if (new_size == 0) {
         free(data);
         return nullptr;
     }
-    return nullptr;
-//    return realloc(data, new_size);
+    // return nullptr;
+    return realloc(data, new_size);
 }
-
-//void symbol_table_clear(VM *vm, SymbolTable *buffer) {
-//    for (uint64_t i = 0; i < buffer -> count; i += 1) {
-//        mem_manager(vm, (void *) buffer -> datas[i].data(), 0, 0);
-//    }
-//    buffer -> buffClear(vm);
-//    return;
-//}
 
 void report_error(void *parser, ErrorType err_type, const char *fmt, ...) {
     char buffer[DEFAULT_BUfFER_SIZE] = "\0";

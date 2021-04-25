@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-28 10:22:48
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-21 14:11:52
+ * @LastEditTime: 2021-04-25 17:42:31
  * @Description:  < file content > 
  */
 
@@ -51,11 +51,6 @@ int main(int argc, const char **argv) {
         runFile(argv[1]);
     }
 
-//    ObjModule module(VM::getInstance(), "new module5000");
-//    LOG_INFO(" create module ok\n");
-//    ObjFunction obj_func(VM::getInstance(), &module, 32);
-//    LOG_INFO(" create function object ok\n");
-
     VM *vm = VM::getInstance();
 
     std::cout << " get all objects" << std::endl;
@@ -67,10 +62,17 @@ int main(int argc, const char **argv) {
 
     while (tmp != objs) {
         ObjString *str_obj = dynamic_cast<ObjString *> (tmp);
-        if (str_obj == nullptr) { continue; }
+        if (str_obj == nullptr) {
+            std::cout << " > curr obj not ObjString, but " << tmp -> type << std::endl;
+            tmp = tmp -> next;
+            continue;
+        }
         std::cout << " > curr obj : " << str_obj -> value << std::endl;
         tmp = tmp -> next;
     }
+
+    std::cout << "get all modules\n";
+//    std::cout << vm -> all_modules << std::endl;
 
     return 0;
 }

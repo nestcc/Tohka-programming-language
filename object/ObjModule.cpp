@@ -16,7 +16,7 @@ ObjHeader(vm, OT_MODULE, nullptr) {
     module_var_name = SymbolTable();
     module_var_value = ValueBuffer();
 
-    delete name;
+//    delete name;
     name = new ObjString(vm, mod_name);
     vm -> alloca_memory(sizeof(*this));
     LOG_INFO(" allocated ObjModule by %lu\n", sizeof(*this));

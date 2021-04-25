@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 16:19:21
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 21:58:45
+ * @LastEditTime: 2021-04-25 17:43:29
  * @Description:  < file content > 
  */
 
@@ -11,12 +11,14 @@
 #include "../object/ObjectHeader.h"
 #include "../object/ObjMap.h"
 #include "vm.h"
+#include "core.h"
 
-VM::VM() : allocated_byte(0), curr_parser(nullptr), all_objects(nullptr), obj_cnt(0) {}
+VM::VM() : allocated_byte(0), curr_parser(nullptr), all_objects(nullptr) {}
 
 VM *VM::getInstance() {
     if (instance == nullptr) {
         instance = new VM();
+        build_core(instance);
     }
     return instance;
 }
