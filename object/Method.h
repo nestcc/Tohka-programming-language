@@ -1,8 +1,8 @@
 /*
  * @Author: nestcc 
  * @Date: 2021/4/4 23:28
- * @LastEditors: nestcc
- * @LastEditTime: 2021/4/4 23:28
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-04-27 19:48:47
  * @Discription: 
  */
 
@@ -18,6 +18,7 @@ public:
         Primitive primFunc;
         ObjClosure *obj;
     };
+    Method() = default;
 };
 
 #endif //TOHKA_METHOD_H

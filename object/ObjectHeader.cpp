@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-04-04 16:38:13
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-22 14:10:11
+ * @LastEditTime: 2021-04-27 19:39:04
  * @Description:  < file content > 
  */
 //
@@ -39,6 +39,6 @@ uint64_t ObjHeader::hash_value() const {
 ObjHeader::~ObjHeader() {
     if (vm != nullptr) {
         vm->remove_object(this);
-        LOG_INFO("remove object (%d) from vm.\n", type);
+        LOG_INFO("remove object %d from vm.\n", type);
     }
 }

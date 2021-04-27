@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 16:33:56
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-27 19:09:57
+ * @LastEditTime: 2021-04-27 19:58:06
  * @Description:  < file content > 
  */
 
@@ -13,6 +13,8 @@
 #include "../object/ObjMap.h"
 #include "../object/Value.h"
 #include "../object/ObjModule.h"
+#include "../object/BaseClass.h"
+#include "../object/Method.h"
 // #include "vm.h"
 
 char *root_dir = nullptr;
@@ -60,10 +62,25 @@ VM::VmResult exec_module(VM *vm, Value module_name, const char *module_code) {
 
 void build_core(VM *vm) {
     ObjModule *core_module = new ObjModule(vm, "__core_module__");
-    vm -> all_modules = new ObjMap(vm, 8);
+    vm -> all_modules = new ObjMap(vm);
     vm -> all_modules -> add_item(Value(VT_NULL), Value(core_module));
 }
 
 int get_index_from_symbol_table(SymbolTable *table, std::string &name) {
     return std::find(table -> begin(), table -> end(), name) - table -> begin();
+}
+
+void bind_method(BaseClass *base_class, uint64_t index, Method *method) {
+    if (index >= base_class -> methods.size()) {
+        base_class -> methods.fill_wirte(Method(), index - base_class -> methods.size() + 1);
+    }
+    base_class -> methods[index] = *method;
+}
+
+void bind_super_class(BaseClass *sub_class, BaseClass *super_class) {
+    sub_class -> super_class = super_class;
+    sub_class -> field_num += super_class -> field_num;
+    for (uint64_t idx = 0; idx < super_class -> methods.size(); idx += 1) {
+        bind_method(sub_class, idx, &(super_class -> methods[idx]));
+    }
 }

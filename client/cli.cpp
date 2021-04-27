@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-28 10:22:48
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-26 17:40:22
+ * @LastEditTime: 2021-04-27 19:38:23
  * @Description:  < file content > 
  */
 
@@ -12,7 +12,7 @@
 #include "../object/ObjFunction.h"
 #include "../object/ObjModule.h"
 
-void runFile(const char* path) {
+void runFileParser(const char* path) {
     const char* lastSlash = strrchr(path, '/');
     if (lastSlash != nullptr) {
         char* root = (char*)malloc(lastSlash - path + 2);
@@ -42,6 +42,23 @@ void runFile(const char* path) {
     }
 }
 
+static void runFile(const char* path) {
+    const char* lastSlash = strrchr(path, '/');
+    if (lastSlash != NULL) {
+        char* root = (char*)malloc(lastSlash - path + 2);
+        memcpy(root, path, lastSlash - path + 1);
+        root[lastSlash - path + 1] = '\0';
+        root_dir = root;
+    }
+
+    VM* vm = VM::getInstance();
+    const char* sourceCode = read_file(path);
+    
+    std::string spath(path);
+    ObjString src(vm, spath);
+    exec_module(vm, Value(&src), sourceCode);
+}
+
 int main(int argc, const char **argv) {
     LOG_INFO("in main\n");
 
@@ -55,7 +72,6 @@ int main(int argc, const char **argv) {
 
     std::cout << " get all objects" << std::endl;
     ObjHeader *objs = vm -> all_objects, *tmp = objs -> next;
-//    std::cout << objs -> type << std::endl;
     ObjString *str_obj = dynamic_cast<ObjString *> (objs);
     if (str_obj != nullptr)
         std::cout << " > objs : " << str_obj -> value << std::endl;

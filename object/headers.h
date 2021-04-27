@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:12
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 21:48:44
+ * @LastEditTime: 2021-04-27 19:43:51
  * @Discription: 
  */
 
@@ -21,6 +21,8 @@ class ObjString;
 class ObjUpvalue;
 class ObjMap;
 class Frame;
+class BaseClass;
+class Method;
 
 enum ObjType{
     OT_CLASS,   //此项是class类型,以下都是object类型   0
