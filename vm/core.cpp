@@ -2,12 +2,13 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 16:33:56
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-25 17:39:00
+ * @LastEditTime: 2021-04-27 19:09:57
  * @Description:  < file content > 
  */
 
 #include <string>
 #include <sys/stat.h>
+#include <algorithm>
 #include "core.h"
 #include "../object/ObjMap.h"
 #include "../object/Value.h"
@@ -58,7 +59,11 @@ VM::VmResult exec_module(VM *vm, Value module_name, const char *module_code) {
 }
 
 void build_core(VM *vm) {
-    ObjModule *core_module = new ObjModule(vm, "__core__module__");
+    ObjModule *core_module = new ObjModule(vm, "__core_module__");
     vm -> all_modules = new ObjMap(vm, 8);
     vm -> all_modules -> add_item(Value(VT_NULL), Value(core_module));
+}
+
+int get_index_from_symbol_table(SymbolTable *table, std::string &name) {
+    return std::find(table -> begin(), table -> end(), name) - table -> begin();
 }

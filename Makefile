@@ -169,6 +169,33 @@ client/cli.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/client/cli.cpp.s
 .PHONY : client/cli.cpp.s
 
+compiler/compiler.o: compiler/compiler.cpp.o
+
+.PHONY : compiler/compiler.o
+
+# target to build an object file
+compiler/compiler.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/compiler/compiler.cpp.o
+.PHONY : compiler/compiler.cpp.o
+
+compiler/compiler.i: compiler/compiler.cpp.i
+
+.PHONY : compiler/compiler.i
+
+# target to preprocess a source file
+compiler/compiler.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/compiler/compiler.cpp.i
+.PHONY : compiler/compiler.cpp.i
+
+compiler/compiler.s: compiler/compiler.cpp.s
+
+.PHONY : compiler/compiler.s
+
+# target to generate assembly for a file
+compiler/compiler.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/toh.dir/build.make CMakeFiles/toh.dir/compiler/compiler.cpp.s
+.PHONY : compiler/compiler.cpp.s
+
 includes/unicode.o: includes/unicode.cpp.o
 
 .PHONY : includes/unicode.o
@@ -694,6 +721,9 @@ help:
 	@echo "... client/cli.o"
 	@echo "... client/cli.i"
 	@echo "... client/cli.s"
+	@echo "... compiler/compiler.o"
+	@echo "... compiler/compiler.i"
+	@echo "... compiler/compiler.s"
 	@echo "... includes/unicode.o"
 	@echo "... includes/unicode.i"
 	@echo "... includes/unicode.s"

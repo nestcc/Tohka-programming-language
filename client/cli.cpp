@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-28 10:22:48
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-25 17:42:31
+ * @LastEditTime: 2021-04-26 17:40:22
  * @Description:  < file content > 
  */
 
@@ -70,9 +70,6 @@ int main(int argc, const char **argv) {
         std::cout << " > curr obj : " << str_obj -> value << std::endl;
         tmp = tmp -> next;
     }
-
-    std::cout << "get all modules\n";
-//    std::cout << vm -> all_modules << std::endl;
 
     return 0;
 }

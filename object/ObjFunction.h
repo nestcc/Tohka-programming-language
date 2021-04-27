@@ -1,8 +1,8 @@
 /*
  * @Author: nestcc 
  * @Date: 2021/4/4 23:35
- * @LastEditors: nestcc
- * @LastEditTime: 2021/4/4 23:35
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-04-27 09:31:00
  * @Discription: 
  */
 
@@ -25,7 +25,6 @@ public:
 
     struct FuncDebug {
         FuncDebug() = default;
-
         std::string file_name;
         uint64_t line_no;
     } dbg_info;

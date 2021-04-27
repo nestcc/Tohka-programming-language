@@ -26,6 +26,6 @@ add_executable(toh  ${CLI_DIR}
                     ${INCLUDE_DIR}
                     ${VM_DIR}
                     ${PARSER_DIR}
-                    ${OBJECT_DIR})
-#                    ${GC_DIR}
-#                    ${COMPILER_DIR})
+                    ${OBJECT_DIR}
+                    ${GC_DIR}
+                    ${COMPILER_DIR})
