@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:30
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 22:00:10
+ * @LastEditTime: 2021-05-01 10:01:42
  * @Discription: 
  */
 
@@ -91,6 +91,10 @@ uint64_t Value::hash_value() const {
             return -1;
     }
     return 0;
+}
+
+bool Value::operator==(ValueType vtype) {
+    return type == vtype;
 }
 
 bool operator==(const Value &v1, const Value &v2) {

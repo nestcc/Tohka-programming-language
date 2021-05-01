@@ -2,7 +2,7 @@
  * @Author: Zhao Yizhu
  * @Date: 2021-02-25 13:55:51
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-25 17:24:49
+ * @LastEditTime: 2021-05-01 10:08:28
  * @Description:  < file content > 
  */
 
@@ -72,11 +72,11 @@ report_error(parser, ERROR_LEX, __VA_ARGS__);
 #define COMPILE_ERROR(parser, ...) \
 report_error(parser, ERROR_COMPILE, __VA_ARGS__);
 
-#define RUNTIME_ERROR(parser, ...) \
-report_error(parser, ERROR_RUNTIME, __VA_ARGS__);
+#define RUNTIME_ERROR(...) \
+report_error(nullptr, ERROR_RUNTIME, __VA_ARGS__);
 
-#define RUNTIME_WARRINING(parser, ...) \
-report_error(parser, ERROR_WARRNING, __VA_ARGS__);
+#define RUNTIME_WARRINING(...) \
+report_error(nullptr, ERROR_WARRNING, __VA_ARGS__);
 
 #define DEFAULT_BUfFER_SIZE 512
 

@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 18:17
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 21:49:10
+ * @LastEditTime: 2021-05-01 10:11:38
  * @Discription: 
  */
 
@@ -21,6 +21,14 @@ public:
     typedef MemBufferSTL<Method> MethodBuffer;
     MethodBuffer methods;
     ObjString *name;
+
+    BaseClass() = default;
+    BaseClass(VM *vm, std::string name, uint64_t field_num);
+    BaseClass(const BaseClass &base_class) = delete;
+    BaseClass &operator=(const BaseClass &base_class) = delete;
+    ~BaseClass() override;
 };
+
+inline BaseClass *get_class_of_val(VM *vm, Value *val);
 
 #endif //TOHKA_BASE_CLASS_H

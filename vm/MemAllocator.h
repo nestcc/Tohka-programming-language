@@ -1,13 +1,13 @@
 /*
  * @Author: nestcc 
  * @Date: 2021/4/20 10:24
- * @LastEditors: nestcc
- * @LastEditTime: 2021/4/20 10:24
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-05-01 09:29:14
  * @Discription: 
  */
 
-#ifndef _TOHKA_MEMALLOCATOR_H_
-#define _TOHKA_MEMALLOCATOR_H_
+#ifndef _MEMALLOCATOR_H_
+#define _MEMALLOCATOR_H_
 
 #include <cstdlib>
 #include <cstring>
@@ -113,4 +113,4 @@ private:
 };
 
 
-#endif //TOHKA_MEMALLOCATOR_H
+#endif //_MEMALLOCATOR_H_

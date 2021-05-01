@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:28
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-27 19:48:47
+ * @LastEditTime: 2021-05-01 09:54:46
  * @Discription: 
  */
 
@@ -15,7 +15,7 @@ class Method {
 public:
     MethodType type;
     union {
-        Primitive primFunc;
+        Primitive prim_func;
         ObjClosure *obj;
     };
     Method() = default;

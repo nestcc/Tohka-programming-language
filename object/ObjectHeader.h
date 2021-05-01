@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date:
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 21:50:55
+ * @LastEditTime: 2021-05-01 10:17:01
  * @Discription:
  */
 
@@ -16,7 +16,7 @@ class ObjHeader {
 public:
     ObjType type;
     bool is_dark;
-    BaseClass *cls;
+    BaseClass *cls;     // super class
     ObjHeader *next, *prev;
     uint64_t ref_cnt;
     VM *vm;
