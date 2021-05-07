@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:30
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-05-01 10:01:42
+ * @LastEditTime: 2021-05-07 15:32:18
  * @Discription: 
  */
 
@@ -53,18 +53,26 @@ Value::~Value() {
 Value::Value(const Value &val) {
     type = val.type;
     num = val.num;
+    if (type == VT_OBJ) {
+        obj_header -> ref_cnt += 1;
+    }
 }
 
 Value::Value(Value &&val) {
     type = val.type;
     num = val.num;
     val.obj_header = nullptr;
-//    return *this;
 }
 
 Value &Value::operator=(const Value &val) {
+    if (type == VT_OBJ) {
+        obj_header -> ref_cnt -= 1;
+    }
     type = val.type;
     num = val.num;
+    if (type == VT_OBJ) {
+        obj_header -> ref_cnt += 1;
+    }
     return *this;
 }
 
@@ -125,6 +133,13 @@ bool operator!=(const Value &v1, const Value &v2) {
 //    return num;
 //}
 //
-//ObjHeader *Value::to_obj() {
-//    return obj_header;
-//}
+
+ObjHeader *Value::toObj() {
+    if (type != VT_OBJ) { return nullptr; }
+    return obj_header;
+}
+
+Value::operator ObjHeader *() {
+    if (type != VT_OBJ) { return nullptr; }
+    return obj_header;
+}

@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:28
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-05-01 10:01:06
+ * @LastEditTime: 2021-05-07 15:31:48
  * @Discription: 
  */
 
@@ -47,6 +47,10 @@ public:
     friend bool operator==(const Value &v1, const Value &v2);
 
     friend bool operator!=(const Value &v1, const Value &v2);
+
+    ObjHeader *toObj();
+
+    operator ObjHeader *();
 
     ~Value();
 };   //通用的值结构
