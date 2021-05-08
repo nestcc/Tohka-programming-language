@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:28
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-05-07 15:31:48
+ * @LastEditTime: 2021-05-08 15:12:55
  * @Discription: 
  */
 
@@ -50,7 +50,7 @@ public:
 
     ObjHeader *toObj();
 
-    operator ObjHeader *();
+    // operator ObjHeader *();
 
     ~Value();
 };   //通用的值结构

@@ -2,26 +2,34 @@
  * @Author: Nestcc
  * @Date: 2021-05-01 09:30:09
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-05-07 15:44:46
+ * @LastEditTime: 2021-05-08 16:06:57
  * @Description:  < file content > 
  */
 
+#include "vm.h"
+#include "core.h"
 #include "primitive_methods.h"
 #include "../object/Method.h"
 #include "../object/Value.h"
 #include "../object/BaseClass.h"
 #include "../includes/utils.h"
 
-inline void func_bind_method(Method *method, Primitive prim_func) {
-    if (method == nullptr) {
-        COMPILE_ERROR(nullptr, "method is nullptr.");
-        return;
+static inline BaseClass *get_class_of_val(VM *vm, Value *val) {
+    switch (val -> type) {
+        case VT_NULL:
+            return vm -> null_class;
+        case VT_TRUE:
+        case VT_FALSE:
+            return vm -> bool_class;
+        case VT_NUM:
+            return vm -> num_class;
+        case VT_OBJ:
+            return val -> obj_header -> cls;
+        // case VT_UNDEFINED:
+        default:
+            NOT_REACHED();
     }
-    else if (prim_func == nullptr) {
-        COMPILE_ERROR(nullptr, "primitive function is nullptr.");
-        return;
-    }
-    method -> prim_func = prim_func;
+    return nullptr;
 }
 
 #define RET_VALUE(val) args[0] = val; return true;
@@ -71,3 +79,7 @@ bool obj_super_type(VM *vm, Value *args) {
     ObjHeader *obj = (ObjHeader *) args[0];
     RET_VALUE(Value(obj -> cls -> super_class));
 }
+
+// bool obj_meta_type(VM *vm, Value *args) {
+    
+// }

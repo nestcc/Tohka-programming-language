@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 23:30
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-05-07 15:32:18
+ * @LastEditTime: 2021-05-08 15:11:05
  * @Discription: 
  */
 
@@ -135,11 +135,6 @@ bool operator!=(const Value &v1, const Value &v2) {
 //
 
 ObjHeader *Value::toObj() {
-    if (type != VT_OBJ) { return nullptr; }
-    return obj_header;
-}
-
-Value::operator ObjHeader *() {
     if (type != VT_OBJ) { return nullptr; }
     return obj_header;
 }

@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 16:13:34
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-25 17:28:34
+ * @LastEditTime: 2021-05-08 15:33:30
  * @Description:  < file content > 
  */
 
@@ -13,6 +13,7 @@
 // #include "../includes/common.h"
 // #include "../includes/utils.h"
 #include "../object/headers.h"
+// #include "MemBufferSTL.h"
 //#include "../object/ObjMap.h"
 #include <vector>
 #include <string>
@@ -21,6 +22,10 @@ class ObjHeader;
 class BaseClass;
 class ObjMap;
 class ObjThread;
+// template<>
+// class MemBufferSTL();
+
+typedef std::vector<std::string> MethodNameList;
 
 class VM {
 public:
@@ -47,7 +52,7 @@ public:
     BaseClass *num_class;
     BaseClass *fn_class;
     BaseClass *thread_class;
-    std::vector<std::string> all_method_name;
+    MethodNameList all_method_name;
     ObjMap *all_modules;
     ObjThread *curr_thread;
 

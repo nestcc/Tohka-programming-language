@@ -9,10 +9,10 @@
 build/*
 cmake-build-debug/
 CMakeFiles/
-cmake-build-debug
-cmake_install.cmake
-cMakeCache.txt
-Makefile
+./cmake-build-debug
+./cmake_install.cmake
+./cMakeCache.txt
+./Makefile
 
 # jetbrains
 .idea/

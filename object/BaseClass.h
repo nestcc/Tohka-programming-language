@@ -2,7 +2,7 @@
  * @Author: nestcc 
  * @Date: 2021/4/4 18:17
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-05-01 10:11:38
+ * @LastEditTime: 2021-05-08 16:02:14
  * @Discription: 
  */
 
@@ -29,6 +29,6 @@ public:
     ~BaseClass() override;
 };
 
-inline BaseClass *get_class_of_val(VM *vm, Value *val);
+// inline BaseClass *get_class_of_val(VM *vm, Value *val);
 
 #endif //TOHKA_BASE_CLASS_H

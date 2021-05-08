@@ -13,8 +13,8 @@
 
 ObjModule::ObjModule(VM *vm, const std::string &mod_name) :
 ObjHeader(vm, OT_MODULE, nullptr) {
-    module_var_name = SymbolTable();
-    module_var_value = ValueBuffer();
+    module_var_name = SymbolTable(vm, 0);
+    module_var_value = ValueBuffer(vm, 0);
 
 //    delete name;
     name = new ObjString(vm, mod_name);
