@@ -1,8 +1,8 @@
 /*
  * @Author: nestcc 
  * @Date: 2021/4/4 23:35
- * @LastEditors: nestcc
- * @LastEditTime: 2021/4/4 23:35
+ * @LastEditors: Nestcc
+ * @LastEditTime: 2021-05-08 16:30:50
  * @Discription: 
  */
 
@@ -14,8 +14,10 @@
 ObjFunction::ObjFunction(VM *vm, ObjModule *obj_module, uint64_t slot_num) :
         ObjHeader(vm, OT_FUNCTION, vm -> func_cls) {
     LOG_INFO(" new ObjFunction slot_num = %llu\n, module = %s\n", slot_num, obj_module -> name -> value . data());
-    ins_stream = ByteBuffer();
-    constants = ValueBuffer();
+    // ins_stream = ByteBuffer(vm, 0);
+    new (&ins_stream) ByteBuffer(vm, 0);
+    // constants = ValueBuffer(vm, 0);
+    new (&constants) ValueBuffer(vm, 0);
 
     module = obj_module;
     max_stk_slot_num = slot_num;

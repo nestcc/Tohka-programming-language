@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-04-28 10:38:25
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-05-08 16:07:06
+ * @LastEditTime: 2021-05-08 16:26:53
  * @Description:  < file content > 
  */
 
@@ -14,7 +14,8 @@ BaseClass::BaseClass(VM *vm, std::string name, uint64_t field_num):
 ObjHeader(vm, OT_CLASS, nullptr) {
     this -> name = new ObjString(vm, name);
     this -> field_num = field_num;
-    this -> methods = MethodBuffer(vm, 0);
+    // this -> methods = MethodBuffer(vm, 0);
+    new(&methods) MethodBuffer(vm, 0);
 }
 
 BaseClass::~BaseClass() {

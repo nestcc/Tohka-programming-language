@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-04-24 21:41:50
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 21:51:20
+ * @LastEditTime: 2021-05-08 16:29:46
  * @Description:  < file content > 
  */
 
@@ -25,6 +25,9 @@ public:
         std::vector<Type>(size),
         vm(vm),
         curr_size(size) {};
+
+    MemBufferSTL(const MemBufferSTL<Type> &other) = delete;
+    MemBufferSTL &operator=(const MemBufferSTL<Type> &other) = delete;
 
     MemBufferSTL(VM *vm, uint64_t size, const Type &t) :
         std::vector<Type>(size, t), 
