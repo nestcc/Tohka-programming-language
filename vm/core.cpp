@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 16:33:56
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-05-08 15:59:25
+ * @LastEditTime: 2021-07-18 10:05:25
  * @Description:  < file content > 
  */
 
@@ -107,9 +107,15 @@ void build_core(VM *vm) {
     func_bind_class(vm, vm -> object_class, "!", obj_not);
     func_bind_class(vm, vm -> object_class, "==(_)", obj_equal);
     func_bind_class(vm, vm -> object_class, "!=(_)", obj_not_equal);
+    func_bind_class(vm, vm -> object_class, "type", obj_type);
+    func_bind_class(vm, vm -> object_class, "type_name", obj_type_name);
+    func_bind_class(vm, vm -> object_class, "super_type", obj_super_type);
 
     vm -> class_class = new BaseClass(vm, "__class__", 0);
-    
+    func_bind_class(vm, vm -> class_class, "type", obj_type);
+    func_bind_class(vm, vm -> class_class, "type_name", obj_type_name);
+    func_bind_class(vm, vm -> class_class, "super_type", obj_super_type);
+
     BaseClass *obj_meta_class = new BaseClass(vm, "__obj_meta__", 0);
     bind_super_class(obj_meta_class, vm -> class_class);
 
