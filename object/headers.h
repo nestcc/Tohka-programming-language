@@ -20,9 +20,9 @@ class ObjUpvalue;
 class ObjString;
 class ObjUpvalue;
 class ObjMap;
-class Frame;
+class frame;
 class BaseClass;
-class Method;
+class method;
 
 enum ObjType{
     OT_CLASS,   //此项是class类型,以下都是object类型   0

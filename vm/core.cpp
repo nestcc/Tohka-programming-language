@@ -11,11 +11,11 @@
 #include <algorithm>
 #include "core.h"
 #include "primitive_methods.h"
-#include "../object/ObjMap.h"
-#include "../object/Value.h"
-#include "../object/ObjModule.h"
-#include "../object/BaseClass.h"
-#include "../object/Method.h"
+#include "../object/obj_map.h"
+#include "../object/value.h"
+#include "../object/obj_module.h"
+#include "../object/base_class.h"
+#include "../object/method.h"
 #include "../compiler/compiler.h"
 
 char *root_dir = nullptr;
@@ -31,10 +31,10 @@ static inline void func_bind_class(VM *vm, BaseClass *base_cls, std::string meth
     }
 
     uint64_t global_index = get_index_from_symbol_table(&vm -> all_method_name, method_name);
-    Method *method = new Method();
-    method -> prim_func = prim_func;
-    method -> type = MT_PRIMITIVE;
-    bind_method(base_cls, global_index, method);
+    method *pMethod = new method();
+    pMethod -> prim_func = prim_func;
+    pMethod -> type = MT_PRIMITIVE;
+    bind_method(base_cls, global_index, pMethod);
 }
 
 // 读源码文件
@@ -81,11 +81,11 @@ int get_index_from_symbol_table(MethodNameList *table, std::string &name) {
     return std::find(table -> begin(), table -> end(), name) - table -> begin();
 }
 
-void bind_method(BaseClass *base_class, uint64_t index, Method *method) {
+void bind_method(BaseClass *base_class, uint64_t index, method *pMethod) {
     if (index >= base_class -> methods.size()) {
-        base_class -> methods.fill_wirte(Method(), index - base_class -> methods.size() + 1);
+        base_class -> methods.fill_wirte(method(), index - base_class -> methods.size() + 1);
     }
-    base_class -> methods[index] = *method;
+    base_class -> methods[index] = *pMethod;
 }
 
 void bind_super_class(BaseClass *sub_class, BaseClass *super_class) {

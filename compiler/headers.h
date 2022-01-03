@@ -13,12 +13,12 @@
 #include <cinttypes>
 #include <string>
 
-class LocalVar;
+class local_var;
 class Loop;
 class Upvalue;
 class Signature;
 class Compiler;
-class ClassBookKeep;
+class class_book_keep;
 class CompileUnit;
 
 #define MAX_LOCAL_VAR_NUM 128

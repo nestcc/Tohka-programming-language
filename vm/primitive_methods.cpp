@@ -9,9 +9,9 @@
 #include "vm.h"
 #include "core.h"
 #include "primitive_methods.h"
-#include "../object/Method.h"
-#include "../object/Value.h"
-#include "../object/BaseClass.h"
+#include "../object/method.h"
+#include "../object/value.h"
+#include "../object/base_class.h"
 #include "../includes/utils.h"
 
 static inline BaseClass *get_class_of_val(VM *vm, Value *val) {

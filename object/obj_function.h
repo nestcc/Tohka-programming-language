@@ -10,7 +10,7 @@
 #define _TOHKA_OBJFUNCTION_H_
 
 #include <string>
-#include "ObjectHeader.h"
+#include "object_header.h"
 
 class ObjFunction : public ObjHeader {
 public:

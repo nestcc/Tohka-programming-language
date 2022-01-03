@@ -10,7 +10,7 @@
 //
 
 #include <iostream>
-#include "ObjectHeader.h"
+#include "object_header.h"
 
 ObjHeader::ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls) {
     type = obj_type;

@@ -2,14 +2,13 @@
  * @Author: Nestcc
  * @Date: 2021-04-24 20:44:39
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 21:59:10
+ * @LastEditTime: 2022-01-03 20:16:38
  * @Description:  < file content > 
  */
 
-#include "ObjThread.h"
-#include "ObjUpvalue.h"
-#include "ObjClosure.h"
-#include "Frame.h"
+#include "obj_thread.h"
+#include "obj_upvalue.h"
+#include "obj_closure.h"
 
 void ObjThread::prepare_frame(ObjClosure *obj_closure, Value *stk_start) {
     ASSERT(frame_capacity > used_frame_num, "Not enough frame for thread.");

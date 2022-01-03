@@ -10,7 +10,7 @@
 #define _TOHKA_OBJECT_HEADER_H_
 
 #include "headers.h"
-#include "../vm/MemBufferSTL.h"
+#include "../vm/mem_buffer_stl.h"
 
 class ObjHeader {
 public:

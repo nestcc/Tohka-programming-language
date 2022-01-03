@@ -6,9 +6,9 @@
  * @Description:  < file content > 
  */
 
-#include "BaseClass.h"
+#include "base_class.h"
 #include "headers.h"
-#include "Value.h"
+#include "value.h"
 
 BaseClass::BaseClass(VM *vm, std::string name, uint64_t field_num):
 ObjHeader(vm, OT_CLASS, nullptr) {

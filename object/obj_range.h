@@ -9,7 +9,7 @@
 #ifndef _TOHKA_OBJRANGE_H_
 #define _TOHKA_OBJRANGE_H_
 
-#include "ObjectHeader.h"
+#include "object_header.h"
 
 class ObjRange : public ObjHeader{
 public:

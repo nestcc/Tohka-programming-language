@@ -10,7 +10,7 @@
 #define _COMPILER_H_
 
 #include <string>
-#include "../object/ObjFunction.h"
+#include "../object/obj_function.h"
 
 int define_module_value(VM *vm, ObjModule *obj_module, std::string name, const Value &val);
 

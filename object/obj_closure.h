@@ -6,11 +6,11 @@
  * @Discription: 
  */
 
-#ifndef _TOHKA_OBJCLOSURE_H_
-#define _TOHKA_OBJCLOSURE_H_
+#ifndef _TOHKA_OBJ_CLOSURE_H_
+#define _TOHKA_OBJ_CLOSURE_H_
 
 #include <vector>
-#include "ObjFunction.h"
+#include "obj_function.h"
 
 class ObjClosure : public ObjHeader {
 public:

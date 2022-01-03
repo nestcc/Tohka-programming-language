@@ -6,15 +6,10 @@
  * @Description:  < file content > 
  */
 
-
 #ifndef _VM_H_
 #define _VM_H_
 
-// #include "../includes/common.h"
-// #include "../includes/utils.h"
 #include "../object/headers.h"
-// #include "MemBufferSTL.h"
-//#include "../object/ObjMap.h"
 #include <vector>
 #include <string>
 

@@ -10,7 +10,7 @@
 #define _COMPILERUNIT_H_
 
 #include "headers.h"
-#include "LocalVar.h"
+#include "local_var.h"
 #include "Upvalue.h"
 #include "Loop.h"
 #include "../object/ObjFunction.h"

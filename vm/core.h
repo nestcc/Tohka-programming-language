@@ -12,7 +12,7 @@
 #include "../includes/common.h"
 #include "../includes/utils.h"
 #include "../object/headers.h"
-#include "MemBufferSTL.h"
+#include "mem_buffer_stl.h"
 
 extern char *root_dir;
 char *read_file(const char *fname);
@@ -20,7 +20,7 @@ void build_core(VM *vm);
 VM::VmResult exec_module(VM *vm, Value module_name, const char *module_code);
 int get_index_from_symbol_table(MethodNameList *table, std::string &name);
 
-void bind_method(BaseClass *base_class, uint64_t index, Method *method);
+void bind_method(BaseClass *base_class, uint64_t index, method *pMethod);
 void bind_super_class(BaseClass *sub_class, BaseClass *super_class);
 
 #endif

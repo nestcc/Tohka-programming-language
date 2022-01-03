@@ -8,8 +8,8 @@
 
 #include <vector>
 #include <cerrno>
-#include "ObjList.h"
-#include "Value.h"
+#include "obj_list.h"
+#include "value.h"
 
 ObjList::ObjList(VM *vm, int size_n) :
 ObjHeader(vm, OT_LIST, vm -> list_class){

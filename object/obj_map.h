@@ -6,10 +6,10 @@
  * @Description:  < file content > 
  */
 
-#ifndef _TOHKA_OBJMAP_H_
-#define _TOHKA_OBJMAP_H_
+#ifndef _TOHKA_OBJ_MAP_H_
+#define _TOHKA_OBJ_MAP_H_
 
-#include "Value.h"
+#include "value.h"
 
 class ObjMap : public ObjHeader {
 private:

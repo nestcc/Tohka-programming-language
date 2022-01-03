@@ -9,7 +9,7 @@
 #ifndef _TOHKA_OBJMODULE_H_
 #define _TOHKA_OBJMODULE_H_
 
-#include "ObjectHeader.h"
+#include "object_header.h"
 
 class ObjModule : public ObjHeader{
 public:

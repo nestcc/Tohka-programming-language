@@ -8,8 +8,8 @@
 
 #include <cstdint>
 // #include <string>
-#include "../object/ObjectHeader.h"
-#include "../object/ObjMap.h"
+#include "../object/object_header.h"
+#include "../object/obj_map.h"
 #include "vm.h"
 #include "core.h"
 

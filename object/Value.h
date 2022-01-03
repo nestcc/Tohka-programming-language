@@ -9,7 +9,7 @@
 #ifndef _TOHKA_VALUE_H_
 #define _TOHKA_VALUE_H_
 
-#include "ObjectHeader.h"
+#include "object_header.h"
 
 class Value {
 public:

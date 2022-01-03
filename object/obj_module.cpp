@@ -6,10 +6,9 @@
  * @Discription: 
  */
 
-#include "ObjModule.h"
-#include "ObjString.h"
-#include "Value.h"
-#include <iostream>
+#include "obj_module.h"
+#include "obj_string.h"
+#include "value.h"
 
 ObjModule::ObjModule(VM *vm, const std::string &mod_name) :
 ObjHeader(vm, OT_MODULE, nullptr) {
@@ -23,7 +22,6 @@ ObjHeader(vm, OT_MODULE, nullptr) {
     vm -> alloca_memory(sizeof(*this));
     LOG_INFO(" allocated ObjModule by %lu\n", sizeof(*this));
     LOG_INFO(" module name = ");
-    std::cout << mod_name << std::endl;
 }
 
 ObjModule::~ObjModule() {

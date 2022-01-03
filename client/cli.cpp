@@ -9,8 +9,8 @@
 #include <iostream>
 #include <cstring>
 #include "cli.h"
-#include "../object/ObjFunction.h"
-#include "../object/ObjModule.h"
+#include "../object/obj_function.h"
+#include "../object/obj_module.h"
 
 void runFileParser(const char* path) {
     const char* lastSlash = strrchr(path, '/');

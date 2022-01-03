@@ -9,16 +9,16 @@
 #ifndef _TOHKA_BASE_CLASS_H_
 #define _TOHKA_BASE_CLASS_H_
 
-#include "ObjectHeader.h"
-#include "ObjString.h"
-#include "Method.h"
-#include "../vm/MemBufferSTL.h"
+#include "object_header.h"
+#include "obj_string.h"
+#include "method.h"
+#include "../vm/mem_buffer_stl.h"
 
 class BaseClass : public ObjHeader {
 public:
     BaseClass *super_class;
     uint64_t field_num;
-    typedef MemBufferSTL<Method> MethodBuffer;
+    typedef MemBufferSTL<method> MethodBuffer;
     MethodBuffer methods;
     ObjString *name;
 
