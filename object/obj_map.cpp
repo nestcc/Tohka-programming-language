@@ -6,16 +6,20 @@
  * @Description:  < file content > 
  */
 
+#include <utility>
 #include "obj_map.h"
-
 
 ObjMap::KV::KV() : key(Value(0.0)), val(Value(0.0)), next(nullptr) {};
 
-ObjMap::KV::KV(const KV &kv) : key(kv.val), val(kv.val), next(nullptr) {};
+ObjMap::KV::KV(ObjMap::KV &&kv) : key(std::forward<Value>(kv.key)), val(std::forward<Value>(kv.val)), next(nullptr) {}
+
+ObjMap::KV::KV(const KV &kv) : key(kv.key), val(kv.val), next(nullptr) {};
+
+ObjMap::KV::KV(Value &&key, Value &&val) : key(std::forward<Value>(key)), val(std::forward<Value>(val)), next(nullptr) {}
 
 ObjMap::KV::KV(const Value &key, const Value &val) : key(key), val(val), next(nullptr) {};
 
-ObjMap::KV &ObjMap::KV::operator== (const KV &kv) {
+ObjMap::KV &ObjMap::KV::operator= (const KV &kv) {
     if (key == kv.key) {
         val = kv.val;
     }
@@ -32,7 +36,7 @@ vsize(0),
 size(0), 
 enlarge_ratio(0.8),
 items(std::vector<KV *> (capacity, nullptr)) {
-    vm -> alloca_memory(sizeof(*this));
+    vm->alloc_memory(sizeof(*this));
 }
 
 ObjMap::ObjMap(VM *vm, uint64_t capacity) :
@@ -51,13 +55,21 @@ int ObjMap::add_item(const Value &key, const Value &val) {
         vsize += 1;
     }
     else {
-        KV *head = new KV(key, val);
-        head -> next = items[index];
-        items[index] = head;
+        KV *head = items[index];
+        while (head && head -> key != key) { head = head -> next; }
+
+        if (head == nullptr) {
+            head = new KV(key, val);
+            head -> next = items[index];
+            items[index] = head;
+        }
+        else {
+            head -> val = val;
+        }
     }
     size += 1;
     if (vm != nullptr)
-        vm -> alloca_memory(sizeof(KV));
+        vm->alloc_memory(sizeof(KV));
     return 0;
 }
 
@@ -94,18 +106,16 @@ int ObjMap::remove(const Value &key) {
     size -= 1;
 
     if (vm != nullptr)
-        vm -> realloca_memory(sizeof(KV), 0);
+        vm->realloc_memory(sizeof(KV), 0);
     return 0;
 }
 
 Value *ObjMap::get(const Value &key) {
     uint64_t index = key.hash_value() % capacity;
 
-    if (items[index] == nullptr) { return nullptr; }
-
-    KV *res = items[index];
-    while (res && res -> key != key) { res = res -> next; }
-    return res == nullptr ? nullptr : &(res -> val);
+    KV *head = items[index];
+    while (head && head -> key != key) { head = head -> next; }
+    return head == nullptr ? nullptr : &(head -> val);
 }
 
 void ObjMap::clear() {
@@ -120,8 +130,12 @@ void ObjMap::clear() {
     }
 
     if (vm != nullptr)
-        vm -> realloca_memory(sizeof(KV) * size, 0);
+        vm->realloc_memory(sizeof(KV) * size, 0);
     vsize = size = 0;
+}
+
+Value *ObjMap::get_item(const Value &key) {
+    return this -> get(key);
 }
 
 ObjMap::~ObjMap() {

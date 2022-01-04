@@ -14,4 +14,6 @@
 
 int define_module_value(VM *vm, ObjModule *obj_module, std::string name, const Value &val);
 
+ObjFunction *compile_module(VM *vm, ObjModule *module, const std::string &module_code);
+
 #endif

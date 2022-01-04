@@ -45,7 +45,7 @@ public:
 
     void adjust_size() {
         uint64_t new_size = total_size();
-        vm -> realloca_memory(curr_size, new_size);
+        vm->realloc_memory(curr_size, new_size);
         curr_size = new_size;
     }
 

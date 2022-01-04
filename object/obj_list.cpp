@@ -14,7 +14,7 @@
 ObjList::ObjList(VM *vm, int size_n) :
 ObjHeader(vm, OT_LIST, vm -> list_class){
     elements.reserve(size_n);
-    uint64_t allocated = vm -> alloca_memory(sizeof(Value) * size_n + sizeof(*this));
+    uint64_t allocated = vm->alloc_memory(sizeof(Value) * size_n + sizeof(*this));
     LOG_INFO(" allocated list object by %lluB \n", allocated);
 }
 

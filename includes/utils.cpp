@@ -15,7 +15,7 @@
 #include "../parser/parser.h"
 #include "../vm/vm.h"
 
-uint64_t ceil_to_squar(uint64_t v) {
+uint64_t ceil_to_square(uint64_t v) {
     v += (v == 0);
     v--;
     v |= v >> 1;

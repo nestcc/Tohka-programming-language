@@ -22,12 +22,12 @@ ObjFunction::ObjFunction(VM *vm, ObjModule *obj_module, uint64_t slot_num) :
     module = obj_module;
     max_stk_slot_num = slot_num;
     up_val_num = arg_num = 0;
-    size_t allocated = vm -> alloca_memory(sizeof(*this));
+    size_t allocated = vm->alloc_memory(sizeof(*this));
 
     LOG_INFO(" allocated ObjFunction by %lu\n", allocated);
 }
 
 //
 //ObjFunction::~ObjFunction() {
-//    this -> ObjHeader::vm -> realloca_memory();
+//    this -> ObjHeader::vm -> realloc_memory();
 //}

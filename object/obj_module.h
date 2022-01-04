@@ -6,8 +6,8 @@
  * @Discription: 
  */
 
-#ifndef _TOHKA_OBJMODULE_H_
-#define _TOHKA_OBJMODULE_H_
+#ifndef _TOHKA_OBJ_MODULE_H_
+#define _TOHKA_OBJ_MODULE_H_
 
 #include "object_header.h"
 

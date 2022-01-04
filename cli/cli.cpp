@@ -12,7 +12,7 @@
 #include "../object/obj_function.h"
 #include "../object/obj_module.h"
 
-void runFileParser(const char* path) {
+void run_file_parser(const char* path) {
     const char* lastSlash = strrchr(path, '/');
     if (lastSlash != nullptr) {
         char* root = (char*)malloc(lastSlash - path + 2);
@@ -42,9 +42,9 @@ void runFileParser(const char* path) {
     }
 }
 
-static void runFile(const char* path) {
+static void run_file(const char* path) {
     const char* lastSlash = strrchr(path, '/');
-    if (lastSlash != NULL) {
+    if (lastSlash != nullptr) {
         char* root = (char*)malloc(lastSlash - path + 2);
         memcpy(root, path, lastSlash - path + 1);
         root[lastSlash - path + 1] = '\0';
@@ -65,19 +65,16 @@ int main(int argc, const char **argv) {
     if (argc == 1) {
         fprintf(stderr, RED "use %s [ file name ] ...\n" NOCOLOR, argv[0]);
     } else {
-        runFile(argv[1]);
+        run_file(argv[1]);
     }
 
     VM *vm = VM::getInstance();
 
     std::cout << " get all objects" << std::endl;
     ObjHeader *objs = vm -> all_objects, *tmp = objs -> next;
-    ObjString *str_obj = dynamic_cast<ObjString *> (objs);
-    if (str_obj != nullptr)
-        std::cout << " > objs : " << str_obj -> value << std::endl;
 
     while (tmp != objs) {
-        ObjString *str_obj = dynamic_cast<ObjString *> (tmp);
+        auto *str_obj = dynamic_cast<ObjString *> (tmp);
         if (str_obj == nullptr) {
             std::cout << " > curr obj not ObjString, but " << tmp -> type << std::endl;
             tmp = tmp -> next;

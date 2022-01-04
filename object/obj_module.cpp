@@ -19,9 +19,9 @@ ObjHeader(vm, OT_MODULE, nullptr) {
 
 //    delete name;
     name = new ObjString(vm, mod_name);
-    vm -> alloca_memory(sizeof(*this));
+    vm->alloc_memory(sizeof(*this));
     LOG_INFO(" allocated ObjModule by %lu\n", sizeof(*this));
-    LOG_INFO(" module name = ");
+    LOG_INFO(" module name = %s\n", name -> value.c_str());
 }
 
 ObjModule::~ObjModule() {

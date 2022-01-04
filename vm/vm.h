@@ -36,7 +36,7 @@ public:
 
     BaseClass *str_cls;
     BaseClass *func_cls;
-    BaseClass *class_class;
+    BaseClass *class_of_class;
     BaseClass *object_class;
     BaseClass *string_class;
     BaseClass *map_class;
@@ -53,9 +53,9 @@ public:
 
     static VM *getInstance();
 
-    uint64_t realloca_memory(uint64_t old_size, uint64_t new_size);
+    uint64_t realloc_memory(uint64_t old_size, uint64_t new_size);
 
-    uint64_t alloca_memory(uint64_t new_size);
+    uint64_t alloc_memory(uint64_t new_size);
 
     void add_object(ObjHeader *obj);
 

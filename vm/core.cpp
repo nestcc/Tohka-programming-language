@@ -12,10 +12,10 @@
 #include "core.h"
 #include "primitive_methods.h"
 #include "../object/obj_map.h"
-#include "../object/value.h"
 #include "../object/obj_module.h"
 #include "../object/base_class.h"
-#include "../object/method.h"
+#include "../object/obj_closure.h"
+#include "../object/obj_thread.h"
 #include "../compiler/compiler.h"
 
 char *root_dir = nullptr;
@@ -77,8 +77,8 @@ VM::VmResult exec_module(VM *vm, Value module_name, const char *module_code) {
     return VM::VmResult::VM_RESULT_ERROR;
 }
 
-int get_index_from_symbol_table(MethodNameList *table, std::string &name) {
-    return std::find(table -> begin(), table -> end(), name) - table -> begin();
+int get_index_from_symbol_table(MethodNameList *table, const std::string &name) {
+    return std::find(table -> begin(), table -> end(), name) - (table -> begin());
 }
 
 void bind_method(BaseClass *base_class, uint64_t index, method *pMethod) {
@@ -97,7 +97,7 @@ void bind_super_class(BaseClass *sub_class, BaseClass *super_class) {
 }
 
 void build_core(VM *vm) {
-    ObjModule *core_module = new ObjModule(vm, "__core_module__");
+    auto *core_module = new ObjModule(vm, "__core_module__");
     vm -> all_modules = new ObjMap(vm);
     vm -> all_modules -> add_item(Value(VT_NULL), Value(core_module));
 
@@ -111,15 +111,50 @@ void build_core(VM *vm) {
     func_bind_class(vm, vm -> object_class, "type_name", obj_type_name);
     func_bind_class(vm, vm -> object_class, "super_type", obj_super_type);
 
-    vm -> class_class = new BaseClass(vm, "__class__", 0);
-    func_bind_class(vm, vm -> class_class, "type", obj_type);
-    func_bind_class(vm, vm -> class_class, "type_name", obj_type_name);
-    func_bind_class(vm, vm -> class_class, "super_type", obj_super_type);
+    vm -> class_of_class = new BaseClass(vm, "__class__", 0);
+    func_bind_class(vm, vm -> class_of_class, "type", obj_type);
+    func_bind_class(vm, vm -> class_of_class, "type_name", obj_type_name);
+    func_bind_class(vm, vm -> class_of_class, "super_type", obj_super_type);
 
-    BaseClass *obj_meta_class = new BaseClass(vm, "__obj_meta__", 0);
-    bind_super_class(obj_meta_class, vm -> class_class);
+    auto *obj_meta_class = new BaseClass(vm, "__obj_meta__", 0);
+    bind_super_class(obj_meta_class, vm -> class_of_class);
+
 
     vm -> object_class -> cls = obj_meta_class;
-    obj_meta_class -> cls = vm -> class_class;
-    vm -> class_class -> cls = nullptr;
+    obj_meta_class -> cls = vm -> class_of_class;
+    vm -> class_of_class -> cls = nullptr;
+}
+
+int add_symbol(VM *vm, SymbolTable *table, const std::string &name) {
+    ASSERT(name.length != 0, "Length of symbol is 0!");
+    table -> push_back(name);
+    return table -> size() - 1;
+}
+
+static ObjModule *get_module(VM *vm, const Value &module_name) {
+    Value *val = vm -> all_modules ->get_item(module_name);
+    if (val -> type == VT_UNDEFINED) { return nullptr; }
+    return dynamic_cast<ObjModule *> (val -> obj_header);
+}
+
+static ObjThread *load_module(VM *vm, const Value &module_name, const std::string &module_code) {
+    ObjModule *module = get_module(vm, module_name);
+
+    if (module == nullptr) {
+        ObjString *obj_str_module_name = dynamic_cast<ObjString *> (module_name.obj_header);
+
+        module = new ObjModule(vm, obj_str_module_name -> value);
+        vm -> all_modules -> add_item(module_name, Value(dynamic_cast<ObjHeader *>(module)));
+
+        ObjModule *core_module = get_module(vm, Value(VT_NULL));
+
+        for (uint64_t index = 0; index < core_module -> module_var_name.size(); index += 1) {
+            define_module_value(vm, module, core_module -> module_var_name[index], core_module -> module_var_value[index]);
+        }
+    }
+
+    ObjFunction *obj_fn = compile_module(vm, module, module_code);
+    ObjClosure *obj_closure = new ObjClosure(vm, obj_fn);
+    ObjThread *obj_thread = new ObjThread(vm, obj_closure);
+    return obj_thread;
 }

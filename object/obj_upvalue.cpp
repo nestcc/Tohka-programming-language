@@ -14,6 +14,6 @@ ObjUpvalue::ObjUpvalue(VM *vm, Value *local_value)
     local_val_ptr = local_value;
     closed_up_val = Value(VT_NULL);
     next = nullptr;
-    vm -> alloca_memory(sizeof(*this));
+    vm->alloc_memory(sizeof(*this));
     LOG_INFO(" allocated ObjUpvalue by %lu\n", sizeof(*this));
 }

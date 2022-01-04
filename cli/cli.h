@@ -6,8 +6,8 @@
  * @Description:  < file content > 
  */
 
-#ifndef _CLI_H_
-#define _CLI_H_
+#ifndef _TOHKA_CLI_H_
+#define _TOHKA_CLI_H_
 
 #define MAX_LINE_LEN 1024
 
@@ -17,4 +17,4 @@
 #include "../vm/core.h"
 #include "../parser/parser.h"
 
-#endif //TOHKA_CLI_H
+#endif // _TOHKA_CLI_H_

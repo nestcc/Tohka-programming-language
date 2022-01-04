@@ -16,7 +16,7 @@ ObjHeader(vm, OT_UPVALUE, vm -> func_cls){
     for (uint64_t i = 0; i < func_obj -> up_val_num; i += 1) {
         upvalues[i] = nullptr;
     }
-    size_t allocated = vm -> alloca_memory(sizeof(*this) +
-            sizeof(ObjUpvalue *) * upvalues.capacity());
+    size_t allocated = vm->alloc_memory(sizeof(*this) +
+                                        sizeof(ObjUpvalue *) * upvalues.capacity());
     LOG_INFO(" allocated ObjClosure by %lu\n", allocated);
 }

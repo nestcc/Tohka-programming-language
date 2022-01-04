@@ -18,9 +18,11 @@ private:
         Value val;
         KV *next;
         KV();
+        KV(KV &&kv);
         KV(const KV &kv);
-        KV &operator==(const KV &kv);
+        KV(Value &&key, Value &&val);
         KV(const Value &key, const Value &val);
+        KV &operator=(const KV &kv);
         ~KV() = default;
     };
     
@@ -39,7 +41,7 @@ public:
     ObjMap(VM *vm, uint64_t capacity);
     ~ObjMap();
     int add_item(const Value &key, const Value &val);
-    Value &get_item(const Value &key);
+    Value *get_item(const Value &key);
     int remove(const Value &key);
     
 };

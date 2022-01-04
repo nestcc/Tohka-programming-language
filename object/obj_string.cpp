@@ -8,15 +8,14 @@
 
 #include "obj_string.h"
 #include <string>
-#include <iostream>
 
 ObjString::ObjString(VM *vm, const std::string &str) :
 ObjHeader(vm, OT_STRING, vm -> str_cls) {
     value = str;
     hash();
-    vm -> alloca_memory(sizeof(*this));
+    vm->alloc_memory(sizeof(*this));
     LOG_INFO(" allocated string object by %lu B.\n", sizeof(*this) + value.size());
-    std::cout << " > string : " << value << std::endl;
+    LOG_INFO(" > string : %s \n", value.c_str());
 }
 
 uint64_t ObjString::hash() {
@@ -32,20 +31,20 @@ ObjString::ObjString(VM *vm, const char *str, uint64_t ssize) :
 ObjHeader(vm, OT_STRING, vm -> str_cls) {
     value = std::string(str, ssize);
     hash();
-    vm -> alloca_memory(sizeof(*this));
+    vm->alloc_memory(sizeof(*this));
     LOG_INFO(" allocated string object by %lu B.\n", sizeof(*this) + value.size());
-    std::cout << " > string : " <<  value << std::endl;
+    LOG_INFO(" > string : %s \n", value.c_str());
 }
 
 bool ObjString::equal_to(const ObjHeader *obj) {
-    const ObjString *other = dynamic_cast<const ObjString *> (obj);
+    const auto *other = dynamic_cast<const ObjString *> (obj);
     if (other == nullptr) { return false; }
     if (hash_code != other -> hash_code) { return false; }
     return value == other -> value;
 }
 
 ObjString::~ObjString() {
-    vm -> realloca_memory(value.size(), 0);
+    vm->realloc_memory(value.size(), 0);
     // vm -> remove_object(this);
 }
 

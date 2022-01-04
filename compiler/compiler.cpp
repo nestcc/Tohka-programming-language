@@ -12,6 +12,9 @@
 #include "compiler.h"
 #include "../object/obj_module.h"
 #include "../object/value.h"
+#include "../object/obj_function.h"
+#include "../object/obj_map.h"
+#include "../object/obj_string.h"
 
 int define_module_value(VM *vm, ObjModule *obj_module, std::string name, const Value &val) {
     if (name.size() > MAX_ID_LEN) {
@@ -37,4 +40,9 @@ int define_module_value(VM *vm, ObjModule *obj_module, std::string name, const V
         symbol_index = -1;
     }
     return symbol_index;
+}
+
+ObjFunction *compile_module(VM *vm, ObjModule *module, const std::string &module_code) {
+    // TODO complete module building function
+    return nullptr;
 }

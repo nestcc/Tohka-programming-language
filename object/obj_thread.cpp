@@ -45,9 +45,9 @@ ObjHeader(vm, OT_THREAD, vm -> thread_class) {
     stk_capacity = obj_closure -> func -> max_stk_slot_num + 1;
     
     reset(obj_closure);
-    vm -> alloca_memory(sizeof(*this));
+    vm->alloc_memory(sizeof(*this));
 }
 
 ObjThread::~ObjThread() {
-    vm -> realloca_memory(sizeof(*this), 0);
+    vm->realloc_memory(sizeof(*this), 0);
 }
