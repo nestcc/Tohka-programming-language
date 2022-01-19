@@ -71,7 +71,7 @@ Parser::Parser(VM *vm, const char *file, const char *source_code, ObjModule *obj
     curr_token.length = 0;
 
     prev_token = curr_token;
-    this->obj_module = obj_mudule;
+    this->curr_module = obj_mudule;
 
     interpolation_expect_rparen_num = 0;
 

@@ -10,16 +10,16 @@
 #ifndef _HEADERS_H_
 #define _HEADERS_H_
 
-#include <cinttypes>
+#include <cstdint>
 #include <string>
 
-class local_var;
+class LocalVar;
 class Loop;
 class Upvalue;
 class Signature;
 class Compiler;
-class class_book_keep;
-class CompileUnit;
+class ClassBookKeep;
+class CompilerUnit;
 
 #define MAX_LOCAL_VAR_NUM 128
 #define MAX_UPVALUE_NUM 128

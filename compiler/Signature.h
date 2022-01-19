@@ -13,7 +13,7 @@
 
 class Signature {
 public:
-    enum SignType {
+    enum SignatureType {
         SIGN_CONSTRUCT,  //构造函数
         SIGN_METHOD,  //普通方法
         SIGN_GETTER, //getter方法
@@ -22,7 +22,7 @@ public:
         SIGN_SUBSCRIPT_SETTER   //setter形式的下标
     };
 
-    SignType type;
+    SignatureType type;
     std::string name;
     uint64_t arg_num;
 };

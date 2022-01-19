@@ -10,7 +10,7 @@
 #define _CLASSBOOKKEEP_H_
 
 #include "headers.h"
-#include "../vm/MemBufferSTL.h"
+#include "../vm/mem_buffer_stl.h"
 
 class Signature;
 

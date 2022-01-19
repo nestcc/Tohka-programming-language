@@ -16,7 +16,7 @@ void ObjThread::prepare_frame(ObjClosure *obj_closure, Value *stk_start) {
     Frame &f = frames[used_frame_num++];
     f.stack_start = stk_start;
     f.closure = obj_closure;
-    f.ip = obj_closure -> func -> ins_stream.data();
+    f.ip = obj_closure -> func -> instr_stream.data();
 }
 
 void ObjThread::reset(ObjClosure *obj_closure) {

@@ -19,7 +19,7 @@ char *read_file(const char *fname);
 void build_core(VM *vm);
 VM::VmResult exec_module(VM *vm, Value module_name, const char *module_code);
 
-int get_index_from_symbol_table(MethodNameList *table, const std::string &name);
+int get_index_from_symbol_table(VM::MethodNameList *table, const std::string &name);
 int add_symbol(VM *vm, SymbolTable *table, const std::string &symbol);
 
 void bind_method(BaseClass *base_class, uint64_t index, method *pMethod);

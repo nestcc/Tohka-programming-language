@@ -20,8 +20,8 @@
 
 char *root_dir = nullptr;
 
-static inline void func_bind_class(VM *vm, BaseClass *base_cls, std::string method_name, Primitive prim_func) {
-    if (method_name == "") {
+static inline void func_bind_class(VM *vm, BaseClass *base_cls, const std::string &method_name, Primitive prim_func) {
+    if (method_name.empty()) {
         COMPILE_ERROR(nullptr, "method_name is empty.");
         return;
     }
@@ -31,7 +31,7 @@ static inline void func_bind_class(VM *vm, BaseClass *base_cls, std::string meth
     }
 
     uint64_t global_index = get_index_from_symbol_table(&vm -> all_method_name, method_name);
-    method *pMethod = new method();
+    auto *pMethod = new method();
     pMethod -> prim_func = prim_func;
     pMethod -> type = MT_PRIMITIVE;
     bind_method(base_cls, global_index, pMethod);
@@ -46,7 +46,7 @@ char *read_file(const char *fpath) {
         exit(EXIT_FAILURE);
     }
 
-    struct stat file_status;
+    struct stat file_status{};
     stat(fpath, &file_status);
 
     size_t fsize = file_status.st_size;
@@ -141,7 +141,7 @@ static ObjThread *load_module(VM *vm, const Value &module_name, const std::strin
     ObjModule *module = get_module(vm, module_name);
 
     if (module == nullptr) {
-        ObjString *obj_str_module_name = dynamic_cast<ObjString *> (module_name.obj_header);
+        auto *obj_str_module_name = dynamic_cast<ObjString *> (module_name.obj_header);
 
         module = new ObjModule(vm, obj_str_module_name -> value);
         vm -> all_modules -> add_item(module_name, Value(dynamic_cast<ObjHeader *>(module)));
@@ -154,7 +154,7 @@ static ObjThread *load_module(VM *vm, const Value &module_name, const std::strin
     }
 
     ObjFunction *obj_fn = compile_module(vm, module, module_code);
-    ObjClosure *obj_closure = new ObjClosure(vm, obj_fn);
-    ObjThread *obj_thread = new ObjThread(vm, obj_closure);
+    auto *obj_closure = new ObjClosure(vm, obj_fn);
+    auto *obj_thread = new ObjThread(vm, obj_closure);
     return obj_thread;
 }

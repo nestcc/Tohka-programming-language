@@ -16,6 +16,7 @@
 #include "../includes/unicode.h"
 #include "../object/base_class.h"
 #include "../object/value.h"
+#include "../compiler/compiler_unit.h"
 
 enum TokenType {
     TOKEN_UNKNOWN,                          // 0
@@ -147,16 +148,17 @@ public:
 
     const char *file;
     const char *source_code;
+
     const char *next_char_ptr;
     char curr_char;
     Token curr_token;
     Token prev_token;
-    ObjModule *obj_module;
+    ObjModule *curr_module;
+    CompilerUnit *curr_compile_unit;
+    VM *vm;
+    Parser *parent;
 
 private:
-    VM *vm;
-
-    Parser *parent;
 
     // 处于内嵌表达式之中时,期望的右括号数量.
     // 用于跟踪小括号对儿的嵌套

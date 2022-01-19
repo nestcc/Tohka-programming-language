@@ -17,13 +17,12 @@ class ObjHeader;
 class BaseClass;
 class ObjMap;
 class ObjThread;
-// template<>
-// class MemBufferSTL();
 
-typedef std::vector<std::string> MethodNameList;
 
 class VM {
 public:
+    typedef std::vector<std::string> MethodNameList;
+
     // 虚拟机执行结果
     enum VmResult {
         VM_RESULT_SUCCESS,

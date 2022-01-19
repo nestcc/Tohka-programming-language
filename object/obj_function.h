@@ -11,11 +11,12 @@
 
 #include <string>
 #include "object_header.h"
+#include "../vm/mem_buffer_stl.h"
 
 class ObjFunction : public ObjHeader {
 public:
 
-    ByteBuffer ins_stream;  // 函数编译后的指令流
+    ByteBuffer instr_stream;  // 函数编译后的指令流
     ValueBuffer constants;  // 函数中的常量表
 
     ObjModule *module;      // 本函数所属的模块
@@ -26,7 +27,7 @@ public:
     struct FuncDebug {
         FuncDebug() = default;
         std::string file_name;
-        uint64_t line_no;
+        MemBufferSTL<uint64_t> line_no;
     } dbg_info;
 
     ObjFunction() = default;
