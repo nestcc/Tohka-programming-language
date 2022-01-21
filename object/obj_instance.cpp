@@ -6,9 +6,9 @@
  * @Discription: 
  */
 
-#include "obj_instance.h"
-#include "base_class.h"
-#include "value.h"
+#include "object/obj_instance.h"
+#include "object/base_class.h"
+#include "object/value.h"
 
 ObjInstance::ObjInstance(VM *vm, BaseClass *base_class) :
 ObjHeader(vm, OT_INSTANCE, base_class) {

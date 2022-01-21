@@ -10,7 +10,7 @@
 #define _TOHKA_OBJINSTANCE_H_
 
 #include <vector>
-#include "object_header.h"
+#include "object/object_header.h"
 
 class ObjInstance : public ObjHeader{
 public:

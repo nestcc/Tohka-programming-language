@@ -9,18 +9,17 @@
 #include <string>
 #include <sys/stat.h>
 #include <algorithm>
-#include "core.h"
-#include "primitive_methods.h"
-#include "../object/obj_map.h"
-#include "../object/obj_module.h"
-#include "../object/base_class.h"
-#include "../object/obj_closure.h"
-#include "../object/obj_thread.h"
-#include "../compiler/compiler.h"
+#include "vm/core.h"
+#include "vm/primitive_methods.h"
+#include "object/obj_map.h"
+#include "object/obj_module.h"
+#include "object/base_class.h"
+#include "object/obj_closure.h"
+#include "object/obj_thread.h"
+#include "compiler/compiler.h"
 
-char *root_dir = nullptr;
 
-static inline void func_bind_class(VM *vm, BaseClass *base_cls, const std::string &method_name, Primitive prim_func) {
+inline void Core::func_bind_class(VM *vm, BaseClass *base_cls, const std::string &method_name, Primitive prim_func) {
     if (method_name.empty()) {
         COMPILE_ERROR(nullptr, "method_name is empty.");
         return;
@@ -38,7 +37,7 @@ static inline void func_bind_class(VM *vm, BaseClass *base_cls, const std::strin
 }
 
 // 读源码文件
-char *read_file(const char *fpath) {
+char *Core::read_file(const char *fpath) {
     FILE *srcf = fopen(fpath, "r");
 
     if (srcf == nullptr) {
@@ -73,22 +72,22 @@ char *read_file(const char *fpath) {
     return fcontent;
 }
 
-VM::VmResult exec_module(VM *vm, Value module_name, const char *module_code) {
+VM::VmResult Core::exec_module(Value module_name, const char *module_code) {
     return VM::VmResult::VM_RESULT_ERROR;
 }
 
-int get_index_from_symbol_table(MethodNameList *table, const std::string &name) {
+int Core::get_index_from_symbol_table(VM::MethodNameList *table, const std::string &name) {
     return std::find(table -> begin(), table -> end(), name) - (table -> begin());
 }
 
-void bind_method(BaseClass *base_class, uint64_t index, method *pMethod) {
+void Core::bind_method(BaseClass *base_class, uint64_t index, method *pMethod) {
     if (index >= base_class -> methods.size()) {
         base_class -> methods.fill_wirte(method(), index - base_class -> methods.size() + 1);
     }
     base_class -> methods[index] = *pMethod;
 }
 
-void bind_super_class(BaseClass *sub_class, BaseClass *super_class) {
+void Core::bind_super_class(BaseClass *sub_class, BaseClass *super_class) {
     sub_class -> super_class = super_class;
     sub_class -> field_num += super_class -> field_num;
     for (uint64_t idx = 0; idx < super_class -> methods.size(); idx += 1) {
@@ -96,7 +95,7 @@ void bind_super_class(BaseClass *sub_class, BaseClass *super_class) {
     }
 }
 
-void build_core(VM *vm) {
+void Core::build() {
     auto *core_module = new ObjModule(vm, "__core_module__");
     vm -> all_modules = new ObjMap(vm);
     vm -> all_modules -> add_item(Value(VT_NULL), Value(core_module));
@@ -125,20 +124,20 @@ void build_core(VM *vm) {
     vm -> class_of_class -> cls = nullptr;
 }
 
-int add_symbol(VM *vm, SymbolTable *table, const std::string &name) {
+int Core::add_symbol(SymbolTable *table, const std::string &name) {
     ASSERT(name.length != 0, "Length of symbol is 0!");
     table -> push_back(name);
     return table -> size() - 1;
 }
 
-static ObjModule *get_module(VM *vm, const Value &module_name) {
+ObjModule *Core::get_module(const Value &module_name) {
     Value *val = vm -> all_modules ->get_item(module_name);
     if (val -> type == VT_UNDEFINED) { return nullptr; }
     return dynamic_cast<ObjModule *> (val -> obj_header);
 }
 
-static ObjThread *load_module(VM *vm, const Value &module_name, const std::string &module_code) {
-    ObjModule *module = get_module(vm, module_name);
+ObjThread *Core::load_module(const Value &module_name, const std::string &module_code) {
+    ObjModule *module = get_module(module_name);
 
     if (module == nullptr) {
         auto *obj_str_module_name = dynamic_cast<ObjString *> (module_name.obj_header);
@@ -146,7 +145,7 @@ static ObjThread *load_module(VM *vm, const Value &module_name, const std::strin
         module = new ObjModule(vm, obj_str_module_name -> value);
         vm -> all_modules -> add_item(module_name, Value(dynamic_cast<ObjHeader *>(module)));
 
-        ObjModule *core_module = get_module(vm, Value(VT_NULL));
+        ObjModule *core_module = get_module(Value(VT_NULL));
 
         for (uint64_t index = 0; index < core_module -> module_var_name.size(); index += 1) {
             define_module_value(vm, module, core_module -> module_var_name[index], core_module -> module_var_value[index]);

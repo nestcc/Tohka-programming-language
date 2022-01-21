@@ -10,10 +10,10 @@
 #include <cinttypes>
 #include <cstdlib>
 
-#include "common.h"
-#include "utils.h"
-#include "../parser/parser.h"
-#include "../vm/vm.h"
+#include "includes/common.h"
+#include "includes/utils.h"
+#include "parser/parser.h"
+#include "vm/vm.h"
 
 uint64_t ceil_to_square(uint64_t v) {
     v += (v == 0);

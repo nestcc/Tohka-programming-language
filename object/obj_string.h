@@ -11,7 +11,7 @@
 
 #include <cinttypes>
 #include <string>
-#include "object_header.h"
+#include "object/object_header.h"
 
 class ObjString : public ObjHeader {
 public:

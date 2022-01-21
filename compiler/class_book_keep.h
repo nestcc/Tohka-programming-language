@@ -9,8 +9,8 @@
 #ifndef _CLASSBOOKKEEP_H_
 #define _CLASSBOOKKEEP_H_
 
-#include "headers.h"
-#include "../vm/mem_buffer_stl.h"
+#include "compiler/headers.h"
+#include "vm/mem_buffer_stl.h"
 
 class Signature;
 

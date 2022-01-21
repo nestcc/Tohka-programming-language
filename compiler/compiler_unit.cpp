@@ -4,8 +4,8 @@
  * @Discription: 
  */
 
-#include "headers.h"
-#include "compiler_unit.h"
+#include "compiler/headers.h"
+#include "compiler/compiler_unit.h"
 
 
 CompilerUnit::CompilerUnit(Parser *parser, CompilerUnit *enclosing_unit, bool is_method) {
@@ -75,4 +75,8 @@ void CompilerUnit::write_opcode_byte_operand(OpCode opcode, ByteOperand byte_ope
 void CompilerUnit::write_opcode_short_operand(OpCode opcode, ShortOperand short_operand) {
     write_op_code(opcode);
     write_short_operand(short_operand);
+}
+
+void CompilerUnit::compile_program() {
+    return;
 }

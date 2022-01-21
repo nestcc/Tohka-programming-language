@@ -11,7 +11,7 @@
 #include <cstring>
 #include <vector>
 
-#include "parser.h"
+#include "parser/parser.h"
 
 struct KeywordToken {
     std::string keyword;

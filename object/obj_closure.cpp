@@ -6,7 +6,7 @@
  * @Discription: 
  */
 
-#include "obj_closure.h"
+#include "object/obj_closure.h"
 
 ObjClosure::ObjClosure(VM *vm, ObjFunction *func_obj) :
 ObjHeader(vm, OT_UPVALUE, vm -> func_cls){

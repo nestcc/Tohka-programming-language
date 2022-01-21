@@ -8,22 +8,23 @@
 
 #include <iostream>
 #include <cstring>
-#include "cli.h"
-#include "../object/obj_function.h"
-#include "../object/obj_module.h"
+#include "cli/cli.h"
+#include "object/obj_function.h"
+#include "object/obj_module.h"
 
 void run_file_parser(const char* path) {
     const char* lastSlash = strrchr(path, '/');
+    VM *vm = VM::instance();
+
     if (lastSlash != nullptr) {
         char* root = (char*)malloc(lastSlash - path + 2);
         memcpy(root, path, lastSlash - path + 1);
         root[lastSlash - path + 1] = '\0';
-        root_dir = root;
+        vm->root_dir = root;
     }
 
-    VM *vm = VM::getInstance();
 
-    const char* sourceCode = read_file(path);
+    const char* sourceCode = vm->read_file(path);
 
     Parser parser(vm, path, sourceCode, nullptr);
 
@@ -43,20 +44,20 @@ void run_file_parser(const char* path) {
 }
 
 static void run_file(const char* path) {
-    const char* lastSlash = strrchr(path, '/');
-    if (lastSlash != nullptr) {
-        char* root = (char*)malloc(lastSlash - path + 2);
-        memcpy(root, path, lastSlash - path + 1);
-        root[lastSlash - path + 1] = '\0';
-        root_dir = root;
+    const char* last_slash = strrchr(path, '/');
+    VM* vm = VM::instance();
+    if (last_slash != nullptr) {
+        char* root = (char*)malloc(last_slash - path + 2);
+        memcpy(root, path, last_slash - path + 1);
+        root[last_slash - path + 1] = '\0';
+        vm->root_dir = root;
     }
 
-    VM* vm = VM::getInstance();
-    const char* sourceCode = read_file(path);
+    const char* source_code = vm->read_file(path);
     
     std::string spath(path);
     ObjString src(vm, spath);
-    exec_module(vm, Value(&src), sourceCode);
+    vm->exec_module(new Value(&src), source_code);
 }
 
 int main(int argc, const char **argv) {
@@ -68,7 +69,7 @@ int main(int argc, const char **argv) {
         run_file(argv[1]);
     }
 
-    VM *vm = VM::getInstance();
+    VM *vm = VM::instance();
 
     std::cout << " get all objects" << std::endl;
     ObjHeader *objs = vm -> all_objects, *tmp = objs -> next;

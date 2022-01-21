@@ -9,8 +9,8 @@
 #ifndef _TOHKA_UPVALUE_H_
 #define _TOHKA_UPVALUE_H_
 
-#include "object_header.h"
-#include "value.h"
+#include "object/object_header.h"
+#include "object/value.h"
 
 class ObjUpvalue : public ObjHeader {
 public:

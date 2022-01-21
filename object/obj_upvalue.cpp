@@ -6,8 +6,8 @@
  * @Discription: 
  */
 
-#include "obj_upvalue.h"
-#include "../vm/vm.h"
+#include "object/obj_upvalue.h"
+#include "vm/vm.h"
 
 ObjUpvalue::ObjUpvalue(VM *vm, Value *local_value)
 : ObjHeader(vm, OT_UPVALUE, nullptr) {

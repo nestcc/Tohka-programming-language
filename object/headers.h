@@ -9,8 +9,8 @@
 #ifndef _TOHKA_HEADERS_H_
 #define _TOHKA_HEADERS_H_
 
-#include "../includes/common.h"
-#include "../includes/utils.h"
+#include "includes/common.h"
+#include "includes/utils.h"
 
 class Value;
 class ObjHeader;

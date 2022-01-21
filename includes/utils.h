@@ -12,7 +12,10 @@
 #include <stdarg.h>
 #include <vector>
 #include <string>
-#include "../vm/vm.h"
+#include "common.h"
+//#include "../vm/vm.h"
+
+class VM;
 
 #ifdef NDEBUG
 #define LOG_INFO(...)

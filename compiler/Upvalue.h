@@ -9,7 +9,7 @@
 #ifndef _UPVALUE_H_
 #define _UPVALUE_H_
 
-#include "headers.h"
+#include "compiler/headers.h"
 
 class Upvalue {
 public:

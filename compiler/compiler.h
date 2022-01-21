@@ -10,13 +10,13 @@
 #define _COMPILER_H_
 
 #include <string>
-#include "../object/obj_function.h"
-#include "headers.h"
-#include "local_var.h"
-#include "upvalue.h"
-#include "loop.h"
-#include "../object/obj_function.h"
-#include "../parser/parser.h"
+#include "object/obj_function.h"
+#include "compiler/headers.h"
+#include "compiler/local_var.h"
+#include "compiler/upvalue.h"
+#include "compiler/loop.h"
+#include "object/obj_function.h"
+#include "parser/parser.h"
 
 int define_module_value(VM *vm, ObjModule *obj_module, std::string name, const Value &val);
 

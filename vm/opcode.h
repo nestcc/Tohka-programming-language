@@ -9,7 +9,7 @@
 
 #define OPCODE_SLOTS(opcode, effect) OPCODE_##opcode,
 typedef enum {
-#include "../vm/opcode.inc"
+#include "vm/opcode.inc"
 } OpCode;
 #undef OPCODE_SLOTS
 

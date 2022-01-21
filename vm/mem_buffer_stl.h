@@ -11,7 +11,7 @@
 
 #include <vector>
 #include <string>
-#include "vm.h"
+#include "vm/vm.h"
 
 template<typename Type>
 class MemBufferSTL : public std::vector<Type> {
@@ -69,5 +69,6 @@ public:
 
 typedef MemBufferSTL<std::string> SymbolTable;
 typedef MemBufferSTL<uint8_t> ByteBuffer;
+typedef MemBufferSTL<Value> ValueBuffer;
 
 #endif

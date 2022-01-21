@@ -10,7 +10,7 @@
 #define _TOHKA_OBJ_CLOSURE_H_
 
 #include <vector>
-#include "obj_function.h"
+#include "object/obj_function.h"
 
 class ObjClosure : public ObjHeader {
 public:

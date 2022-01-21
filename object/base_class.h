@@ -9,10 +9,10 @@
 #ifndef _TOHKA_BASE_CLASS_H_
 #define _TOHKA_BASE_CLASS_H_
 
-#include "object_header.h"
-#include "obj_string.h"
-#include "method.h"
-#include "../vm/mem_buffer_stl.h"
+#include "object/object_header.h"
+#include "object/obj_string.h"
+#include "object/method.h"
+#include "vm/mem_buffer_stl.h"
 
 class BaseClass : public ObjHeader {
 public:

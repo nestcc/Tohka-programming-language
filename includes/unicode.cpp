@@ -9,8 +9,8 @@
 #include <cinttypes>
 #include <iostream>
 
-#include "common.h"
-#include "unicode.h"
+#include "includes/common.h"
+#include "includes/unicode.h"
 
 //返回value按照utf8编码后的字节数
 uint64_t get_number_encode_utf8(int value) {

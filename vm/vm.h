@@ -9,9 +9,9 @@
 #ifndef _VM_H_
 #define _VM_H_
 
-#include "../object/headers.h"
 #include <vector>
 #include <string>
+#include "object/headers.h"
 
 class ObjHeader;
 class BaseClass;
@@ -28,7 +28,7 @@ public:
         VM_RESULT_SUCCESS,
         VM_RESULT_ERROR
     };
-
+    char *root_dir;
     uint64_t allocated_byte;
     Parser *curr_parser;
     ObjHeader *all_objects;
@@ -50,22 +50,34 @@ public:
     ObjMap *all_modules;
     ObjThread *curr_thread;
 
-    static VM *getInstance();
+public:
+    static VM *instance();
 
     uint64_t realloc_memory(uint64_t old_size, uint64_t new_size);
-
     uint64_t alloc_memory(uint64_t new_size);
-
     void add_object(ObjHeader *obj);
-
     void remove_object(ObjHeader *obj);
+
+//    int get_index_from_symbol_table(const std::string &name);
+    uint64_t get_method_index(const std::string &name);
+    char *read_file(const char *fpath);
+
+    VmResult exec_module(Value *module_name, const char *module_code);
+
+private:
+    static VM *_instance;
+    int obj_cnt;
 
 private:
     VM();
     VM(const VM &vm) = delete;
     ~VM() = default;
-    static VM *instance;
-    int obj_cnt;
+
+    void _bind_super_class(BaseClass *sub_class, BaseClass *super_class);
+    uint64_t _define_module_value(ObjModule *obj_module, std::string name, Value *val);
+    void _bind_method(BaseClass *base_class, uint64_t index, method *pMethod);
+    void _func_bind_class(BaseClass *base_cls, const std::string &method_name, Primitive prim_func);
+    void _build_core();
 };
 
 #endif

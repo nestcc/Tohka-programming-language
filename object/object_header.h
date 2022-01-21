@@ -9,8 +9,8 @@
 #ifndef _TOHKA_OBJECT_HEADER_H_
 #define _TOHKA_OBJECT_HEADER_H_
 
-#include "headers.h"
-#include "../vm/mem_buffer_stl.h"
+#include "object/headers.h"
+#include "vm/vm.h"
 
 class ObjHeader {
 public:
@@ -21,6 +21,7 @@ public:
     uint64_t ref_cnt;
     VM *vm;
 
+public:
     ObjHeader() = default;
     ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls);
 
@@ -33,7 +34,5 @@ public:
     virtual ~ObjHeader();
 private:
 };
-
-typedef MemBufferSTL<Value> ValueBuffer;
 
 #endif //TOHKA_OBJECT_HEADER_H

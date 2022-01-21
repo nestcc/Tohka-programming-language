@@ -9,7 +9,8 @@
 #ifndef _TOHKA_OBJLIST_H_
 #define _TOHKA_OBJLIST_H_
 
-#include "object_header.h"
+#include "object/object_header.h"
+#include "vm/mem_buffer_stl.h"
 
 class ObjList : public ObjHeader {
 public:

@@ -9,7 +9,7 @@
 #ifndef _TOHKA_METHOD_H_
 #define _TOHKA_METHOD_H_
 
-#include "headers.h"
+#include "object/headers.h"
 
 class method {
 public:

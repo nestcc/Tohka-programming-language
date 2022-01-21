@@ -6,10 +6,10 @@
  * @Discription: 
  */
 
-#include "obj_function.h"
-#include "obj_module.h"
-#include "obj_string.h"
-#include "value.h"
+#include "object/obj_function.h"
+#include "object/obj_module.h"
+#include "object/obj_string.h"
+#include "object/value.h"
 
 ObjFunction::ObjFunction(VM *vm, ObjModule *obj_module, uint64_t slot_num) :
         ObjHeader(vm, OT_FUNCTION, vm -> func_cls) {

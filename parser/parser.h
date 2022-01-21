@@ -9,14 +9,14 @@
 #ifndef _PARSER_H_
 #define _PARSER_H_
 
-#include "../vm/mem_buffer_stl.h"
-#include "../vm/core.h"
-#include "../includes/common.h"
-#include "../includes/utils.h"
-#include "../includes/unicode.h"
-#include "../object/base_class.h"
-#include "../object/value.h"
-#include "../compiler/compiler_unit.h"
+#include "vm/mem_buffer_stl.h"
+#include "vm/core.h"
+#include "includes/common.h"
+#include "includes/utils.h"
+#include "includes/unicode.h"
+#include "object/base_class.h"
+#include "object/value.h"
+#include "compiler/compiler_unit.h"
 
 enum TokenType {
     TOKEN_UNKNOWN,                          // 0

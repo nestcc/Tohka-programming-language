@@ -33,4 +33,6 @@ class CompilerUnit;
 
 #define MAX_FIELD_NUM 128
 
+#define OPCODE_NUM 62
+
 #endif

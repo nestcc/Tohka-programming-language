@@ -9,7 +9,7 @@
 #ifndef _TOHKA_OBJ_MAP_H_
 #define _TOHKA_OBJ_MAP_H_
 
-#include "value.h"
+#include "object/value.h"
 
 class ObjMap : public ObjHeader {
 private:

@@ -11,10 +11,9 @@
 
 #define MAX_LINE_LEN 1024
 
-#include "../includes/common.h"
-#include "../includes/unicode.h"
-#include "../includes/utils.h"
-#include "../vm/core.h"
-#include "../parser/parser.h"
+#include "includes/common.h"
+#include "includes/unicode.h"
+#include "includes/utils.h"
+#include "parser/parser.h"
 
 #endif // _TOHKA_CLI_H_

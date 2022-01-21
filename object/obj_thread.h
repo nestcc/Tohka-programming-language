@@ -9,9 +9,9 @@
 #ifndef _OBJTHREAD_H_
 #define _OBJTHREAD_H_
 
-#include "object_header.h"
-#include "value.h"
-#include "frame.h"
+#include "object/object_header.h"
+#include "object/value.h"
+#include "object/frame.h"
 
 class ObjThread : public ObjHeader {
     Value *stk;

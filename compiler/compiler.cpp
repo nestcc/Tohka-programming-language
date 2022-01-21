@@ -6,39 +6,12 @@
  * @Description:  < file content > 
  */
 
-#include "../includes/utils.h"
-#include "../vm/core.h"
-#include "compiler.h"
-#include "compiler_unit.h"
-#include "../object/obj_module.h"
-#include "../object/obj_map.h"
-
-
-int define_module_value(VM *vm, ObjModule *obj_module, std::string name, const Value &val) {
-    if (name.size() > MAX_ID_LEN) {
-        if (vm -> curr_parser != nullptr) {
-            COMPILE_ERROR(vm -> curr_parser, "Identifier %s is longer than MAX_ID_LEN(%d)", 
-                            name.c_str(), MAX_ID_LEN);
-        }
-        else {
-            MEM_ERROR("Identifier %s is longer than MAX_ID_LEN(%d)", 
-                        name.c_str(), MAX_ID_LEN);
-        }
-    }
-
-    // std::string module_name(name, length);
-    int symbol_index = get_index_from_symbol_table(&(obj_module -> module_var_name), name);
-    if (symbol_index == obj_module -> module_var_name.size()) {
-        obj_module -> module_var_name.buff_add(name);
-    }
-    else if (obj_module -> module_var_value[symbol_index].type == VT_NULL) {
-        obj_module -> module_var_value[symbol_index] = val;
-    }
-    else {
-        symbol_index = -1;
-    }
-    return symbol_index;
-}
+#include "includes/utils.h"
+#include "vm/core.h"
+#include "compiler/compiler.h"
+#include "compiler/compiler_unit.h"
+#include "object/obj_module.h"
+#include "object/obj_map.h"
 
 ObjFunction *compile_module(VM *vm, ObjModule *module, const std::string &module_code) {
     // TODO complete module building function

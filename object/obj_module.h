@@ -9,7 +9,9 @@
 #ifndef _TOHKA_OBJ_MODULE_H_
 #define _TOHKA_OBJ_MODULE_H_
 
-#include "object_header.h"
+#include "object/object_header.h"
+#include "vm/vm.h"
+#include "vm/mem_buffer_stl.h"
 
 class ObjModule : public ObjHeader{
 public:
@@ -17,10 +19,12 @@ public:
     ValueBuffer module_var_value;       // 模块中的模块变量值
     ObjString *name;                    // 模块名
 
+public:
     ObjModule() = default;
     ObjModule(VM *vm, const std::string &mod_name);
-
     ~ObjModule() override;
+
+    void compile_module(const char *module_code);
 };
 
 

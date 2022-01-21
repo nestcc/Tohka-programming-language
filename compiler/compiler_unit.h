@@ -7,14 +7,14 @@
 #ifndef _COMPILERUNIT_H_
 #define _COMPILERUNIT_H_
 
-#include "headers.h"
-#include "local_var.h"
-#include "upvalue.h"
-#include "loop.h"
-#include "../object/obj_function.h"
-#include "../parser/parser.h"
-#include "../vm/opcode.h"
-#include "../vm/operand.h"
+#include "compiler/headers.h"
+#include "compiler/local_var.h"
+#include "compiler/upvalue.h"
+#include "compiler/loop.h"
+#include "object/obj_function.h"
+#include "parser/parser.h"
+#include "vm/opcode.h"
+#include "vm/operand.h"
 
 
 class CompilerUnit {
@@ -32,14 +32,16 @@ public:
 
     //把opcode定义到数组opCodeSlotsUsed中
 #define OPCODE_SLOTS(opCode, effect) effect,
-    const int _op_code_slots_used[] = {
-#include "opcode.inc"
+    const int _op_code_slots_used[OPCODE_NUM] = {
+#include "vm/opcode.inc"
     };
 #undef OPCODE_SLOTS
 
 public:
     CompilerUnit() = default;
     CompilerUnit(Parser *parser, CompilerUnit *enclosing_unit, bool is_method);
+
+    void compile_program();
 
 private:
     int write_byte(Byte byte);

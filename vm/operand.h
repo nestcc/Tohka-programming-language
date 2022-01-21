@@ -8,7 +8,7 @@
 #define _TOHKA_OPERAND_H_
 
 #include <cstdint>
-#include "../includes/utils.h"
+#include "includes/utils.h"
 
 typedef Byte ByteOperand;
 

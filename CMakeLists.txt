@@ -5,15 +5,8 @@ project(Tohka)
 #SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g2 -glldb")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -g")
 
-aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR} SOURCE_DIR)
-
-aux_source_directory(${PROJECT_SOURCE_DIR}/cli CLI_DIR)
-aux_source_directory(${PROJECT_SOURCE_DIR}/includes INCLUDE_DIR)
-aux_source_directory(${PROJECT_SOURCE_DIR}/vm VM_DIR)
-aux_source_directory(${PROJECT_SOURCE_DIR}/parser PARSER_DIR)
-aux_source_directory(${PROJECT_SOURCE_DIR}/gc GC_DIR)
-aux_source_directory(${PROJECT_SOURCE_DIR}/object OBJECT_DIR)
-aux_source_directory(${PROJECT_SOURCE_DIR}/compiler COMPILER_DIR)
+set(BUILD_DIR .)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 if (DEBUG)
     SET(CMAKE_BUILD_TYPE "Debug")
@@ -21,10 +14,16 @@ if (DEBUG)
     SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall -DNDEBUG")
 endif ()
 
-add_executable(toh  ${CLI_DIR}
-                    ${INCLUDE_DIR}
-                    ${VM_DIR}
-                    ${PARSER_DIR}
-                    ${OBJECT_DIR}
-                    ${GC_DIR}
-                    ${COMPILER_DIR})
+set(TOHKA_LINK_LIBS
+    Includes
+    VM
+    Parser
+    Object
+    Compiler)
+
+add_subdirectory(${PROJECT_SOURCE_DIR}/includes)
+add_subdirectory(${PROJECT_SOURCE_DIR}/vm)
+add_subdirectory(${PROJECT_SOURCE_DIR}/parser)
+add_subdirectory(${PROJECT_SOURCE_DIR}/object)
+add_subdirectory(${PROJECT_SOURCE_DIR}/compiler)
+add_subdirectory(${PROJECT_SOURCE_DIR}/cli)

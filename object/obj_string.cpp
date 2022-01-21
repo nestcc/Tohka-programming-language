@@ -6,8 +6,8 @@
  * @Discription: 
  */
 
-#include "obj_string.h"
 #include <string>
+#include "object/obj_string.h"
 
 ObjString::ObjString(VM *vm, const std::string &str) :
 ObjHeader(vm, OT_STRING, vm -> str_cls) {
