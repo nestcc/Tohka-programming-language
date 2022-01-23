@@ -2,10 +2,9 @@
  * @Author: Nestcc
  * @Date: 2021-04-27 09:33:11
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-27 17:56:50
- * @Description:  < file content > 
+ * @LastEditTime: 2022-01-21 16:49:53
+ * @Description:  < file content >
  */
-
 
 #ifndef _HEADERS_H_
 #define _HEADERS_H_
@@ -23,7 +22,7 @@ class CompilerUnit;
 
 #define MAX_LOCAL_VAR_NUM 128
 #define MAX_UPVALUE_NUM 128
-#define MAX_ID_LEN 128   //变量名最大长度
+#define MAX_ID_LEN 128  //变量名最大长度
 
 #define MAX_METHOD_NAME_LEN MAX_ID_LEN
 #define MAX_ARG_NUM 16

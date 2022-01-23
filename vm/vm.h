@@ -73,9 +73,11 @@ private:
     VM(const VM &vm) = delete;
     ~VM() = default;
 
+    ObjModule *_get_module(Value *module_name);
+    ObjThread *_load_module(Value *module_name, const char *module_code);
     void _bind_super_class(BaseClass *sub_class, BaseClass *super_class);
     uint64_t _define_module_value(ObjModule *obj_module, std::string name, Value *val);
-    void _bind_method(BaseClass *base_class, uint64_t index, method *pMethod);
+    void _bind_method(BaseClass *base_class, uint64_t index, method *method_ptr);
     void _func_bind_class(BaseClass *base_cls, const std::string &method_name, Primitive prim_func);
     void _build_core();
 };

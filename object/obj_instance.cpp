@@ -10,6 +10,7 @@
 #include "object/base_class.h"
 #include "object/value.h"
 
+
 ObjInstance::ObjInstance(VM *vm, BaseClass *base_class) :
 ObjHeader(vm, OT_INSTANCE, base_class) {
     for (uint64_t i = 0; i < base_class -> field_num; i += 1) {

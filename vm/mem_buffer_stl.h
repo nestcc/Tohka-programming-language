@@ -2,46 +2,39 @@
  * @Author: Nestcc
  * @Date: 2021-04-24 21:41:50
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-05-08 16:29:46
- * @Description:  < file content > 
+ * @LastEditTime: 2022-01-24 02:01:36
+ * @Description:  < file content >
  */
 
-#ifndef _MEMALLOCATORSTL_H_
-#define _MEMALLOCATORSTL_H_
+#ifndef _MEM_BUFFER_STL_H_
+#define _MEM_BUFFER_STL_H_
 
-#include <vector>
 #include <string>
+#include <vector>
+
 #include "vm/vm.h"
 
-template<typename Type>
+template <typename Type>
 class MemBufferSTL : public std::vector<Type> {
 public:
     VM *vm = nullptr;
     uint64_t curr_size;
 
-    MemBufferSTL() : std::vector<Type>(0), vm(nullptr) , curr_size(0) {};
+    MemBufferSTL() : std::vector<Type>(0), vm(nullptr), curr_size(0){};
 
-    MemBufferSTL(VM *vm, uint64_t size) :
-        std::vector<Type>(size),
-        vm(vm),
-        curr_size(size) {};
+    MemBufferSTL(VM *vm, uint64_t size) : std::vector<Type>(size), vm(vm), curr_size(size){};
 
     MemBufferSTL(const MemBufferSTL<Type> &other) = delete;
     MemBufferSTL &operator=(const MemBufferSTL<Type> &other) = delete;
 
-    MemBufferSTL(VM *vm, uint64_t size, const Type &t) :
-        std::vector<Type>(size, t), 
-        vm(vm),
-        curr_size(size) {};
+    MemBufferSTL(VM *vm, uint64_t size, const Type &t)
+        : std::vector<Type>(size, t), vm(vm), curr_size(size){};
 
     ~MemBufferSTL() {
-        if (vm != nullptr)
-            buff_clear();
+        if (vm != nullptr) buff_clear();
     }
 
-    uint64_t total_size() {
-        return std::vector<Type>::capacity() * sizeof(Type);
-    }
+    uint64_t total_size() { return std::vector<Type>::capacity() * sizeof(Type); }
 
     void adjust_size() {
         uint64_t new_size = total_size();
@@ -51,20 +44,17 @@ public:
 
     void fill_wirte(Type data, uint64_t fill_cnt) {
         for (uint64_t i = 0; i < fill_cnt; i += 1) {
-            this -> push_back(data);
+            std::vector<Type>::push_back(data);
         }
         adjust_size();
     };
 
-    void buff_add(Type data) {
-        fill_wirte(data, 1);
-    };
+    void buff_add(Type data) { fill_wirte(data, 1); };
 
     void buff_clear() {
         std::vector<Type>::clear();
         adjust_size();
     }
-
 };
 
 typedef MemBufferSTL<std::string> SymbolTable;

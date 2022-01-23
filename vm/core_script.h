@@ -1,4 +1,4 @@
-static const char* coreModuleCode =
+static const char* core_module_code =
 "class Null {}\n"
 "class Bool {}\n"
 "class Num {}\n"

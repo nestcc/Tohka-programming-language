@@ -13,6 +13,7 @@
 #include "object/base_class.h"
 #include "includes/utils.h"
 
+
 static inline BaseClass *get_class_of_val(VM *vm, Value *val) {
     switch (val -> type) {
         case VT_NULL:

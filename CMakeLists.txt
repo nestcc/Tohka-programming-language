@@ -16,10 +16,10 @@ endif ()
 
 set(TOHKA_LINK_LIBS
     Includes
-    VM
-    Parser
     Object
-    Compiler)
+    Parser
+    Compiler
+    VM)
 
 add_subdirectory(${PROJECT_SOURCE_DIR}/includes)
 add_subdirectory(${PROJECT_SOURCE_DIR}/vm)

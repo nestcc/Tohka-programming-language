@@ -2,100 +2,100 @@
  * @Author: Nestcc
  * @Date: 2021-03-12 17:18:38
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 21:49:43
+ * @LastEditTime: 2022-01-24 01:27:08
  * @Description:  < file content >
  */
 
 #ifndef _PARSER_H_
 #define _PARSER_H_
 
-#include "vm/mem_buffer_stl.h"
-#include "vm/core.h"
+#include "compiler/compiler_unit.h"
 #include "includes/common.h"
-#include "includes/utils.h"
 #include "includes/unicode.h"
+#include "includes/utils.h"
 #include "object/base_class.h"
 #include "object/value.h"
-#include "compiler/compiler_unit.h"
+#include "vm/core.h"
+#include "vm/mem_buffer_stl.h"
 
 enum TokenType {
-    TOKEN_UNKNOWN,                          // 0
+    TOKEN_UNKNOWN,  // 0
 
     // 数据类型
-    TOKEN_NUM,		   //数字                   1
-    TOKEN_STRING,     	   //字符串
-    TOKEN_ID,	     	   //变量名
-    TOKEN_INTERPOLATION,     //内嵌表达式
+    TOKEN_NUM,            //数字                   1
+    TOKEN_STRING,         //字符串
+    TOKEN_ID,             //变量名
+    TOKEN_INTERPOLATION,  //内嵌表达式
 
     // 关键字(系统保留字)
-    TOKEN_VAR,		   //'var'                  5
-    TOKEN_FUN,		   //'fun'
-    TOKEN_IF,		   //'if'
-    TOKEN_ELSE,	     	   //'else'
-    TOKEN_TRUE,	     	   //'true'
-    TOKEN_FALSE,	     	   //'false'        10
-    TOKEN_WHILE,	     	   //'while'
-    TOKEN_FOR,	     	   //'for'
-    TOKEN_BREAK,	     	   //'break'
-    TOKEN_CONTINUE,         //'continue'
-    TOKEN_RETURN,     	   //'return'           15
-    TOKEN_NULL,	     	   //'null'
+    TOKEN_VAR,       //'var'                  5
+    TOKEN_FUN,       //'fun'
+    TOKEN_IF,        //'if'
+    TOKEN_ELSE,      //'else'
+    TOKEN_TRUE,      //'true'
+    TOKEN_FALSE,     //'false'        10
+    TOKEN_WHILE,     //'while'
+    TOKEN_FOR,       //'for'
+    TOKEN_BREAK,     //'break'
+    TOKEN_CONTINUE,  //'continue'
+    TOKEN_RETURN,    //'return'           15
+    TOKEN_NULL,      //'null'
 
     //以下是关于类和模块导入的token
-    TOKEN_CLASS,	     	   //'class'
-    TOKEN_THIS,	     	   //'this'
-    TOKEN_STATIC,     	   //'static'
-    TOKEN_IS,		   // 'is'                  20
-    TOKEN_SUPER,	     	   //'super'
-    TOKEN_IMPORT,     	   //'import'
+    TOKEN_CLASS,   //'class'
+    TOKEN_THIS,    //'this'
+    TOKEN_STATIC,  //'static'
+    TOKEN_IS,      // 'is'                  20
+    TOKEN_SUPER,   //'super'
+    TOKEN_IMPORT,  //'import'
 
     //分隔符
-    TOKEN_COMMA,		   //','
-    TOKEN_COLON,		   //':'
-    TOKEN_LEFT_PAREN,	   //'('                25
-    TOKEN_RIGHT_PAREN,	   //')'
-    TOKEN_LEFT_BRACKET,	   //'['
-    TOKEN_RIGHT_BRACKET,	   //']'
-    TOKEN_LEFT_BRACE,	   //'{'
-    TOKEN_RIGHT_BRACE,	   //'}'                30
-    TOKEN_DOT,		   //'.'
-    TOKEN_DOT_DOT,	   //'..'
+    TOKEN_COMMA,          //','
+    TOKEN_COLON,          //':'
+    TOKEN_LEFT_PAREN,     //'('                25
+    TOKEN_RIGHT_PAREN,    //')'
+    TOKEN_LEFT_BRACKET,   //'['
+    TOKEN_RIGHT_BRACKET,  //']'
+    TOKEN_LEFT_BRACE,     //'{'
+    TOKEN_RIGHT_BRACE,    //'}'                30
+    TOKEN_DOT,            //'.'
+    TOKEN_DOT_DOT,        //'..'
 
     //简单双目运算符
-    TOKEN_ADD,		   //'+'
-    TOKEN_SUB,		   //'-'
-    TOKEN_MUL,		   //'*'                    35
-    TOKEN_DIV,		   //'/'
-    TOKEN_MOD,		   //'%'
+    TOKEN_ADD,  //'+'
+    TOKEN_SUB,  //'-'
+    TOKEN_MUL,  //'*'                    35
+    TOKEN_DIV,  //'/'
+    TOKEN_MOD,  //'%'
 
     //赋值运算符
-    TOKEN_ASSIGN,	   //'='
+    TOKEN_ASSIGN,  //'='
 
     // 位运算符
-    TOKEN_BIT_AND,	   //'&'
-    TOKEN_BIT_OR,	   //'|'                    40
-    TOKEN_BIT_NOT,	   //'~'
+    TOKEN_BIT_AND,          //'&'
+    TOKEN_BIT_OR,           //'|'                    40
+    TOKEN_BIT_NOT,          //'~'
     TOKEN_BIT_SHIFT_RIGHT,  //'>>'
     TOKEN_BIT_SHIFT_LEFT,   //'<<'
 
     // 逻辑运算符
-    TOKEN_LOGIC_AND,	   //'&&'
-    TOKEN_LOGIC_OR,	   //'||'                   45
-    TOKEN_LOGIC_NOT,	   //'!'
+    TOKEN_LOGIC_AND,  //'&&'
+    TOKEN_LOGIC_OR,   //'||'                   45
+    TOKEN_LOGIC_NOT,  //'!'
 
     //关系操作符
-    TOKEN_EQUAL,		   //'=='
-    TOKEN_NOT_EQUAL,	   //'!='
-    TOKEN_GREATE,	   //'>'
-    TOKEN_GREATE_EQUAL,	   //'>='               50
-    TOKEN_LESS,		   //'<'
-    TOKEN_LESS_EQUAL,	   //'<='
+    TOKEN_EQUAL,         //'=='
+    TOKEN_NOT_EQUAL,     //'!='
+    TOKEN_GREATE,        //'>'
+    TOKEN_GREATE_EQUAL,  //'>='               50
+    TOKEN_LESS,          //'<'
+    TOKEN_LESS_EQUAL,    //'<='
 
-    TOKEN_QUESTION,	   //'?'
+    TOKEN_QUESTION,  //'?'
 
-    TOKEN_SEMICOLON,         // ';'
+    TOKEN_SEMICOLON,  // ';'
     // 文件结束标记,仅词法分析时使用
-    TOKEN_EOF		   //'EOF'                  54
+    TOKEN_EOF  //'EOF'                  54
 };
 
 struct Token {
@@ -116,7 +116,7 @@ public:
      */
     char look_ahead() const;
 
-    /** 
+    /**
      * @description: 下一个字符是否是期望的，是则读入并返回true，否则返回false
      */
     bool metch_token(TokenType expected);
@@ -128,7 +128,7 @@ public:
 
     /**
      * @description: 解析token
-     */    
+     */
     void parse_id(TokenType type);
 
     /**
@@ -139,12 +139,12 @@ public:
     /**
      * @description: 断言当前token为expected并读入下一token,否则报错errMsg
      */
-    void consume_curr_token(TokenType expected, const char* errMsg);
+    void consume_curr_token(TokenType expected, const char *errMsg);
 
     /**
      * @description: 断言下一个token为expected,否则报错errMsg
      */
-    void consume_next_token(TokenType expected, const char* errMsg);
+    void consume_next_token(TokenType expected, const char *errMsg);
 
     const char *file;
     const char *source_code;
@@ -159,7 +159,6 @@ public:
     Parser *parent;
 
 private:
-
     // 处于内嵌表达式之中时,期望的右括号数量.
     // 用于跟踪小括号对儿的嵌套
     int interpolation_expect_rparen_num;
@@ -200,8 +199,8 @@ private:
     bool match_token(TokenType expected);
 
     /**
- * @description: 解析十进制数
- */
+     * @description: 解析十进制数
+     */
     void parse_dec_number();
 
     /**

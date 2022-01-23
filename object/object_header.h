@@ -2,7 +2,7 @@
  * @Author: Nestcc
  * @Date:
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-05-01 10:17:01
+ * @LastEditTime: 2022-01-24 01:30:11
  * @Discription:
  */
 
@@ -10,13 +10,12 @@
 #define _TOHKA_OBJECT_HEADER_H_
 
 #include "object/headers.h"
-#include "vm/vm.h"
 
 class ObjHeader {
 public:
     ObjType type;
     bool is_dark;
-    BaseClass *cls;     // super class
+    BaseClass *cls;  // super class
     ObjHeader *next, *prev;
     uint64_t ref_cnt;
     VM *vm;
@@ -32,7 +31,8 @@ public:
     virtual uint64_t hash_value() const;
 
     virtual ~ObjHeader();
+
 private:
 };
 
-#endif //TOHKA_OBJECT_HEADER_H
+#endif  // TOHKA_OBJECT_HEADER_H

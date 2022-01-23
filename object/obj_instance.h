@@ -12,6 +12,7 @@
 #include <vector>
 #include "object/object_header.h"
 
+
 class ObjInstance : public ObjHeader{
 public:
     typedef std::vector<Value> FieldType;

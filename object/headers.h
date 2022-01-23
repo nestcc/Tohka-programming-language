@@ -12,6 +12,7 @@
 #include "includes/common.h"
 #include "includes/utils.h"
 
+
 class Value;
 class ObjHeader;
 class ObjClosure;
@@ -23,6 +24,7 @@ class ObjMap;
 class frame;
 class BaseClass;
 class method;
+class VM;
 
 enum ObjType{
     OT_CLASS,   //此项是class类型,以下都是object类型   0

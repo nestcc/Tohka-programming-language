@@ -2,16 +2,17 @@
  * @Author: Zhao Yizhu
  * @Date: 2021-02-25 14:10:12
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-25 17:26:51
+ * @LastEditTime: 2022-01-24 01:25:51
  * @Description:  < file content >
  */
 
-#include <iostream>
+#include "includes/utils.h"
+
 #include <cinttypes>
 #include <cstdlib>
+#include <iostream>
 
 #include "includes/common.h"
-#include "includes/utils.h"
 #include "parser/parser.h"
 #include "vm/vm.h"
 
@@ -28,8 +29,7 @@ uint64_t ceil_to_square(uint64_t v) {
 }
 
 void *mem_manager(VM *vm, void *data, uint64_t old_size, uint64_t new_size) {
-
-    vm -> allocated_byte += new_size - old_size;
+    vm->allocated_byte += new_size - old_size;
 
     if (new_size == 0) {
         free(data);
@@ -40,23 +40,23 @@ void *mem_manager(VM *vm, void *data, uint64_t old_size, uint64_t new_size) {
 }
 
 void report_error(void *parser, ErrorType err_type, const char *fmt, ...) {
-    char buffer[DEFAULT_BUfFER_SIZE] = "\0";
+    char buffer[DEFAULT_BUFFER_SIZE] = "\0";
     va_list ap;
     va_start(ap, fmt);
-    vsnprintf(buffer, DEFAULT_BUfFER_SIZE, fmt, ap);
+    vsnprintf(buffer, DEFAULT_BUFFER_SIZE, fmt, ap);
     va_end(ap);
 
     switch (err_type) {
     case ERROR_IO:
     case ERROR_MEM:
-        fprintf(stderr, RED "%s:%d" NOCOLOR " In function %s():%s\n",
-            __FILE__, __LINE__, __func__, buffer);
+        fprintf(stderr, RED "%s:%d" NOCOLOR " In function %s():%s\n", __FILE__, __LINE__, __func__,
+                buffer);
         break;
     case ERROR_LEX:
     case ERROR_COMPILE:
         ASSERT(parser != nullptr, "parser is null!");
-        fprintf(stderr, RED "%s:%llu" NOCOLOR " \"%s\"\n", ((Parser *) parser) -> file,
-            ((Parser *) parser) -> prev_token.line_no, buffer);
+        fprintf(stderr, RED "%s:%llu" NOCOLOR " \"%s\"\n", ((Parser *)parser)->file,
+                ((Parser *)parser)->prev_token.line_no, buffer);
         break;
     case ERROR_RUNTIME:
         fprintf(stderr, RED "%s\n" NOCOLOR, buffer);
@@ -68,5 +68,5 @@ void report_error(void *parser, ErrorType err_type, const char *fmt, ...) {
     default:
         NOT_REACHED();
     }
-    exit(1);
+    exit(-1);
 }

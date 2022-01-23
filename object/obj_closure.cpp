@@ -8,6 +8,7 @@
 
 #include "object/obj_closure.h"
 
+
 ObjClosure::ObjClosure(VM *vm, ObjFunction *func_obj) :
 ObjHeader(vm, OT_UPVALUE, vm -> func_cls){
     upvalues = std::vector<ObjUpvalue *>(func_obj -> up_val_num);

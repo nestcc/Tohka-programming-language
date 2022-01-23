@@ -9,9 +9,8 @@
 build/
 cmake-build-debug/
 CMakeFiles/
-cmake-build-debug/
 cmake_install.cmake
-cMakeCache.txt
+CMakeCache.txt
 Makefile
 
 # jetbrains

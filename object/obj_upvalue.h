@@ -12,6 +12,7 @@
 #include "object/object_header.h"
 #include "object/value.h"
 
+
 class ObjUpvalue : public ObjHeader {
 public:
     Value *local_val_ptr;

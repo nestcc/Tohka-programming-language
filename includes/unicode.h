@@ -12,6 +12,6 @@
 uint64_t get_number_encode_utf8(int value);
 uint64_t get_number_decode_utf8(uint8_t byte);
 uint8_t encode_utf8(uint8_t *buff, int value);
-int decode_utf8(const uint8_t *byte_ptr, size_t length);
+int decode_utf8(const uint8_t *byte_ptr, uint64_t length);
 
 #endif

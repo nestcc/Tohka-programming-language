@@ -12,6 +12,7 @@
 #include <vector>
 #include "object/obj_function.h"
 
+
 class ObjClosure : public ObjHeader {
 public:
     ObjFunction *func;

@@ -1,16 +1,18 @@
 /*
- * @Author: nestcc 
+ * @Author: nestcc
  * @Date: 2021/4/4 22:48
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-22 14:06:35
- * @Discription: 
+ * @LastEditTime: 2022-01-24 01:31:27
+ * @Discription:
  */
 
-#include <string>
 #include "object/obj_string.h"
 
-ObjString::ObjString(VM *vm, const std::string &str) :
-ObjHeader(vm, OT_STRING, vm -> str_cls) {
+#include <string>
+
+#include "vm/vm.h"
+
+ObjString::ObjString(VM *vm, const std::string &str) : ObjHeader(vm, OT_STRING, vm->str_cls) {
     value = str;
     hash();
     vm->alloc_memory(sizeof(*this));
@@ -27,8 +29,8 @@ uint64_t ObjString::hash() {
     return hash_code;
 }
 
-ObjString::ObjString(VM *vm, const char *str, uint64_t ssize) :
-ObjHeader(vm, OT_STRING, vm -> str_cls) {
+ObjString::ObjString(VM *vm, const char *str, uint64_t ssize)
+    : ObjHeader(vm, OT_STRING, vm->str_cls) {
     value = std::string(str, ssize);
     hash();
     vm->alloc_memory(sizeof(*this));
@@ -37,10 +39,14 @@ ObjHeader(vm, OT_STRING, vm -> str_cls) {
 }
 
 bool ObjString::equal_to(const ObjHeader *obj) {
-    const auto *other = dynamic_cast<const ObjString *> (obj);
-    if (other == nullptr) { return false; }
-    if (hash_code != other -> hash_code) { return false; }
-    return value == other -> value;
+    const auto *other = dynamic_cast<const ObjString *>(obj);
+    if (other == nullptr) {
+        return false;
+    }
+    if (hash_code != other->hash_code) {
+        return false;
+    }
+    return value == other->value;
 }
 
 ObjString::~ObjString() {
@@ -48,6 +54,4 @@ ObjString::~ObjString() {
     // vm -> remove_object(this);
 }
 
-uint64_t ObjString::hash_value() const {
-    return hash_code;
-}
+uint64_t ObjString::hash_value() const { return hash_code; }

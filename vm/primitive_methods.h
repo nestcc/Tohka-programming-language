@@ -9,9 +9,9 @@
 #ifndef _PRIMITIVE_METHODS_H_
 #define _PRIMITIVE_METHODS_H_
 
-// #include "core.h"
 #include "vm/vm.h"
 #include "object/headers.h"
+
 
 // !object
 bool obj_not(VM *vm, Value *args);

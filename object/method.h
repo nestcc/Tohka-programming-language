@@ -11,6 +11,7 @@
 
 #include "object/headers.h"
 
+
 class method {
 public:
     MethodType type;

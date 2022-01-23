@@ -2,8 +2,6 @@
  * @Author: Nestcc
  * @Date: 2021-03-29 16:05:45
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-24 21:54:37
- * @Description:  < file content > 
  */
 
 #ifndef _TOHKA_CLI_H_
@@ -16,4 +14,4 @@
 #include "includes/utils.h"
 #include "parser/parser.h"
 
-#endif // _TOHKA_CLI_H_
+#endif  // _TOHKA_CLI_H_

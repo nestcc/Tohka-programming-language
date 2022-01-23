@@ -10,6 +10,7 @@
 #include "object/obj_upvalue.h"
 #include "object/obj_closure.h"
 
+
 void ObjThread::prepare_frame(ObjClosure *obj_closure, Value *stk_start) {
     ASSERT(frame_capacity > used_frame_num, "Not enough frame for thread.");
     

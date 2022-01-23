@@ -11,6 +11,7 @@
 #include "object/obj_list.h"
 #include "object/value.h"
 
+
 ObjList::ObjList(VM *vm, int size_n) :
 ObjHeader(vm, OT_LIST, vm -> list_class){
     elements.reserve(size_n);

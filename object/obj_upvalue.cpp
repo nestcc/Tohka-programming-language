@@ -9,6 +9,7 @@
 #include "object/obj_upvalue.h"
 #include "vm/vm.h"
 
+
 ObjUpvalue::ObjUpvalue(VM *vm, Value *local_value)
 : ObjHeader(vm, OT_UPVALUE, nullptr) {
     local_val_ptr = local_value;

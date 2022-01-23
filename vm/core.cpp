@@ -20,14 +20,8 @@
 
 
 inline void Core::func_bind_class(VM *vm, BaseClass *base_cls, const std::string &method_name, Primitive prim_func) {
-    if (method_name.empty()) {
-        COMPILE_ERROR(nullptr, "method_name is empty.");
-        return;
-    }
-    else if (prim_func == nullptr) {
-        COMPILE_ERROR(nullptr, "primitive function is nullptr.");
-        return;
-    }
+    if (method_name.empty()) { COMPILE_ERROR(nullptr, "method_name is empty."); }
+    else if (prim_func == nullptr) { COMPILE_ERROR(nullptr, "primitive function is nullptr."); }
 
     uint64_t global_index = get_index_from_symbol_table(&vm -> all_method_name, method_name);
     auto *pMethod = new method();
@@ -125,7 +119,7 @@ void Core::build() {
 }
 
 int Core::add_symbol(SymbolTable *table, const std::string &name) {
-    ASSERT(name.length != 0, "Length of symbol is 0!");
+    ASSERT(name.size() != 0, "Length of symbol is 0!");
     table -> push_back(name);
     return table -> size() - 1;
 }

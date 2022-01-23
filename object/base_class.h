@@ -1,17 +1,17 @@
 /*
- * @Author: nestcc 
+ * @Author: nestcc
  * @Date: 2021/4/4 18:17
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-05-08 16:02:14
- * @Discription: 
+ * @LastEditTime: 2022-01-21 16:48:00
+ * @Discription:
  */
 
 #ifndef _TOHKA_BASE_CLASS_H_
 #define _TOHKA_BASE_CLASS_H_
 
-#include "object/object_header.h"
-#include "object/obj_string.h"
 #include "object/method.h"
+#include "object/obj_string.h"
+#include "object/object_header.h"
 #include "vm/mem_buffer_stl.h"
 
 class BaseClass : public ObjHeader {
@@ -31,4 +31,4 @@ public:
 
 // inline BaseClass *get_class_of_val(VM *vm, Value *val);
 
-#endif //TOHKA_BASE_CLASS_H
+#endif  // TOHKA_BASE_CLASS_H

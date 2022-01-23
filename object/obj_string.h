@@ -1,9 +1,9 @@
 /*
- * @Author: nestcc 
+ * @Author: nestcc
  * @Date: 2021/4/4 22:48
  * @LastEditors: Nestcc
- * @LastEditTime: 2021-04-28 10:40:15
- * @Discription: 
+ * @LastEditTime: 2022-01-24 01:31:07
+ * @Discription:
  */
 
 #ifndef _TOHKA_OBJSTRING_H_
@@ -11,6 +11,7 @@
 
 #include <cinttypes>
 #include <string>
+
 #include "object/object_header.h"
 
 class ObjString : public ObjHeader {
@@ -21,15 +22,14 @@ public:
     ObjString() = delete;
     ObjString(VM *vm, const std::string &str);
     ObjString(VM *vm, const char *str, uint64_t ssize);
-    
+
     uint64_t hash_value() const override;
 
     uint64_t hash();
 
     virtual bool equal_to(const ObjHeader *obj) override;
-    
+
     ~ObjString() override;
 };
 
-
-#endif //TOHKA_OBJSTRING_H
+#endif  // TOHKA_OBJSTRING_H
