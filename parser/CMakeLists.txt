@@ -2,4 +2,4 @@
 set(LIBRARY_OUTPUT_PATH "${BUILD_DIR}")
 
 add_library(Parser
-        parser.cpp)
+        parser.cpp ../Token/token.h)

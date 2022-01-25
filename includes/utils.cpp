@@ -8,9 +8,7 @@
 
 #include "includes/utils.h"
 
-#include <cinttypes>
 #include <cstdlib>
-#include <iostream>
 
 #include "includes/common.h"
 #include "parser/parser.h"

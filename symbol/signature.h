@@ -25,6 +25,9 @@ public:
     SignatureType type;
     std::string name;
     uint64_t arg_num;
+
+public:
+    std::string to_string();
 };
 
 #endif

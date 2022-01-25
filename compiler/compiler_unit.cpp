@@ -49,7 +49,7 @@ int CompilerUnit::write_byte(Byte byte) {
     return _obj_func->instr_stream.size() - 1;
 }
 
-void CompilerUnit::write_op_code(OpCode opcode) {
+void CompilerUnit::write_opcode(OpCode opcode) {
     write_byte(opcode);
     _stack_slot_num += _op_code_slots_used[opcode];
     if (_stack_slot_num > _obj_func->max_stk_slot_num) {
@@ -65,13 +65,31 @@ void CompilerUnit::write_short_operand(ShortOperand operand) {
 }
 
 void CompilerUnit::write_opcode_byte_operand(OpCode opcode, ByteOperand byte_operand) {
-    write_op_code(opcode);
+    write_opcode(opcode);
     write_byte_operand(byte_operand);
 }
 
 void CompilerUnit::write_opcode_short_operand(OpCode opcode, ShortOperand short_operand) {
-    write_op_code(opcode);
+    write_opcode(opcode);
     write_short_operand(short_operand);
 }
 
 void CompilerUnit::compile_program() { return; }
+
+uint64_t CompilerUnit::add_constant(Value *constant) {
+    _obj_func->constants.buff_add(*constant);
+    return _obj_func->constants.size() - 1;
+}
+
+void CompilerUnit::emit_load_constant(Value *value) {
+    uint64_t index = add_constant(value);
+    write_opcode_short_operand(OPCODE_LOAD_CONSTANT, ShortOperand(index));
+}
+
+void CompilerUnit::literal(CompilerUnit *cu, bool can_assign UNUSED) {
+    cu->emit_load_constant(&cu->_curr_parser->prev_token.value);
+}
+
+void CompilerUnit::expression(SymbolBindRule::BindPower bp) {
+    DenotationFunc nud ;
+}

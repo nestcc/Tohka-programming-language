@@ -43,7 +43,7 @@ void ObjModule::compile_module(const char *module_code) {
 
     parser->get_next_token();
 
-    while (!parser->metch_token(TOKEN_EOF)) {
+    while (!parser->metch_token(Token::TOKEN_EOF)) {
         cu->compile_program();
     }
 

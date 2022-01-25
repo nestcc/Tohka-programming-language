@@ -34,4 +34,9 @@ class CompilerUnit;
 
 #define OPCODE_NUM 62
 
+typedef void (*DenotationFunc) (CompilerUnit *cu, bool can_assign);
+
+typedef void (*MethodSignatureFunc) (CompilerUnit *cu, Signature *signature);
+
+
 #endif

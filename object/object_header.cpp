@@ -32,7 +32,7 @@ bool ObjHeader::equal_to(const ObjHeader *obj) {
 }
 
 uint64_t ObjHeader::hash_value() const {
-    RUNTIME_WARRINING(nullptr, "Unsupport hash code for current object %d.", type);
+    RUNTIME_WARNING(nullptr, "Unsupport hash code for current object %d.", type);
     return -1;
 }
 

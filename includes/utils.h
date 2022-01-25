@@ -48,12 +48,9 @@ typedef uint8_t Byte;
 typedef char Char;
 typedef int Int;
 
-// template<typename Type>
-// typedef MemBufferSTL<Type> MemBuffer;
 
 enum ErrorType { ERROR_IO, ERROR_MEM, ERROR_LEX, ERROR_COMPILE, ERROR_RUNTIME, ERROR_WARRNING };
 
-// void symbol_table_clear(VM *vm, SymbolTable *buffer);
 
 void report_error(void *parser, ErrorType err_type, const char *fmt, ...);
 
@@ -67,7 +64,7 @@ void report_error(void *parser, ErrorType err_type, const char *fmt, ...);
 
 #define RUNTIME_ERROR(...) report_error(nullptr, ERROR_RUNTIME, __VA_ARGS__);
 
-#define RUNTIME_WARRINING(...) report_error(nullptr, ERROR_WARRNING, __VA_ARGS__);
+#define RUNTIME_WARNING(...) report_error(nullptr, ERROR_WARRNING, __VA_ARGS__);
 
 #define DEFAULT_BUFFER_SIZE 512
 

@@ -13,12 +13,12 @@
 
 
 ObjFunction::ObjFunction(VM *vm, ObjModule *obj_module, uint64_t slot_num) :
-        ObjHeader(vm, OT_FUNCTION, vm -> func_cls) {
-    LOG_INFO(" new ObjFunction slot_num = %llu\n, module = %s\n", slot_num, obj_module -> name -> value . data());
+        ObjHeader(vm, OT_FUNCTION, vm->func_cls) {
+    LOG_INFO(" new ObjFunction slot_num = %llu\n, module = %s\n", slot_num, obj_module->name->value.data());
     // instr_stream = ByteBuffer(vm, 0);
-    new (&instr_stream) ByteBuffer(vm, 0);
+    new(&instr_stream) ByteBuffer(vm, 0);
     // constants = ValueBuffer(vm, 0);
-    new (&constants) ValueBuffer(vm, 0);
+    new(&constants) ValueBuffer(vm, 0);
 
     module = obj_module;
     max_stk_slot_num = slot_num;

@@ -16,29 +16,29 @@
 struct KeywordToken {
     std::string keyword;
     uint8_t length;
-    TokenType token;
+    Token::TokenType token;
 };  //关键字(保留字)结构
 
 //关键字查找表
 std::vector<KeywordToken> keywords_token = {
-    {"var", 3, TOKEN_VAR},           {"fun", 3, TOKEN_FUN},       {"if", 2, TOKEN_IF},
-    {"else", 4, TOKEN_ELSE},         {"true", 4, TOKEN_TRUE},     {"false", 5, TOKEN_FALSE},
-    {"while", 5, TOKEN_WHILE},       {"for", 3, TOKEN_FOR},       {"break", 5, TOKEN_BREAK},
-    {"continue", 8, TOKEN_CONTINUE}, {"return", 6, TOKEN_RETURN}, {"null", 4, TOKEN_NULL},
-    {"class", 5, TOKEN_CLASS},       {"is", 2, TOKEN_IS},         {"static", 6, TOKEN_STATIC},
-    {"this", 4, TOKEN_THIS},         {"super", 5, TOKEN_SUPER},   {"import", 6, TOKEN_IMPORT},
-    {"", 0, TOKEN_UNKNOWN}};
+    {"var", 3, Token::TOKEN_VAR},           {"fun", 3, Token::TOKEN_FUN},       {"if", 2, Token::TOKEN_IF},
+    {"else", 4, Token::TOKEN_ELSE},         {"true", 4, Token::TOKEN_TRUE},     {"false", 5, Token::TOKEN_FALSE},
+    {"while", 5, Token::TOKEN_WHILE},       {"for", 3, Token::TOKEN_FOR},       {"break", 5, Token::TOKEN_BREAK},
+    {"continue", 8, Token::TOKEN_CONTINUE}, {"return", 6, Token::TOKEN_RETURN}, {"null", 4, Token::TOKEN_NULL},
+    {"class", 5, Token::TOKEN_CLASS},       {"is", 2, Token::TOKEN_IS},         {"static", 6, Token::TOKEN_STATIC},
+    {"this", 4, Token::TOKEN_THIS},         {"super", 5, Token::TOKEN_SUPER},   {"import", 6, Token::TOKEN_IMPORT},
+    {"", 0, Token::TOKEN_UNKNOWN}};
 
-static TokenType id_or_keyword(const char *str, uint64_t length) {
-    TokenType ret;
+static Token::TokenType id_or_keyword(const char *str, uint64_t length) {
+    Token::TokenType ret;
     for (uint64_t i = 0; i < keywords_token.size(); i += 1) {
         if (keywords_token[i].length == length &&
             memcmp((char *)keywords_token[i].keyword.c_str(), str, length) == 0) {
-            return (TokenType)(keywords_token[i].token);
+            return (Token::TokenType)(keywords_token[i].token);
         }
     }
 
-    return TOKEN_ID;
+    return Token::TOKEN_ID;
 }
 
 Parser::Parser(VM *vm, const char *file, const char *source_code, ObjModule *obj_mudule) {
@@ -49,11 +49,11 @@ Parser::Parser(VM *vm, const char *file, const char *source_code, ObjModule *obj
     curr_char = *this->source_code;
     next_char_ptr = this->source_code + 1;
 
-    curr_token.type = TOKEN_UNKNOWN;
+    curr_token.type = Token::TOKEN_UNKNOWN;
     prev_token = curr_token;
 
     curr_token.line_no = 1;
-    curr_token.type = TOKEN_UNKNOWN;
+    curr_token.type = Token::TOKEN_UNKNOWN;
     curr_token.start = nullptr;
     curr_token.length = 0;
 
@@ -65,7 +65,7 @@ Parser::Parser(VM *vm, const char *file, const char *source_code, ObjModule *obj
 
 char Parser::look_ahead() const { return *next_char_ptr; }
 
-bool Parser::metch_token(TokenType expected) {
+bool Parser::metch_token(Token::TokenType expected) {
     if (curr_token.type == expected) {
         get_next_token();
         return true;
@@ -83,14 +83,14 @@ void Parser::skip_blanks() {
     return;
 }
 
-void Parser::parse_id(TokenType type) {
+void Parser::parse_id(Token::TokenType type) {
     while (isalnum(curr_char) || curr_char == '_') {
         get_next_char();
     }
 
     auto wlen = (uint64_t)(next_char_ptr - curr_token.start - 1);
 
-    if (type != TOKEN_UNKNOWN) {
+    if (type != Token::TOKEN_UNKNOWN) {
         curr_token.type = type;
     } else {
         curr_token.type = id_or_keyword(curr_token.start, wlen);
@@ -106,23 +106,23 @@ void Parser::get_next_token() {
     prev_token = curr_token;
     skip_blanks();
 
-    curr_token.type = TOKEN_EOF;
+    curr_token.type = Token::TOKEN_EOF;
     curr_token.length = 0;
     curr_token.start = next_char_ptr - 1;
 
     while (curr_char != '\0' && curr_char != EOF) {
         switch (curr_char) {
         case ',':
-            curr_token.type = TOKEN_COMMA;
+            curr_token.type = Token::TOKEN_COMMA;
             break;
         case ':':
-            curr_token.type = TOKEN_COLON;
+            curr_token.type = Token::TOKEN_COLON;
             break;
         case '(':
             if (interpolation_expect_rparen_num > 0) {
                 interpolation_expect_rparen_num += 1;
             }
-            curr_token.type = TOKEN_LEFT_PAREN;
+            curr_token.type = Token::TOKEN_LEFT_PAREN;
             break;
         case ')':
             if (interpolation_expect_rparen_num > 0) {
@@ -132,42 +132,42 @@ void Parser::get_next_token() {
                     break;
                 }
             }
-            curr_token.type = TOKEN_RIGHT_PAREN;
+            curr_token.type = Token::TOKEN_RIGHT_PAREN;
             break;
         case '[':
-            curr_token.type = TOKEN_LEFT_BRACKET;
+            curr_token.type = Token::TOKEN_LEFT_BRACKET;
             break;
         case ']':
-            curr_token.type = TOKEN_RIGHT_BRACKET;
+            curr_token.type = Token::TOKEN_RIGHT_BRACKET;
             break;
         case '{':
-            curr_token.type = TOKEN_LEFT_BRACE;
+            curr_token.type = Token::TOKEN_LEFT_BRACE;
             break;
         case '}':
-            curr_token.type = TOKEN_RIGHT_BRACE;
+            curr_token.type = Token::TOKEN_RIGHT_BRACE;
             break;
         case '.':
             if (match_next_char('.')) {
-                curr_token.type = TOKEN_DOT_DOT;
+                curr_token.type = Token::TOKEN_DOT_DOT;
             } else {
-                curr_token.type = TOKEN_DOT;
+                curr_token.type = Token::TOKEN_DOT;
             }
             break;
         case '=':
             if (match_next_char('=')) {
-                curr_token.type = TOKEN_EQUAL;
+                curr_token.type = Token::TOKEN_EQUAL;
             } else {
-                curr_token.type = TOKEN_ASSIGN;
+                curr_token.type = Token::TOKEN_ASSIGN;
             }
             break;
         case '+':
-            curr_token.type = TOKEN_ADD;
+            curr_token.type = Token::TOKEN_ADD;
             break;
         case '-':
-            curr_token.type = TOKEN_SUB;
+            curr_token.type = Token::TOKEN_SUB;
             break;
         case '*':
-            curr_token.type = TOKEN_MUL;
+            curr_token.type = Token::TOKEN_MUL;
             break;
         case '/':
             //跳过注释'//'或'/*'
@@ -177,55 +177,55 @@ void Parser::get_next_token() {
                 curr_token.start = next_char_ptr - 1;
                 continue;
             } else {
-                curr_token.type = TOKEN_DIV;
+                curr_token.type = Token::TOKEN_DIV;
             }  // '/'
             break;
         case '%':
-            curr_token.type = TOKEN_MOD;
+            curr_token.type = Token::TOKEN_MOD;
             break;
         case '&':
             if (match_next_char('&')) {
-                curr_token.type = TOKEN_LOGIC_AND;
+                curr_token.type = Token::TOKEN_LOGIC_AND;
             } else {
-                curr_token.type = TOKEN_BIT_AND;
+                curr_token.type = Token::TOKEN_BIT_AND;
             }
             break;
         case '|':
             if (match_next_char('|')) {
-                curr_token.type = TOKEN_LOGIC_OR;
+                curr_token.type = Token::TOKEN_LOGIC_OR;
             } else {
-                curr_token.type = TOKEN_BIT_OR;
+                curr_token.type = Token::TOKEN_BIT_OR;
             }
             break;
         case '~':
-            curr_token.type = TOKEN_BIT_NOT;
+            curr_token.type = Token::TOKEN_BIT_NOT;
             break;
         case '?':
-            curr_token.type = TOKEN_QUESTION;
+            curr_token.type = Token::TOKEN_QUESTION;
             break;
         case '>':
             if (match_next_char('=')) {
-                curr_token.type = TOKEN_GREATE_EQUAL;
+                curr_token.type = Token::TOKEN_GREATE_EQUAL;
             } else if (match_next_char('>')) {
-                curr_token.type = TOKEN_BIT_SHIFT_RIGHT;
+                curr_token.type = Token::TOKEN_BIT_SHIFT_RIGHT;
             } else {
-                curr_token.type = TOKEN_GREATE;
+                curr_token.type = Token::TOKEN_GREATE;
             }
             break;
         case '<':
             if (match_next_char('=')) {
-                curr_token.type = TOKEN_LESS_EQUAL;
+                curr_token.type = Token::TOKEN_LESS_EQUAL;
             } else if (match_next_char('<')) {
-                curr_token.type = TOKEN_BIT_SHIFT_LEFT;
+                curr_token.type = Token::TOKEN_BIT_SHIFT_LEFT;
             } else {
-                curr_token.type = TOKEN_LESS;
+                curr_token.type = Token::TOKEN_LESS;
             }
             break;
         case '!':
             if (match_next_char('=')) {
-                curr_token.type = TOKEN_NOT_EQUAL;
+                curr_token.type = Token::TOKEN_NOT_EQUAL;
             } else {
-                curr_token.type = TOKEN_LOGIC_NOT;
+                curr_token.type = Token::TOKEN_LOGIC_NOT;
             }
             break;
 
@@ -234,7 +234,7 @@ void Parser::get_next_token() {
             break;
 
         case ';':
-            curr_token.type = TOKEN_SEMICOLON;
+            curr_token.type = Token::TOKEN_SEMICOLON;
             break;
 
         default:
@@ -245,7 +245,7 @@ void Parser::get_next_token() {
 
             //首字符是字母或'_'则是变量名
             if (isalpha(curr_char) || curr_char == '_') {
-                parse_id(TOKEN_UNKNOWN);  //解析变量名其余的部分
+                parse_id(Token::TOKEN_UNKNOWN);  //解析变量名其余的部分
             } else if (isdigit(curr_char)) {
                 parse_number();
             } else {
@@ -264,14 +264,14 @@ void Parser::get_next_token() {
     }
 }
 
-void Parser::consume_curr_token(TokenType expected, const char *errMsg) {
+void Parser::consume_curr_token(Token::TokenType expected, const char *errMsg) {
     if (curr_token.type != expected) {
         COMPILE_ERROR(this, errMsg);
     }
     get_next_token();
 }
 
-void Parser::consume_next_token(TokenType expected, const char *errMsg) {
+void Parser::consume_next_token(Token::TokenType expected, const char *errMsg) {
     get_next_token();
     if (curr_token.type != expected) {
         COMPILE_ERROR(this, errMsg);
@@ -327,7 +327,7 @@ void Parser::parse_string() {
         }
 
         if (curr_char == '"') {
-            curr_token.type = TOKEN_STRING;
+            curr_token.type = Token::TOKEN_STRING;
             break;
         }
 
@@ -339,7 +339,7 @@ void Parser::parse_string() {
                 COMPILE_ERROR(this, "sorry, I don`t support nest interpolate expression!");
             }
             interpolation_expect_rparen_num = 1;
-            curr_token.type = TOKEN_INTERPOLATION;
+            curr_token.type = Token::TOKEN_INTERPOLATION;
             break;
         }
 
@@ -426,7 +426,7 @@ void Parser::skip_line() {
     return;
 }
 
-bool Parser::match_token(TokenType expected) {
+bool Parser::match_token(Token::TokenType expected) {
     if (curr_token.type == expected) {
         get_next_token();
         return true;
@@ -472,5 +472,5 @@ void Parser::parse_number() {
     }
 
     curr_token.length = (uint64_t)(next_char_ptr - curr_token.start - 1);
-    curr_token.type = TOKEN_NUM;
+    curr_token.type = Token::TOKEN_NUM;
 }

@@ -11,6 +11,7 @@
 #include "compiler/local_var.h"
 #include "compiler/loop.h"
 #include "compiler/upvalue.h"
+#include "symbol/symbol_bind_rule.h"
 #include "object/obj_function.h"
 #include "parser/parser.h"
 #include "vm/opcode.h"
@@ -41,17 +42,26 @@ public:
     CompilerUnit(Parser *parser, CompilerUnit *enclosing_unit, bool is_method);
 
     void compile_program();
+    uint64_t add_constant(Value *constant);
+    void emit_load_constant(Value *value);
+    static void literal(CompilerUnit *cu, bool can_assign UNUSED);
+
+private:
+//    SymbolBindRule rules[3] = {{"__TOKEN_INVALID__", SymbolBindRule::BP_NONE, nullptr, nullptr, nullptr},
+//                               {"__TOKEN_NUM__", SymbolBindRule::BP_NONE, literal, nullptr, nullptr}};
 
 private:
     int write_byte(Byte byte);
 
-    void write_op_code(OpCode opcode);
+    void write_opcode(OpCode opcode);
 
     void write_byte_operand(ByteOperand operand);
     void write_short_operand(ShortOperand operand);
 
     void write_opcode_byte_operand(OpCode opcode, ByteOperand byte_operand);
     void write_opcode_short_operand(OpCode opcode, ShortOperand short_operand);
+
+    void expression(SymbolBindRule::BindPower bp);
 };
 
 #endif

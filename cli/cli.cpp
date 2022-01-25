@@ -27,9 +27,9 @@ void run_file_parser(const char *path) {
 
     Parser parser(vm, path, sourceCode, nullptr);
 
-#include "../parser/token.list"
+#include "Token/token_list.h"
 
-    while (parser.curr_token.type != TOKEN_EOF) {
+    while (parser.curr_token.type != Token::TOKEN_EOF) {
         parser.get_next_token();
         printf(" %llu L-tokenArray [%s] : [", parser.curr_token.line_no,
                tokenArray[parser.curr_token.type].c_str());

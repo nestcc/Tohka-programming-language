@@ -20,9 +20,8 @@ union ShortOperand {
         Byte byte2;
     };
 
-    operator short () {
-        return short_operand;
-    }
+    ShortOperand(uint64_t operand);
+    operator short ();
 };
 
 union IntOperand {
@@ -34,9 +33,8 @@ union IntOperand {
         Byte byte4;
     };
 
-    operator int () {
-        return int_operand;
-    }
+    IntOperand(uint64_t operand);
+    operator int ();
 };
 
 
