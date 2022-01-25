@@ -4,7 +4,7 @@ TOKEN_STRING,
 TOKEN_ID,
 TOKEN_INTERPOLATION,
 TOKEN_VAR,		        //'var'
-TOKEN_FUN,		        //'fun'
+TOKEN_FUNC,		        //'func'
 TOKEN_IF,		        //'if'
 TOKEN_ELSE,	     	    //'else'	
 TOKEN_TRUE,	     	    //'true'

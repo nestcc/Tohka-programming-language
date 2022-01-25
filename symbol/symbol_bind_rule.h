@@ -39,11 +39,11 @@ public:
 //    DenotationFunc nud; // Methods called by tokens that don't care about left operand
 //    DenotationFunc led; // Methods called by tokens that concern about left operand
 
-    virtual void nud(CompilerUnit *cu, bool can_assign) = 0; // Methods called by tokens that don't care about left operand
-    virtual void led(CompilerUnit *cu, bool can_assign) = 0; // Methods called by tokens that concern about left operand
-    virtual void method_sign(CompilerUnit *cu, Signature *signature) = 0;
+    virtual void nud(CompileUnit *cu, bool can_assign) = 0; // Methods called by tokens that don't care about left operand
+    virtual void led(CompileUnit *cu, bool can_assign) = 0; // Methods called by tokens that concern about left operand
+    virtual void method_sign(CompileUnit *cu, Signature *signature) = 0;
 
-    void expression(CompilerUnit *cu, BindPower bp);
+    void expression(CompileUnit *cu, BindPower bp);
 };
 
 #endif // end of _TOHKA_SYMBOL_BIND_RULE_H_

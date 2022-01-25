@@ -8,7 +8,7 @@
 
 #include "compiler/compiler.h"
 
-#include "compiler/compiler_unit.h"
+#include "compiler/compile_unit.h"
 #include "includes/utils.h"
 #include "object/obj_map.h"
 #include "object/obj_module.h"

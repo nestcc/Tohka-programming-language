@@ -37,7 +37,7 @@ void ObjModule::compile_module(const char *module_code) {
     parser->parent = vm->curr_parser;
     vm->curr_parser = parser;
 
-    CompilerUnit *cu = new CompilerUnit(parser, nullptr, false);
+    CompileUnit *cu = new CompileUnit(parser, nullptr, false);
 
     uint32_t module_var_num_before = module_var_value.size();
 

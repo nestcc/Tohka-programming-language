@@ -10,7 +10,7 @@
 #include "symbol_bind_rule.h"
 
 class Operator : SymbolBindRule {
-    void expression(CompilerUnit *cu, BindPower bp);
+    void expression(CompileUnit *cu, BindPower bp);
 };
 
 
