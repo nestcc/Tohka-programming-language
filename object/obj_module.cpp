@@ -27,7 +27,7 @@ ObjModule::ObjModule(VM *vm, const std::string &mod_name) : ObjHeader(vm, OT_MOD
 
 ObjModule::~ObjModule() { delete name; }
 
-void ObjModule::compile_module(const char *module_code) {
+ObjFunction *ObjModule::compile_module(const char *module_code) {
     Parser *parser = nullptr;
     if (name == nullptr) {
         parser = new Parser(vm, "../vm/core_script.h", module_code, this);
@@ -52,10 +52,10 @@ void ObjModule::compile_module(const char *module_code) {
     }
     delete parser;
     delete cu;
-    return;
+    return nullptr;
 }
 
-uint64_t ObjModule::define_var(const std::string &name, Value *value) {
+uint64_t ObjModule::define_value(const std::string &name, Value *value) {
     if (name.size() > MAX_ID_LEN) {
         if (vm->curr_parser == nullptr) {
             COMPILE_ERROR(nullptr, "Invilad value name %s", name.c_str());

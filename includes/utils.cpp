@@ -12,7 +12,7 @@
 
 #include "includes/common.h"
 #include "parser/parser.h"
-#include "vm/vm.h"
+#include "core/vm.h"
 
 uint64_t ceil_to_square(uint64_t v) {
     v += (v == 0);

@@ -9,9 +9,10 @@
 #ifndef _TOHKA_OBJ_MODULE_H_
 #define _TOHKA_OBJ_MODULE_H_
 
+#include "obj_function.h"
 #include "object/object_header.h"
-#include "vm/mem_buffer_stl.h"
-#include "vm/vm.h"
+#include "core/mem_buffer_stl.h"
+#include "core/vm.h"
 
 class ObjModule : public ObjHeader {
 public:
@@ -24,8 +25,9 @@ public:
     ObjModule(VM *vm, const std::string &mod_name);
     ~ObjModule() override;
 
-    void compile_module(const char *module_code);
-    uint64_t define_var(const std::string &name, Value *value);
+    ObjFunction *compile_module(const char *module_code);
+    uint64_t define_value(const std::string &name, Value *value);
+
 };
 
 #endif  // TOHKA_OBJMODULE_H

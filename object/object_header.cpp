@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "vm/vm.h"
+#include "core/vm.h"
 
 ObjHeader::ObjHeader(VM *vm, ObjType obj_type, BaseClass *base_cls) {
     type = obj_type;

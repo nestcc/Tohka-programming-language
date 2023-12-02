@@ -7,7 +7,7 @@
  */
 
 #include "object/obj_upvalue.h"
-#include "vm/vm.h"
+#include "core/vm.h"
 
 
 ObjUpvalue::ObjUpvalue(VM *vm, Value *local_value)

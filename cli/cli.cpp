@@ -14,7 +14,7 @@
 
 void run_file_parser(const char *path) {
     const char *lastSlash = strrchr(path, '/');
-    VM *vm = VM::instance();
+    VM *vm = new VM();
 
     if (lastSlash != nullptr) {
         char *root = (char *)malloc(lastSlash - path + 2);
@@ -27,24 +27,24 @@ void run_file_parser(const char *path) {
 
     Parser parser(vm, path, sourceCode, nullptr);
 
-#include "Token/token_list.h"
+#include "token/token_list.h"
 
-    while (parser.curr_token.type != Token::TOKEN_EOF) {
+    while (parser.curr_token->type != Token::TOKEN_EOF) {
         parser.get_next_token();
-        printf(" %llu L-tokenArray [%s] : [", parser.curr_token.line_no,
-               tokenArray[parser.curr_token.type].c_str());
+        printf(" %llu L-tokenArray [%s] : [", parser.curr_token->line_no,
+               tokenArray[parser.curr_token->type].c_str());
         //        std::cout << tokenArray[parser.curr_token.type] << " [";
         uint32_t idx = 0;
-        while (idx < parser.curr_token.length) {
-            printf("%c", *(parser.curr_token.start + idx++));
+        while (idx < parser.curr_token->length) {
+            printf("%c", *(parser.curr_token->start + idx++));
         }
         printf("]\n");
     }
 }
 
-static void run_file(const char *path) {
+static VM *run_file(const char *path) {
     const char *last_slash = strrchr(path, '/');
-    VM *vm = VM::instance();
+    VM *vm = new VM();
     if (last_slash != nullptr) {
         char *root = (char *)malloc(last_slash - path + 2);
         memcpy(root, path, last_slash - path + 1);
@@ -56,7 +56,9 @@ static void run_file(const char *path) {
 
     std::string spath(path);
     ObjString src(vm, spath);
-    vm->exec_module(new Value(&src), source_code);
+    Value final_value = Value(&src);
+    final_value.execute_module(source_code);
+    return  vm;
 }
 
 int main(int argc, const char **argv) {
@@ -65,24 +67,23 @@ int main(int argc, const char **argv) {
     if (argc == 1) {
         fprintf(stderr, RED "use %s [ file name ] ...\n" NOCOLOR, argv[0]);
     } else {
-        run_file(argv[1]);
-    }
+        VM *vm = run_file(argv[1]);
 
-    VM *vm = VM::instance();
+        std::cout << " get all objects" << std::endl;
+        ObjHeader *objs = vm->all_objects;
+        ObjHeader *tmp = objs->next;
 
-    std::cout << " get all objects" << std::endl;
-    ObjHeader *objs = vm->all_objects, *tmp = objs->next;
-
-    while (tmp != objs) {
-        auto *str_obj = dynamic_cast<ObjString *>(tmp);
-        if (str_obj == nullptr) {
-            std::cout << " > curr obj not ObjString, but " << tmp->type
-                      << std::endl;
+        while (tmp != objs) {
+            auto *str_obj = dynamic_cast<ObjString *>(tmp);
+            if (str_obj == nullptr) {
+                std::cout << " > curr obj not ObjString, but " << tmp->type
+                          << std::endl;
+                tmp = tmp->next;
+                continue;
+            }
+            std::cout << " > curr obj : " << str_obj->value << std::endl;
             tmp = tmp->next;
-            continue;
         }
-        std::cout << " > curr obj : " << str_obj->value << std::endl;
-        tmp = tmp->next;
     }
 
     return 0;

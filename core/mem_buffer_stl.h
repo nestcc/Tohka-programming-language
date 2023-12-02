@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-#include "vm/vm.h"
+#include "core/vm.h"
 
 template <typename Type>
 class MemBufferSTL : public std::vector<Type> {

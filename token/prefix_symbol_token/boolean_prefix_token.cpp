@@ -6,7 +6,7 @@
 
 #include "boolean_prefix_token.h"
 #include "compiler/compile_unit.h"
-#include "vm/opcode.h"
+#include "core/opcode.h"
 
 void BooleanPrefixToken::nud(CompileUnit *cu, bool can_assign) {
     OpCode opcode = cu->curr_parser->prev_token->type == TOKEN_TRUE ? OPCODE_PUSH_TRUE : OPCODE_PUSH_FALSE;

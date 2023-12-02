@@ -16,8 +16,8 @@
 #include "object/base_class.h"
 #include "object/value.h"
 #include "token/token.h"
-#include "vm/core.h"
-#include "vm/mem_buffer_stl.h"
+#include "core/core.h"
+#include "core/mem_buffer_stl.h"
 
 class Parser {
 public:

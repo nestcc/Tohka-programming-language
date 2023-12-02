@@ -4,8 +4,9 @@
  * @Discription: 
  */
 
-#ifndef _TOHKA_HEADERS_H_
-#define _TOHKA_HEADERS_H_
+#ifndef _TOHKA_TOKEN__HEADERS_H_
+#define _TOHKA_TOKEN__HEADERS_H_
+
 
 class Value;
 

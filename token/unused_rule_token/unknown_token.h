@@ -7,14 +7,17 @@
 #ifndef _TOHKA_UNKNOWN_TOKEN_H_
 #define _TOHKA_UNKNOWN_TOKEN_H_
 
-#include "token/bp_none_token/bp_none_token.h"
-#include "parser/parser.h"
+#include "token/token.h"
 
-class UnknownToken : public BpNoneToken {
+class UnknownToken : public Token {
 public:
-    UnknownToken() : BpNoneToken() {
+    UnknownToken() : Token() {
         type = TOKEN_UNKNOWN;
     };
+
+    void nud(CompileUnit *cu, bool can_assign);
+    void led(CompileUnit *cu, bool can_assign);
+    void method_sign(CompileUnit *cu, Signature* signature);
 };
 
 

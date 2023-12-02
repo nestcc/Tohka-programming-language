@@ -8,7 +8,7 @@
 
 #include "object/obj_range.h"
 
-#include "vm/vm.h"
+#include "core/vm.h"
 
 static inline uint64_t hash_num(uint64_t num) {
     Bits64 bits64;

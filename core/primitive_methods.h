@@ -9,7 +9,7 @@
 #ifndef _PRIMITIVE_METHODS_H_
 #define _PRIMITIVE_METHODS_H_
 
-#include "vm/vm.h"
+#include "core/vm.h"
 #include "object/headers.h"
 
 

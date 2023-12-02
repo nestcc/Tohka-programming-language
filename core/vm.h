@@ -51,7 +51,8 @@ public:
     ObjThread *curr_thread;
 
 public:
-    static VM *instance();
+    VM();
+    ~VM();
 
     uint64_t realloc_memory(uint64_t old_size, uint64_t new_size);
     uint64_t alloc_memory(uint64_t new_size);
@@ -62,24 +63,21 @@ public:
     uint64_t get_method_index(const std::string &name);
     char *read_file(const char *fpath);
 
-    VmResult exec_module(Value *module_name, const char *module_code);
 
+    // VmResult exec_module(Value *module_name, const char *module_code);
 private:
-    static VM *_instance;
     int obj_cnt;
 
 private:
-    VM();
     VM(const VM &vm) = delete;
-    ~VM() = default;
 
+    void _build_core();
     ObjModule *_get_module(Value *module_name);
     ObjThread *_load_module(Value *module_name, const char *module_code);
-    void _bind_super_class(BaseClass *sub_class, BaseClass *super_class);
-    uint64_t _define_module_value(ObjModule *obj_module, std::string name, Value *val);
-    void _bind_method(BaseClass *base_class, uint64_t index, method *method_ptr);
-    void _func_bind_class(BaseClass *base_cls, const std::string &method_name, Primitive prim_func);
-    void _build_core();
+    // void _bind_super_class(BaseClass *sub_class, BaseClass *super_class);
+    // uint64_t _define_module_value(ObjModule *obj_module, std::string name, Value *val);
+    // void _bind_method(BaseClass *base_class, uint64_t index, method *method_ptr);
+    // void _func_bind_class(BaseClass *base_cls, const std::string &method_name, Primitive prim_func);
 };
 
 #endif

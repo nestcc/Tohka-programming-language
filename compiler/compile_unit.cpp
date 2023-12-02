@@ -87,7 +87,7 @@ void CompileUnit::emit_load_constant(Value *value) {
 }
 
 void CompileUnit::literal(CompileUnit *cu, bool can_assign UNUSED) {
-    cu->emit_load_constant(&cu->curr_parser->prev_token.value);
+    cu->emit_load_constant(cu->curr_parser->prev_token->value);
 }
 
 void CompileUnit::expression(SymbolBindRule::BindPower bp) {
