@@ -10,7 +10,7 @@
 
 #include <string>
 
-#include "vm/vm.h"
+#include "core/vm.h"
 
 ObjString::ObjString(VM *vm, const std::string &str) : ObjHeader(vm, OT_STRING, vm->str_cls) {
     value = str;

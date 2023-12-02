@@ -118,24 +118,11 @@ bool operator!=(const Value &v1, const Value &v2) {
 }
 
 
-//Value &Value::operator=(const Value &val) {
-//    this->type = val.type;
-//    this->num = val.num;
-//    return *this;
-//}
-
-//Value &operator=(Value &self, Value &val) {
-//    self.type = val.type;
-//    self.num = val.num;
-//    return self;
-//}
-
-//double Value::to_num() {
-//    return num;
-//}
-//
-
 ObjHeader *Value::toObj() {
     if (type != VT_OBJ) { return nullptr; }
     return obj_header;
+}
+
+VM::VmResult Value::execute_module(const char* module_code) {
+    return VM::VmResult::VM_RESULT_ERROR;
 }

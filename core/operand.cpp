@@ -4,7 +4,7 @@
  * @Discription: 
  */
 
-#include "vm/operand.h"
+#include "core/operand.h"
 
 
 ShortOperand::ShortOperand(uint64_t operand) {

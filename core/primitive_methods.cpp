@@ -6,8 +6,8 @@
  * @Description:  < file content > 
  */
 
-#include "vm/vm.h"
-#include "vm/primitive_methods.h"
+#include "core/vm.h"
+#include "core/primitive_methods.h"
 #include "object/method.h"
 #include "object/value.h"
 #include "object/base_class.h"

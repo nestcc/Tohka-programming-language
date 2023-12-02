@@ -12,14 +12,14 @@
 #include "object/headers.h"
 
 
-class method {
+class Method {
 public:
     MethodType type;
     union {
         Primitive prim_func;
         ObjClosure *obj;
     };
-    method() = default;
+    Method() = default;
 };
 
 #endif //TOHKA_METHOD_H

@@ -7,7 +7,7 @@
  */
 
 #include <utility>
-#include "vm/vm.h"
+#include "core/vm.h"
 #include "object/obj_map.h"
 
 

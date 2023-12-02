@@ -12,14 +12,14 @@
 #include "object/method.h"
 #include "object/obj_string.h"
 #include "object/object_header.h"
-#include "vm/mem_buffer_stl.h"
+#include "core/mem_buffer_stl.h"
 
 class BaseClass : public ObjHeader {
 public:
     BaseClass *super_class;
     uint64_t field_num;
-    typedef MemBufferSTL<method> MethodBuffer;
-    MethodBuffer methods;
+    typedef MemBufferSTL<Method> MethodBuffer;
+    MethodBuffer methods_buffer;
     ObjString *name;
 
     BaseClass() = default;
@@ -27,6 +27,10 @@ public:
     BaseClass(const BaseClass &base_class) = delete;
     BaseClass &operator=(const BaseClass &base_class) = delete;
     ~BaseClass() override;
+
+    void bind_super_class(BaseClass *super_class);
+    void bind_method(uint64_t index, Method *methods);
+    void bind_func(std::string method_name, Primitive prim_func);
 };
 
 // inline BaseClass *get_class_of_val(VM *vm, Value *val);

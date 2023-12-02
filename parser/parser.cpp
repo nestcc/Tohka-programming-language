@@ -13,10 +13,10 @@
 
 #include "parser/parser.h"
 #include "token/token.h"
-#include "token/bp_none_token/colon_token.h"
-#include "token/bp_none_token/comma_token.h"
-#include "token/prefix_token/left_paren_token.h"
-#include "token/bp_none_token/unknown_token.h"
+#include "token/unused_rule_token/colon_token.h"
+#include "token/unused_rule_token/comma_token.h"
+#include "token/prefix_symbol_token/left_paren_token.h"
+#include "token/unused_rule_token/unknown_token.h"
 
 struct KeywordToken {
     std::string keyword;
@@ -131,100 +131,100 @@ void Parser::get_next_token() {
                     break;
                 }
             }
-            curr_token.type = Token::TOKEN_RIGHT_PAREN;
+            curr_token->type = Token::TOKEN_RIGHT_PAREN;
             break;
         case '[':
-            curr_token.type = Token::TOKEN_LEFT_BRACKET;
+            curr_token->type = Token::TOKEN_LEFT_BRACKET;
             break;
         case ']':
-            curr_token.type = Token::TOKEN_RIGHT_BRACKET;
+            curr_token->type = Token::TOKEN_RIGHT_BRACKET;
             break;
         case '{':
-            curr_token.type = Token::TOKEN_LEFT_BRACE;
+            curr_token->type = Token::TOKEN_LEFT_BRACE;
             break;
         case '}':
-            curr_token.type = Token::TOKEN_RIGHT_BRACE;
+            curr_token->type = Token::TOKEN_RIGHT_BRACE;
             break;
         case '.':
             if (match_next_char('.')) {
-                curr_token.type = Token::TOKEN_DOT_DOT;
+                curr_token->type = Token::TOKEN_DOT_DOT;
             } else {
-                curr_token.type = Token::TOKEN_DOT;
+                curr_token->type = Token::TOKEN_DOT;
             }
             break;
         case '=':
             if (match_next_char('=')) {
-                curr_token.type = Token::TOKEN_EQUAL;
+                curr_token->type = Token::TOKEN_EQUAL;
             } else {
-                curr_token.type = Token::TOKEN_ASSIGN;
+                curr_token->type = Token::TOKEN_ASSIGN;
             }
             break;
         case '+':
-            curr_token.type = Token::TOKEN_ADD;
+            curr_token->type = Token::TOKEN_ADD;
             break;
         case '-':
-            curr_token.type = Token::TOKEN_SUB;
+            curr_token->type = Token::TOKEN_SUB;
             break;
         case '*':
-            curr_token.type = Token::TOKEN_MUL;
+            curr_token->type = Token::TOKEN_MUL;
             break;
         case '/':
             //跳过注释'//'或'/*'
             if (match_next_char('/') || match_next_char('*')) {
                 skip_comment();
                 //重置下一个token起始地址
-                curr_token.start = next_char_ptr - 1;
+                curr_token->start = next_char_ptr - 1;
                 continue;
             } else {
-                curr_token.type = Token::TOKEN_DIV;
+                curr_token->type = Token::TOKEN_DIV;
             }  // '/'
             break;
         case '%':
-            curr_token.type = Token::TOKEN_MOD;
+            curr_token->type = Token::TOKEN_MOD;
             break;
         case '&':
             if (match_next_char('&')) {
-                curr_token.type = Token::TOKEN_LOGIC_AND;
+                curr_token->type = Token::TOKEN_LOGIC_AND;
             } else {
-                curr_token.type = Token::TOKEN_BIT_AND;
+                curr_token->type = Token::TOKEN_BIT_AND;
             }
             break;
         case '|':
             if (match_next_char('|')) {
-                curr_token.type = Token::TOKEN_LOGIC_OR;
+                curr_token->type = Token::TOKEN_LOGIC_OR;
             } else {
-                curr_token.type = Token::TOKEN_BIT_OR;
+                curr_token->type = Token::TOKEN_BIT_OR;
             }
             break;
         case '~':
-            curr_token.type = Token::TOKEN_BIT_NOT;
+            curr_token->type = Token::TOKEN_BIT_NOT;
             break;
         case '?':
-            curr_token.type = Token::TOKEN_QUESTION;
+            curr_token->type = Token::TOKEN_QUESTION;
             break;
         case '>':
             if (match_next_char('=')) {
-                curr_token.type = Token::TOKEN_GREATE_EQUAL;
+                curr_token->type = Token::TOKEN_GREATE_EQUAL;
             } else if (match_next_char('>')) {
-                curr_token.type = Token::TOKEN_BIT_SHIFT_RIGHT;
+                curr_token->type = Token::TOKEN_BIT_SHIFT_RIGHT;
             } else {
-                curr_token.type = Token::TOKEN_GREATE;
+                curr_token->type = Token::TOKEN_GREATE;
             }
             break;
         case '<':
             if (match_next_char('=')) {
-                curr_token.type = Token::TOKEN_LESS_EQUAL;
+                curr_token->type = Token::TOKEN_LESS_EQUAL;
             } else if (match_next_char('<')) {
-                curr_token.type = Token::TOKEN_BIT_SHIFT_LEFT;
+                curr_token->type = Token::TOKEN_BIT_SHIFT_LEFT;
             } else {
-                curr_token.type = Token::TOKEN_LESS;
+                curr_token->type = Token::TOKEN_LESS;
             }
             break;
         case '!':
             if (match_next_char('=')) {
-                curr_token.type = Token::TOKEN_NOT_EQUAL;
+                curr_token->type = Token::TOKEN_NOT_EQUAL;
             } else {
-                curr_token.type = Token::TOKEN_LOGIC_NOT;
+                curr_token->type = Token::TOKEN_LOGIC_NOT;
             }
             break;
 
@@ -233,7 +233,7 @@ void Parser::get_next_token() {
             break;
 
         case ';':
-            curr_token.type = Token::TOKEN_SEMICOLON;
+            curr_token->type = Token::TOKEN_SEMICOLON;
             break;
 
         default:
@@ -250,7 +250,7 @@ void Parser::get_next_token() {
             } else {
                 if (curr_char == '#' && match_next_char('!')) {
                     skip_line();
-                    curr_token.start = next_char_ptr - 1;  //重置下一个token起始地址
+                    curr_token->start = next_char_ptr - 1;  //重置下一个token起始地址
                     continue;
                 }
                 LEX_ERROR(this, "unsupport char: \'%c\' %d, quit.", curr_char, curr_char);
@@ -310,8 +310,6 @@ void Parser::parse_unicode_code_point(ByteBuffer *buf) {
 
     buf->fill_wirte(0, byte_num);
     encode_utf8(buf->data() + buf->size() - byte_num, value);
-
-    return;
 }
 
 void Parser::parse_string() {
@@ -461,15 +459,15 @@ void Parser::parse_number() {
     if (curr_char == '0' && match_next_char('x')) {
         get_next_char();  // skip 'x' behind '0'
         parse_hex_number();
-        curr_token->value = new Value(strtol(curr_token.start, nullptr, 16));
+        curr_token->value = new Value(strtol(curr_token->start, nullptr, 16));
     } else if (curr_char == '0' && isdigit(look_ahead())) {
         parse_oct_number();
-        curr_token->value = new Value(strtol(curr_token.start, nullptr, 8));
+        curr_token->value = new Value(strtol(curr_token->start, nullptr, 8));
     } else {
         parse_dec_number();
-        curr_token->value = new Value(strtol(curr_token.start, nullptr, 10));
+        curr_token->value = new Value(strtol(curr_token->start, nullptr, 10));
     }
 
-    curr_token->length = (uint64_t)(next_char_ptr - curr_token.start - 1);
+    curr_token->length = (uint64_t)(next_char_ptr - curr_token->start - 1);
     curr_token->type = Token::TOKEN_NUM;
 }

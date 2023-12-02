@@ -7,15 +7,15 @@
 #ifndef _COMPILERUNIT_H_
 #define _COMPILERUNIT_H_
 
-#include "compiler/headers.h"
+// #include "compiler/headers.h"
+#include "object/obj_function.h"
 #include "compiler/local_var.h"
 #include "compiler/loop.h"
 #include "compiler/upvalue.h"
 #include "symbol/symbol_bind_rule.h"
-#include "object/obj_function.h"
 #include "parser/parser.h"
-#include "vm/opcode.h"
-#include "vm/operand.h"
+#include "core/opcode.h"
+#include "core/operand.h"
 
 class CompileUnit {
 public:
@@ -33,7 +33,8 @@ public:
     //把opcode定义到数组opCodeSlotsUsed中
 #define OPCODE_SLOTS(opCode, effect) effect,
     const int _op_code_slots_used[OPCODE_NUM] = {
-#include "vm/opcode.inc"
+#include "core/opcode.inc"
+
     };
 #undef OPCODE_SLOTS
 

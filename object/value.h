@@ -10,6 +10,7 @@
 #define _TOHKA_VALUE_H_
 
 #include "object/object_header.h"
+#include "core/vm.h"
 
 
 class Value {
@@ -51,7 +52,7 @@ public:
 
     ObjHeader *toObj();
 
-    // operator ObjHeader *();
+    VM::VmResult execute_module(const char* module_code);
 
     ~Value();
 };   //通用的值结构

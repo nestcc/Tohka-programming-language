@@ -10,8 +10,9 @@
 #define _TOHKA_OBJFUNCTION_H_
 
 #include <string>
+#include "object/headers.h"
 #include "object/object_header.h"
-#include "vm/mem_buffer_stl.h"
+#include "core/mem_buffer_stl.h"
 
 
 class ObjFunction : public ObjHeader {
