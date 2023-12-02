@@ -54,7 +54,7 @@ void report_error(void *parser, ErrorType err_type, const char *fmt, ...) {
     case ERROR_COMPILE:
         ASSERT(parser != nullptr, "parser is null!");
         fprintf(stderr, RED "%s:%llu" NOCOLOR " \"%s\"\n", ((Parser *)parser)->file,
-                ((Parser *)parser)->prev_token.line_no, buffer);
+                ((Parser *)parser)->prev_token->line_no, buffer);
         break;
     case ERROR_RUNTIME:
         fprintf(stderr, RED "%s\n" NOCOLOR, buffer);

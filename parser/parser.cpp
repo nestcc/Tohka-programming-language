@@ -6,12 +6,17 @@
  * @Description:  < file content >
  */
 
-#include "parser/parser.h"
-
 #include <cstring>
 #include <iostream>
 #include <string>
 #include <vector>
+
+#include "parser/parser.h"
+#include "token/token.h"
+#include "token/bp_none_token/colon_token.h"
+#include "token/bp_none_token/comma_token.h"
+#include "token/prefix_token/left_paren_token.h"
+#include "token/bp_none_token/unknown_token.h"
 
 struct KeywordToken {
     std::string keyword;
@@ -21,7 +26,7 @@ struct KeywordToken {
 
 //关键字查找表
 std::vector<KeywordToken> keywords_token = {
-    {"var", 3, Token::TOKEN_VAR},           {"fun", 3, Token::TOKEN_FUN},       {"if", 2, Token::TOKEN_IF},
+    {"var", 3, Token::TOKEN_VAR},           {"fun", 3, Token::TOKEN_FUNC},       {"if", 2, Token::TOKEN_IF},
     {"else", 4, Token::TOKEN_ELSE},         {"true", 4, Token::TOKEN_TRUE},     {"false", 5, Token::TOKEN_FALSE},
     {"while", 5, Token::TOKEN_WHILE},       {"for", 3, Token::TOKEN_FOR},       {"break", 5, Token::TOKEN_BREAK},
     {"continue", 8, Token::TOKEN_CONTINUE}, {"return", 6, Token::TOKEN_RETURN}, {"null", 4, Token::TOKEN_NULL},
@@ -49,15 +54,9 @@ Parser::Parser(VM *vm, const char *file, const char *source_code, ObjModule *obj
     curr_char = *this->source_code;
     next_char_ptr = this->source_code + 1;
 
-    curr_token.type = Token::TOKEN_UNKNOWN;
+    curr_token = new UnknownToken();
     prev_token = curr_token;
 
-    curr_token.line_no = 1;
-    curr_token.type = Token::TOKEN_UNKNOWN;
-    curr_token.start = nullptr;
-    curr_token.length = 0;
-
-    prev_token = curr_token;
     this->curr_module = obj_mudule;
 
     interpolation_expect_rparen_num = 0;
@@ -66,7 +65,7 @@ Parser::Parser(VM *vm, const char *file, const char *source_code, ObjModule *obj
 char Parser::look_ahead() const { return *next_char_ptr; }
 
 bool Parser::metch_token(Token::TokenType expected) {
-    if (curr_token.type == expected) {
+    if (curr_token->type == expected) {
         get_next_token();
         return true;
     }
@@ -76,7 +75,7 @@ bool Parser::metch_token(Token::TokenType expected) {
 void Parser::skip_blanks() {
     while (isspace(curr_char)) {
         if (curr_char == '\n') {
-            curr_token.line_no += 1;
+            curr_token->line_no += 1;
         }
         get_next_char();
     }
@@ -88,15 +87,15 @@ void Parser::parse_id(Token::TokenType type) {
         get_next_char();
     }
 
-    auto wlen = (uint64_t)(next_char_ptr - curr_token.start - 1);
+    auto wlen = (uint64_t)(next_char_ptr - curr_token->start - 1);
 
     if (type != Token::TOKEN_UNKNOWN) {
-        curr_token.type = type;
+        curr_token->type = type;
     } else {
-        curr_token.type = id_or_keyword(curr_token.start, wlen);
+        curr_token->type = id_or_keyword(curr_token->start, wlen);
     }
 
-    curr_token.length = wlen;
+    curr_token->length = wlen;
     return;
 }
 
@@ -106,23 +105,23 @@ void Parser::get_next_token() {
     prev_token = curr_token;
     skip_blanks();
 
-    curr_token.type = Token::TOKEN_EOF;
-    curr_token.length = 0;
-    curr_token.start = next_char_ptr - 1;
+//    curr_token.type = Token::TOKEN_EOF;
+//    curr_token.length = 0;
+//    curr_token.start = next_char_ptr - 1;
 
     while (curr_char != '\0' && curr_char != EOF) {
         switch (curr_char) {
         case ',':
-            curr_token.type = Token::TOKEN_COMMA;
+            curr_token = new CommaToken();
             break;
         case ':':
-            curr_token.type = Token::TOKEN_COLON;
+            curr_token = new ColonToken();
             break;
         case '(':
             if (interpolation_expect_rparen_num > 0) {
                 interpolation_expect_rparen_num += 1;
             }
-            curr_token.type = Token::TOKEN_LEFT_PAREN;
+            curr_token = new LeftParenToken();
             break;
         case ')':
             if (interpolation_expect_rparen_num > 0) {
@@ -258,14 +257,14 @@ void Parser::get_next_token() {
             }
             return;
         }
-        curr_token.length = (uint64_t)(next_char_ptr - curr_token.start);
+        curr_token->length = (uint64_t)(next_char_ptr - curr_token->start);
         get_next_char();
         return;
     }
 }
 
 void Parser::consume_curr_token(Token::TokenType expected, const char *errMsg) {
-    if (curr_token.type != expected) {
+    if (curr_token->type != expected) {
         COMPILE_ERROR(this, errMsg);
     }
     get_next_token();
@@ -273,7 +272,7 @@ void Parser::consume_curr_token(Token::TokenType expected, const char *errMsg) {
 
 void Parser::consume_next_token(Token::TokenType expected, const char *errMsg) {
     get_next_token();
-    if (curr_token.type != expected) {
+    if (curr_token->type != expected) {
         COMPILE_ERROR(this, errMsg);
     }
 }
@@ -327,7 +326,7 @@ void Parser::parse_string() {
         }
 
         if (curr_char == '"') {
-            curr_token.type = Token::TOKEN_STRING;
+            curr_token->type = Token::TOKEN_STRING;
             break;
         }
 
@@ -339,7 +338,7 @@ void Parser::parse_string() {
                 COMPILE_ERROR(this, "sorry, I don`t support nest interpolate expression!");
             }
             interpolation_expect_rparen_num = 1;
-            curr_token.type = Token::TOKEN_INTERPOLATION;
+            curr_token->type = Token::TOKEN_INTERPOLATION;
             break;
         }
 
@@ -386,7 +385,7 @@ void Parser::parse_string() {
     }
 
     ObjString *obj_str = new ObjString(vm, (const char *)str.data(), (uint64_t)str.size());
-    curr_token.value = Value(obj_str);
+    curr_token->value = new Value(obj_str);
     return;
 }
 
@@ -398,7 +397,7 @@ void Parser::skip_comment() {
         while (next_ch != '*' && next_ch != '\0') {
             get_next_char();
             if (curr_char == '\n') {
-                curr_token.line_no++;
+                curr_token->line_no++;
             }
             next_ch = look_ahead();
         }
@@ -417,7 +416,7 @@ void Parser::skip_line() {
     get_next_char();
     while (curr_char != '\0') {
         if (curr_char == '\n') {
-            curr_token.line_no += 1;
+            curr_token->line_no += 1;
             get_next_char();
             break;
         }
@@ -427,7 +426,7 @@ void Parser::skip_line() {
 }
 
 bool Parser::match_token(Token::TokenType expected) {
-    if (curr_token.type == expected) {
+    if (curr_token->type == expected) {
         get_next_token();
         return true;
     }
@@ -462,15 +461,15 @@ void Parser::parse_number() {
     if (curr_char == '0' && match_next_char('x')) {
         get_next_char();  // skip 'x' behind '0'
         parse_hex_number();
-        curr_token.value = Value(strtol(curr_token.start, nullptr, 16));
+        curr_token->value = new Value(strtol(curr_token.start, nullptr, 16));
     } else if (curr_char == '0' && isdigit(look_ahead())) {
         parse_oct_number();
-        curr_token.value = Value(strtol(curr_token.start, nullptr, 8));
+        curr_token->value = new Value(strtol(curr_token.start, nullptr, 8));
     } else {
         parse_dec_number();
-        curr_token.value = Value(strtol(curr_token.start, nullptr, 10));
+        curr_token->value = new Value(strtol(curr_token.start, nullptr, 10));
     }
 
-    curr_token.length = (uint64_t)(next_char_ptr - curr_token.start - 1);
-    curr_token.type = Token::TOKEN_NUM;
+    curr_token->length = (uint64_t)(next_char_ptr - curr_token.start - 1);
+    curr_token->type = Token::TOKEN_NUM;
 }

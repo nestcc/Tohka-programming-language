@@ -8,7 +8,11 @@
 #define _TOHKA_TOKEN_H_
 
 #include <cinttypes>
-#include "object/value.h"
+#include <string>
+#include "token/headers.h"
+#include "compiler/headers.h"
+
+class Parser;
 
 class Token {
 public:
@@ -23,7 +27,7 @@ public:
 
         // 关键字(系统保留字)
         TOKEN_VAR,       //'var'                  5
-        TOKEN_FUN,       //'fun'
+        TOKEN_FUNC,       //'func'
         TOKEN_IF,        //'if'
         TOKEN_ELSE,      //'else'
         TOKEN_TRUE,      //'true'
@@ -92,20 +96,53 @@ public:
         TOKEN_EOF  //'EOF'                  54
     };
 
+    enum BindPower {
+        BP_NONE,      // No bind power
+        BP_LOWEST,    // Lowest
+        BP_ASSIGN,    // =
+        BP_CONDITION,   // ?:
+        BP_LOGIC_OR,    // ||
+        BP_LOGIC_AND,   // &&
+        BP_EQUAL,      // == !=
+        BP_IS,        // is
+        BP_CMP,       // < > <= >=
+        BP_BIT_OR,    // |
+        BP_BIT_AND,   // &
+        BP_BIT_SHIFT, // << >>
+        BP_RANGE,       // ..
+        BP_TERM,      // + -
+        BP_FACTOR,      // * / %
+        BP_UNARY,    // - ! ~
+        BP_CALL,     // . () []
+        BP_HIGHEST
+    };
+
 public:
     TokenType type;
+    BindPower bp;
+    Parser *parser;
+    Value *value;
     const char *start;
     uint64_t length;
     uint64_t line_no;
-    Value value;
+    std::string keyword;
 
 public:
-    Token() = default;
+    Token() {
+        type = TOKEN_UNKNOWN;
+        bp = BP_NONE;
+        parser = nullptr;
+        value = nullptr;
+        start = nullptr;
+        length = 0;
+        line_no = 0;
+    };
 
-//    virtual void nud() = 0;
-//    virtual void led() = 0;
-//    virtual void method_sign() = 0;
+    virtual void nud(CompileUnit *cu, bool can_assign) = 0;
+    virtual void led(CompileUnit *cu, bool can_assign) = 0;
+    virtual void method_sign(CompileUnit *cu, Signature* signature) = 0;
 
+    virtual ~Token() = default;
 };
 
 #endif // end of _TOHKA_TOKEN_H_

@@ -18,7 +18,7 @@ class Upvalue;
 class Signature;
 class Compiler;
 class ClassBookKeep;
-class CompilerUnit;
+class CompileUnit;
 
 #define MAX_LOCAL_VAR_NUM 128
 #define MAX_UPVALUE_NUM 128
@@ -34,9 +34,9 @@ class CompilerUnit;
 
 #define OPCODE_NUM 62
 
-typedef void (*DenotationFunc) (CompilerUnit *cu, bool can_assign);
+typedef void (*DenotationFunc) (CompileUnit *cu, bool can_assign);
 
-typedef void (*MethodSignatureFunc) (CompilerUnit *cu, Signature *signature);
+typedef void (*MethodSignatureFunc) (CompileUnit *cu, Signature *signature);
 
 
 #endif

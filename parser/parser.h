@@ -9,13 +9,13 @@
 #ifndef _PARSER_H_
 #define _PARSER_H_
 
-#include "compiler/compiler_unit.h"
+#include "compiler/compile_unit.h"
 #include "includes/common.h"
 #include "includes/unicode.h"
 #include "includes/utils.h"
 #include "object/base_class.h"
 #include "object/value.h"
-#include "Token/token.h"
+#include "token/token.h"
 #include "vm/core.h"
 #include "vm/mem_buffer_stl.h"
 
@@ -26,10 +26,10 @@ public:
 
     const char *next_char_ptr;
     char curr_char;
-    Token curr_token;
-    Token prev_token;
+    Token *curr_token;
+    Token *prev_token;
     ObjModule *curr_module;
-    CompilerUnit *curr_compile_unit;
+    CompileUnit *curr_compile_unit;
     VM *vm;
     Parser *parent;
 

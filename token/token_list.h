@@ -5,7 +5,7 @@ std::vector<std::string> tokenArray = {
    "ID",
    "INTERPOLATION",
    "VAR",
-   "FUN",
+   "FUNC",
    "IF",
    "ELSE",
    "TRUE",
